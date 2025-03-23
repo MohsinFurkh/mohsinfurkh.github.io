@@ -20,24 +20,7 @@ type Publication = {
 
 // Publications data
 const journalArticles: Publication[] = [
-  {
-    id: 'j1',
-    title: 'Fuzzy rough set loss for handling boundary uncertainty in medical image segmentation',
-    authors: 'M. F. Dar and A. Ganivada',
-    journal: 'Congnitive Computation',
-    volume: 'Under Review',
-    year: '2025',
-    thumbnail: '/images/publications/FRS Loss.jpg'
-  },
-  {
-    id: 'j2',
-    title: 'Multi-modal attentionnet for medical image classification with dual branch feature extraction and saliency maps',
-    authors: 'M. F. Dar and A. Ganivada',
-    journal: 'Expert Systems with Applications',
-    volume: 'Under Review',
-    year: '2025',
-    thumbnail: '/images/publications/MANN.jpg'
-  },
+  
   {
     id: 'j3',
     title: 'Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with uma-net',
@@ -47,18 +30,7 @@ const journalArticles: Publication[] = [
     doi: '10.1007/s11517-025-03301-5',
     thumbnail: '/images/publications/UMA-Net.jpg'
   },
-  {
-    id: 'j4',
-    title: 'Design and analysis of a robust security layer for software defined network framework',
-    authors: 'A. N. Alhaj, N. D. Patel, A. Singh, R. K. Bondugula, M. F. Dar, and J. Ahamed',
-    journal: 'International Journal of Sensor Networks',
-    volume: '46',
-    issue: '1',
-    pages: '1-14',
-    year: '2024',
-    doi: '10.1504/IJSNET.2024.141613',
-    thumbnail: '/images/publications/ijsnet.png'
-  },
+  
   {
     id: 'j5',
     title: 'Deep learning and genetic algorithm-based ensemble model for feature selection and classification of breast ultrasound images',
@@ -104,6 +76,36 @@ const journalArticles: Publication[] = [
     year: '2019',
     doi: '10.21275/ART20194439',
     thumbnail: '/images/publications/ijsr.png'
+  },
+  {
+    id: 'j4',
+    title: 'Design and analysis of a robust security layer for software defined network framework',
+    authors: 'A. N. Alhaj, N. D. Patel, A. Singh, R. K. Bondugula, M. F. Dar, and J. Ahamed',
+    journal: 'International Journal of Sensor Networks',
+    volume: '46',
+    issue: '1',
+    pages: '1-14',
+    year: '2024',
+    doi: '10.1504/IJSNET.2024.141613',
+    thumbnail: '/images/publications/ijsnet.png'
+  },
+  {
+    id: 'j1',
+    title: 'Fuzzy rough set loss for handling boundary uncertainty in medical image segmentation',
+    authors: 'M. F. Dar and A. Ganivada',
+    journal: 'Congnitive Computation',
+    volume: 'Under Review',
+    year: '2025',
+    thumbnail: '/images/publications/FRS Loss.jpg'
+  },
+  {
+    id: 'j2',
+    title: 'Multi-modal attentionnet for medical image classification with dual branch feature extraction and saliency maps',
+    authors: 'M. F. Dar and A. Ganivada',
+    journal: 'Expert Systems with Applications',
+    volume: 'Under Review',
+    year: '2025',
+    thumbnail: '/images/publications/MANN.jpg'
   }
 ];
 

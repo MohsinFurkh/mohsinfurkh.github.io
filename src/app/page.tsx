@@ -21,10 +21,10 @@ export default function Home() {
                 Mohsin Furkh Dar
               </h1>
               <p className="text-xl mb-4">
-                Assistant Professor of Computer Science
+                Senior Research Fellow
               </p>
               <p className="text-lg mb-4">
-                Department of Computer Science, University of Hyderabad
+                School of Computer and Information Sciences, University of Hyderabad
               </p>
               <p className="text-lg mb-8">
                 Research Focus: Deep Learning for Medical Image Analysis
@@ -49,15 +49,15 @@ export default function Home() {
             <h2 className="section-title text-center">About Me</h2>
             <div className="prose prose-lg mx-auto">
               <p className="text-lg mb-6">
-                I am an Assistant Professor in the Department of Computer Science at University of Hyderabad, 
+                I am pursuing a Ph.D from the School of Computer and Information Sciences, University of Hyderabad, 
                 specializing in Deep Learning and Medical Image Analysis. My research focuses on developing 
                 innovative artificial intelligence solutions to improve healthcare outcomes through more 
                 accurate diagnostic tools and personalized treatment strategies.
               </p>
               <p className="text-lg">
-                With expertise in machine learning algorithms and deep understanding of medical imaging 
+                With expertise in machine learning algorithms and a deep understanding of medical imaging 
                 challenges, I develop novel neural network architectures that can analyze complex medical 
-                images with high precision. My research spans areas like fuzzy rough set theory, multi-modal learning,
+                images with high precision. My research spans areas like deep-learning models, fuzzy rough set theory, multi-modal learning,
                 and innovative loss functions for medical image segmentation and classification.
               </p>
             </div>

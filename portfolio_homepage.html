@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Deep Learning for Medical Imaging</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(27, 54, 93, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #FF8C42;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1B365D 0%, #2E8B57 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: #FF8C42;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .stat {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FF8C42;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #FF8C42;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            background: #e07a35;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1B365D;
+        }
+
+        .hero-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInRight 1s ease 0.5s both;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #FF8C42, #2E8B57);
+            padding: 5px;
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #666;
+        }
+
+        .research-highlights {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .research-highlights h3 {
+            color: #FF8C42;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .research-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .keyword {
+            background: rgba(255, 140, 66, 0.2);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 140, 66, 0.3);
+        }
+
+        /* About Preview Section */
+        .about-preview {
+            padding: 5rem 0;
+            background: #F8F9FA;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1B365D;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #FF8C42;
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: #1B365D;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .expertise-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .expertise-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .expertise-item h4 {
+            color: #1B365D;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .expertise-item p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Research Preview */
+        .research-preview {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .research-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .research-card {
+            background: linear-gradient(145deg, #f0f0f0, #ffffff);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #FF8C42;
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .research-card h3 {
+            color: #1B365D;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .research-card p {
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .research-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 0;
+            background: #1B365D;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-section p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: #FF8C42;
+            border-color: #FF8C42;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Your Name</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Your Name</h1>
+                <div class="subtitle">PhD in Deep Learning for Medical Imaging</div>
+                <p>Advancing healthcare through innovative AI solutions for medical image segmentation and classification. Passionate about translating cutting-edge research into clinical impact.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Publications</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Citations</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Awards</span>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <a href="#research" class="btn btn-primary">View Research</a>
+                    <a href="#" class="btn btn-secondary">Download CV</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="profile-image">
+                    <div style="width: 100%; height: 100%; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: #666;">👤</div>
+                </div>
+                
+                <div class="research-highlights">
+                    <h3>Research Focus</h3>
+                    <div class="research-keywords">
+                        <span class="keyword">Deep Learning</span>
+                        <span class="keyword">Medical Imaging</span>
+                        <span class="keyword">Image Segmentation</span>
+                        <span class="keyword">Neural Networks</span>
+                        <span class="keyword">Computer Vision</span>
+                        <span class="keyword">Healthcare AI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div style="font-size: 2rem;">↓</div>
+            <div>Scroll to explore</div>
+        </div>
+    </section>
+
+    <!-- About Preview -->
+    <section class="about-preview" id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>Bridging AI Innovation with Clinical Impact</h3>
+                    <p>I recently completed my PhD in Computer and Information Sciences from the University of Hyderabad, focusing on advancing deep learning techniques for medical image analysis. My research addresses critical challenges in healthcare by developing robust, interpretable AI systems for medical diagnosis and treatment planning.</p>
+                    <p>Currently seeking postdoctoral and faculty positions to continue pushing the boundaries of medical AI while fostering the next generation of researchers in this transformative field.</p>
+                </div>
+                
+                <div class="expertise-grid">
+                    <div class="expertise-item">
+                        <h4>Deep Learning</h4>
+                        <p>Advanced neural architectures for medical image analysis</p>
+                    </div>
+                    <div class="expertise-item">
+                        <h4>Medical Imaging</h4>
+                        <p>Multi-modal imaging: CT, MRI, X-ray, ultrasound</p>
+                    </div>
+                    <div class="expertise-item">
+                        <h4>Clinical Collaboration</h4>
+                        <p>Translating research into real-world medical applications</p>
+                    </div>
+                    <div class="expertise-item">
+                        <h4>Research Leadership</h4>
+                        <p>Mentoring students and leading interdisciplinary projects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Preview -->
+    <section class="research-preview" id="research">
+        <div class="container">
+            <h2 class="section-title">Featured Research</h2>
+            <div class="research-cards">
+                <div class="research-card">
+                    <h3>PhD Thesis: Advances in Deep Learning for Medical Image Segmentation and Classification</h3>
+                    <p>Developed novel deep learning architectures that improve segmentation accuracy by 15% while reducing computational requirements by 30% compared to state-of-the-art methods.</p>
+                    <div class="research-meta">
+                        <span>University of Hyderabad</span>
+                        <span>2024</span>
+                    </div>
+                </div>
+                
+                <div class="research-card">
+                    <h3>Federated Learning for Medical Image Analysis</h3>
+                    <p>Pioneered privacy-preserving collaborative learning methods that enable hospitals to train AI models without sharing sensitive patient data.</p>
+                    <div class="research-meta">
+                        <span>Multi-institutional collaboration</span>
+                        <span>Ongoing</span>
+                    </div>
+                </div>
+                
+                <div class="research-card">
+                    <h3>Explainable AI for Clinical Decision Support</h3>
+                    <p>Created interpretable deep learning models that provide clinically relevant explanations for AI-driven diagnostic recommendations.</p>
+                    <div class="research-meta">
+                        <span>Clinical partnership</span>
+                        <span>2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2>Let's Collaborate</h2>
+            <p>Interested in my research or exploring collaboration opportunities? I'd love to hear from you.</p>
+            <div class="contact-links">
+                <a href="mailto:your.email@example.com" class="contact-link">📧 Email</a>
+                <a href="#" class="contact-link">💼 LinkedIn</a>
+                <a href="#" class="contact-link">🎓 Google Scholar</a>
+                <a href="#" class="contact-link">💻 GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(27, 54, 93, 0.98)';
+            } else {
+                nav.style.background = 'rgba(27, 54, 93, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.research-card, .expertise-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

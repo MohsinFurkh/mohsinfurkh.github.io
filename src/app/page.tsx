@@ -1,134 +1,254 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
+  const [scholarData, setScholarData] = useState({
+    citations: '200+', // Default fallback values
+    publications: '15+',
+    h_index: '5+'
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // In your fetchScholarData function
+    async function fetchScholarData() {
+      try {
+        console.log('Fetching scholar data...');
+        const response = await fetch('/api/scholar');
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Error response:', errorText);
+          throw new Error(`API request failed: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Scholar data received:', data);
+        
+        if (data.error) {
+          console.error('API returned error:', data.error);
+        } else {
+          setScholarData({
+            citations: data.citations,
+            publications: data.publications,
+            h_index: data.h_index
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching scholar data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchScholarData();
+  }, []);
+
+  // Update the Stats section in your existing code
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-primary text-white py-20">
-        <div className="container">
+      <section className="bg-gradient-to-r from-primary to-accent text-white py-20 min-h-screen flex items-center relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-30 bg-grid-pattern"></div>
+        
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-64 md:h-96 w-64 md:w-96 mx-auto">
-              <Image
-                src="/images/profile_pic.jpg"
-                alt="Professional headshot of Dr. Mohsin Furkh Dar"
-                fill
-                className="rounded-full object-cover"
-                priority
-              />
-            </div>
             <div className="text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn">
                 Mohsin Furkh Dar
               </h1>
-              <p className="text-xl mb-4">
-                Senior Research Fellow
+              <div className="text-xl text-accent mb-4 animate-fadeIn delay-200">
+                PhD in Deep Learning for Medical Imaging
+              </div>
+              <p className="text-lg mb-8 animate-fadeIn delay-300">
+                Advancing healthcare through innovative AI solutions for medical image segmentation and classification. 
+                Passionate about translating cutting-edge research into clinical impact.
               </p>
-              <p className="text-lg mb-4">
-                School of Computer and Information Sciences, University of Hyderabad
-              </p>
-              <p className="text-lg mb-8">
-                Research Focus: Deep Learning for Medical Image Analysis
-              </p>
-              <div className="flex justify-center md:justify-start space-x-4">
-                <a href="mailto:mohsinfaurkh@gmail.com" className="btn bg-white text-primary hover:bg-gray-100">
-                  Contact Me
-                </a>
-                <a href="/cv.pdf" className="btn border-2 border-white text-white hover:bg-white/10">
+              
+              {/* Stats - Updated with real-time data */}
+              <div className="flex flex-wrap justify-center md:justify-start gap-8 mb-8 animate-fadeIn delay-400">
+                <Link href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-center group hover:scale-105 transition-transform">
+                  <span className="block text-2xl font-bold text-accent group-hover:underline">
+                    {isLoading ? '...' : scholarData.publications}
+                  </span>
+                  <span className="text-sm opacity-80">Publications</span>
+                </Link>
+                <Link href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-center group hover:scale-105 transition-transform">
+                  <span className="block text-2xl font-bold text-accent group-hover:underline">
+                    {isLoading ? '...' : scholarData.citations}
+                  </span>
+                  <span className="text-sm opacity-80">Citations</span>
+                </Link>
+                <Link href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-center group hover:scale-105 transition-transform">
+                  <span className="block text-2xl font-bold text-accent group-hover:underline">
+                    {isLoading ? '...' : scholarData.h_index}
+                  </span>
+                  <span className="text-sm opacity-80">h-index</span>
+                </Link>
+              </div>
+              
+              {/* Buttons */}
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 animate-fadeIn delay-500">
+                <Link href="/research" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
+                  View Research
+                </Link>
+                <Link href="/cv.pdf" className="btn border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-full">
                   Download CV
-                </a>
+                </Link>
+              </div>
+            </div>
+            
+            <div className="flex flex-col items-center animate-fadeInRight">
+              <div className="relative h-64 w-64 md:h-80 md:w-80 rounded-full p-1 bg-gradient-to-r from-accent to-primary mb-8 animate-float">
+                <Image
+                  src="/images/profile_pic.jpg"
+                  alt="Professional headshot of Dr. Mohsin Furkh Dar"
+                  fill
+                  className="rounded-full object-cover"
+                  priority
+                />
+              </div>
+              
+              {/* Research Keywords */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 w-full">
+                <h3 className="text-accent text-lg font-semibold mb-4">Research Focus</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Deep Learning</span>
+                  <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Medical Imaging</span>
+                  <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Image Segmentation</span>
+                  <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Neural Networks</span>
+                  <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Computer Vision</span>
+                  <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Healthcare AI</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-center animate-bounce">
+          <div className="text-2xl">↓</div>
+          <div className="text-sm">Scroll to explore</div>
+        </div>
       </section>
 
-      {/* Bio Section */}
-      <section className="py-16">
+      {/* About Section */}
+      <section className="py-20 bg-gray-50">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="section-title text-center">About Me</h2>
-            <div className="prose prose-lg mx-auto">
+          <h2 className="section-title text-center relative mb-16">
+            About Me
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 w-20 h-1 bg-accent rounded"></span>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-semibold text-primary mb-4">Bridging AI Innovation with Clinical Impact</h3>
               <p className="text-lg mb-6">
-                I am pursuing a Ph.D from the School of Computer and Information Sciences, University of Hyderabad, 
-                specializing in Deep Learning and Medical Image Analysis. My research focuses on developing 
-                innovative artificial intelligence solutions to improve healthcare outcomes through more 
-                accurate diagnostic tools and personalized treatment strategies.
+                I am a PhD graduate in Computer Science from the University of Hyderabad, specializing in <strong className="text-primary"><a href="#" className="hover:underline">Deep Learning for Medical Image Analysis</a></strong>. My academic journey spans from BSc and MCA at the University of Kashmir to MPhil research on face detection algorithms, culminating in groundbreaking doctoral work on medical AI. During my PhD, I developed several innovative architectures including <strong className="text-primary"><a href="https://link.springer.com/article/10.1007/s11063-023-11333-x" target="_blank" rel="noopener noreferrer" className="hover:underline">EfficientU-Net</a></strong>, <strong className="text-primary"><a href="https://link.springer.com/article/10.1007/s11517-025-03301-5" target="_blank" rel="noopener noreferrer" className="hover:underline">UMA-Net</a></strong> with adaptive <strong className="text-primary">loss functions</strong>, and <strong className="text-primary">Saliency-Guided AttentionNet</strong> (90.51% accuracy in breast ultrasound classification). My research contributions span novel <strong className="text-primary">loss functions</strong>, <strong className="text-primary"><a href="https://www.sciencedirect.com/science/article/pii/S0262885624001227" target="_blank" rel="noopener noreferrer" className="hover:underline">genetic algorithm-based feature selection</a></strong>, and attention mechanisms validated across multiple medical imaging modalities.
               </p>
               <p className="text-lg">
-                With expertise in machine learning algorithms and a deep understanding of medical imaging 
-                challenges, I develop novel neural network architectures that can analyze complex medical 
-                images with high precision. My research spans areas like deep-learning models, fuzzy rough set theory, multi-modal learning,
-                and innovative loss functions for medical image segmentation and classification.
+                Beyond academia, I founded <strong className="text-primary"><a href="https://shifa-ai.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:underline">ShifaAI</a></strong>, an AI-powered healthcare platform that translates my research into practical diagnostic solutions for patients and healthcare providers. The platform offers automated medical image analysis, intelligent diagnostic assistance, and personalized treatment recommendations. I am currently seeking <strong className="text-primary">postdoctoral research opportunities</strong> at leading institutions to further advance medical AI, collaborate on clinical validation studies, and mentor emerging researchers. My mission is to democratize access to intelligent healthcare through cutting-edge AI solutions, particularly in resource-limited settings where expert medical interpretation is scarce.
               </p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow transform hover:-translate-y-1 duration-300">
+                <h4 className="text-primary font-semibold mb-2">Deep Learning</h4>
+                <p className="text-gray-600">Advanced neural architectures for medical image analysis</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow transform hover:-translate-y-1 duration-300">
+                <h4 className="text-primary font-semibold mb-2">Medical Imaging</h4>
+                <p className="text-gray-600">Multi-modal imaging: CT, MRI, X-ray, ultrasound</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow transform hover:-translate-y-1 duration-300">
+                <h4 className="text-primary font-semibold mb-2">Clinical Collaboration</h4>
+                <p className="text-gray-600">Translating research into real-world medical applications</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow transform hover:-translate-y-1 duration-300">
+                <h4 className="text-primary font-semibold mb-2">Research Leadership</h4>
+                <p className="text-gray-600">Mentoring students and leading interdisciplinary projects</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Research Focus Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container">
-          <h2 className="section-title text-center">Research Focus</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Advanced Neural Networks for Medical Imaging</h3>
-              <p className="text-gray-600">
+          <h2 className="section-title text-center relative mb-16">
+            Featured Research
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 w-20 h-1 bg-accent rounded"></span>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+              <h3 className="text-xl font-semibold text-primary mb-4">Advanced Neural Networks for Medical Imaging</h3>
+              <p className="text-gray-600 mb-6">
                 Developing state-of-the-art deep learning architectures optimized for medical image analysis,
                 with a focus on self-supervised learning and uncertainty quantification.
               </p>
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>University of Hyderabad</span>
+                <span>2024</span>
+              </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Multi-modal Data Integration</h3>
-              <p className="text-gray-600">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+              <h3 className="text-xl font-semibold text-primary mb-4">Multi-modal Data Integration</h3>
+              <p className="text-gray-600 mb-6">
                 Creating frameworks that combine medical imaging with clinical data and genomics
                 for comprehensive disease characterization and personalized treatment planning.
               </p>
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>Multi-institutional collaboration</span>
+                <span>Ongoing</span>
+              </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Translational AI Research</h3>
-              <p className="text-gray-600">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+              <h3 className="text-xl font-semibold text-primary mb-4">Translational AI Research</h3>
+              <p className="text-gray-600 mb-6">
                 Bridging the gap between algorithm development and clinical deployment by designing
                 interpretable AI systems that can be effectively integrated into healthcare workflows.
               </p>
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>Clinical partnership</span>
+                <span>2023</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Quick Links Section */}
-      <section className="py-16">
+      {/* Contact Section */}
+      <section className="py-20 bg-primary text-white text-center">
         <div className="container">
-          <h2 className="section-title text-center">Quick Links</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <a href="/research" className="group">
-              <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary">Research</h3>
-                <p className="text-gray-600">Explore my research work</p>
-              </div>
+          <h2 className="text-3xl font-bold mb-4">Let's Collaborate</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Interested in my research or exploring collaboration opportunities? I'd love to hear from you.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="mailto:mohsinfaurkh@gmail.com" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+              📧 Email
             </a>
-            <a href="/publications" className="group">
-              <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary">Publications</h3>
-                <p className="text-gray-600">View my academic papers</p>
-              </div>
+            <a href="https://www.linkedin.com/in/mohsinfurkh/" target="_blank" rel="noopener noreferrer" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+              💼 LinkedIn
             </a>
-            <a href="/projects" className="group">
-              <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary">Projects</h3>
-                <p className="text-gray-600">Check out my projects</p>
-              </div>
+            <a href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+              🎓 Google Scholar
             </a>
-            <a href="/cv.pdf" className="group">
-              <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary">CV</h3>
-                <p className="text-gray-600">Download my CV</p>
-              </div>
+            <a href="https://github.com/mohsinfurkh" target="_blank" rel="noopener noreferrer" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+              💻 GitHub
             </a>
           </div>
         </div>
       </section>
     </div>
   );
-} 
+}

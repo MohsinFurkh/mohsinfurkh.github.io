@@ -17,10 +17,12 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             <Link href="/" className="nav-link">Home</Link>
-            <Link href="/cv" className="nav-link">CV</Link>
+            <Link href="/about" className="nav-link">About</Link>
+            <Link href="/research" className="nav-link">Research</Link>
             <Link href="/publications" className="nav-link">Publications</Link>
             <Link href="/projects" className="nav-link">Projects</Link>
             <Link href="/teaching" className="nav-link">Teaching</Link>
+            <Link href="/blog" className="nav-link">Blog</Link>
             <Link href="/contact" className="nav-link">Contact</Link>
           </div>
 
@@ -112,10 +114,12 @@ export default function Navigation() {
               </div>
               <div className="flex flex-col items-center space-y-4 mt-8">
                 <Link href="/" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Home</Link>
-                <Link href="/cv" className="nav-link-mobile" onClick={() => setIsOpen(false)}>CV</Link>
+                <Link href="/about" className="nav-link-mobile" onClick={() => setIsOpen(false)}>About</Link>
+                <Link href="/research" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Research</Link>
                 <Link href="/publications" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Publications</Link>
                 <Link href="/projects" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Projects</Link>
                 <Link href="/teaching" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Teaching</Link>
+                <Link href="/blog" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Blog</Link>
                 <Link href="/contact" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Contact</Link>
               </div>
             </div>

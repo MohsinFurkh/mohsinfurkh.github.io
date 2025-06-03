@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Research() {
   return (
     <div className="min-h-screen py-16">
@@ -6,19 +8,69 @@ export default function Research() {
           Research
         </h1>
 
-        {/* Research Overview */}
-        <section className="mb-16">
-          <h2 className="section-title">Research Overview</h2>
-          <div className="prose prose-lg max-w-3xl mx-auto">
+        {/* Featured Research */}
+        <section className="mb-16 bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-bold text-primary mb-6">
+            PhD Thesis: Advances in Deep Learning for Medical Image Segmentation and Classification
+          </h2>
+          
+          <div className="prose prose-lg max-w-4xl mx-auto">
+            <h3 className="text-2xl font-semibold text-gray-800 mt-6 mb-4">Overview</h3>
             <p className="text-lg mb-6">
-              My research focuses on developing and applying deep learning techniques to medical image analysis,
-              with the goal of improving healthcare outcomes through more accurate and efficient diagnosis.
+              My doctoral research addressed critical challenges in medical image analysis through the development of innovative deep learning architectures and methodologies. The work focused on improving accuracy, computational efficiency, and generalization capabilities of AI models for medical diagnostics, with particular emphasis on breast ultrasound imaging and tumor detection.
             </p>
-            <p className="text-lg">
-              I work on various aspects of medical image analysis, including segmentation, classification,
-              and feature extraction, with a particular emphasis on developing robust and interpretable
-              AI systems that can be effectively integrated into clinical workflows.
-            </p>
+            
+            <h3 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Key Research Contributions</h3>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-primary mb-3">1. EfficientU-Net: Parameter-Optimized Medical Image Segmentation</h4>
+                <p className="mb-3">
+                  Developed a novel U-Net variant that integrates depthwise separable convolutions and atrous convolution blocks to address the limitations of standard convolutions in medical image segmentation.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  <li><span className="font-medium">100x reduction</span> in computational parameters compared to traditional U-Net</li>
+                  <li>Enhanced boundary localization accuracy for tumor segmentation</li>
+                  <li>Adaptive receptive field handling for varying tumor shapes and sizes</li>
+                </ul>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-primary mb-3">2. UMA-Net with Adaptive Loss Functions</h4>
+                <p className="mb-3">
+                  Created an enhanced U-Net architecture featuring residual connections, attention mechanisms, and bottleneck atrous convolutions, coupled with a dynamic ensemble loss function.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  <li>Multi-scale contextual information capture without spatial resolution compromise</li>
+                  <li>Adaptive loss weighting that dynamically balances region overlap and boundary accuracy</li>
+                  <li>Superior generalization across five diverse breast ultrasound datasets (BUET, BUSI, Mendeley, OMI, UDIAT)</li>
+                </ul>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-primary mb-3">3. Saliency-Guided AttentionNet (SGAN)</h4>
+                <p className="mb-3">
+                  Designed a dual-branch architecture leveraging Grad-CAM saliency maps for breast ultrasound classification.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  <li><span className="font-medium">90.51% accuracy</span>, 87.95% F1-score, and 94.08% AUC across five datasets</li>
+                  <li>Explicit foreground-background decomposition for lesion and peritumoral analysis</li>
+                  <li>Adaptive attention fusion maintaining transfer learning benefits with minimal parameter increase</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-10 text-center">
+              <Link 
+                href="/phd-thesis" 
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-colors"
+              >
+                Read Full Thesis Summary
+                <svg className="ml-2 -mr-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </section>
 

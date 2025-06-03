@@ -187,41 +187,91 @@ export default function Home() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
-              <h3 className="text-xl font-semibold text-primary mb-4">Advanced Neural Networks for Medical Imaging</h3>
+
+          <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+              <h3 className="text-xl font-semibold text-primary mb-4">PhD Thesis: Advances in Deep Learning for Medical Imaging</h3>
               <p className="text-gray-600 mb-6">
-                Developing state-of-the-art deep learning architectures optimized for medical image analysis,
-                with a focus on self-supervised learning and uncertainty quantification.
+                Developed novel deep learning architectures for medical image segmentation and classification,
+                achieving state-of-the-art performance in breast cancer detection from ultrasound images and other medical image modalities.
               </p>
-              <div className="flex justify-between text-sm text-gray-500">
-                <span>University of Hyderabad</span>
-                <span>2024</span>
+              <div className="mt-4">
+                <div className="text-sm text-gray-500 mb-3">
+                  <span>University of Hyderabad</span>
+                  <span className="mx-2">•</span>
+                  <span>2020-2025</span>
+                </div>
+                <a 
+                  href="/phd-thesis" 
+                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium mt-2"
+                >
+                  Read more
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
-              <h3 className="text-xl font-semibold text-primary mb-4">Multi-modal Data Integration</h3>
-              <p className="text-gray-600 mb-6">
-                Creating frameworks that combine medical imaging with clinical data and genomics
-                for comprehensive disease characterization and personalized treatment planning.
-              </p>
-              <div className="flex justify-between text-sm text-gray-500">
-                <span>Multi-institutional collaboration</span>
-                <span>Ongoing</span>
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-primary mb-4">ShifaAI: AI-Powered Healthcare Platform</h3>
+                <p className="text-gray-600 mb-4">
+                  ShifaAI is revolutionizing healthcare with AI-powered diagnostics, automated report analysis, and personalized treatment suggestions for patients and healthcare providers.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  Built using Next.js, TensorFlow, and modern web technologies, it reduces diagnostic errors and accelerates care delivery through intelligent automation.
+                </p>
+              </div>
+              <div className="mt-4">
+                <a 
+                  href="https://shifa-ai.vercel.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  Explore ShifaAI Beta
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+                <p className="text-xs text-gray-500 mt-2">Currently in active development with new features rolling out regularly</p>
+              </div>
+            </div>
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-primary mb-4">MPhil Thesis: Performance Comparison of Face Detection and Recognition Algorithms</h3>
+                <p className="text-gray-600 mb-4">
+                  A comprehensive evaluation of face detection and recognition algorithms, analyzing performance metrics and computational efficiency across various benchmarks including WIDER FACE and MegaFace.
+                </p>
+                <ul className="list-disc pl-5 text-gray-600 text-sm space-y-1 mb-4">
+                  <li>SSH achieved highest precision-recall in detection but with slower processing</li>
+                  <li>Dlib-R and ArcFace showed superior recognition accuracy</li>
+                  <li>Detailed analysis of speed-accuracy tradeoffs in real-world applications</li>
+                </ul>
+              </div>
+              <div className="mt-4">
+                <a 
+                  href="https://drive.google.com/file/d/1hEE-kMir6IsBwE6xP3381YgLGL_PBHyk/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  View Full Thesis
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+                <div className="text-xs text-gray-500 mt-2">
+                  <span>Mewar University Rajasthan</span>
+                  <span className="mx-1">•</span>
+                  <span>Oct 2017 - Mar 2019</span>
+                </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
-              <h3 className="text-xl font-semibold text-primary mb-4">Translational AI Research</h3>
-              <p className="text-gray-600 mb-6">
-                Bridging the gap between algorithm development and clinical deployment by designing
-                interpretable AI systems that can be effectively integrated into healthcare workflows.
-              </p>
-              <div className="flex justify-between text-sm text-gray-500">
-                <span>Clinical partnership</span>
-                <span>2023</span>
-              </div>
-            </div>
+            
+
+            
           </div>
         </div>
       </section>

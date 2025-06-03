@@ -62,7 +62,7 @@ export default function Home() {
               <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn">
                 Mohsin Furkh Dar
               </h1>
-              <div className="text-xl text-accent mb-4 animate-fadeIn delay-200">
+              <div className="text-xl text-green-700 dark:text-green-500 mb-4 animate-fadeIn delay-200 font-semibold">
                 PhD in Deep Learning for Medical Imaging
               </div>
               <p className="text-lg mb-8 animate-fadeIn delay-300">
@@ -115,8 +115,8 @@ export default function Home() {
               </div>
               
               {/* Research Keywords */}
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 w-full">
-                <h3 className="text-accent text-lg font-semibold mb-4">Research Focus</h3>
+              <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 w-full shadow-sm">
+                <h3 className="text-primary dark:text-accent text-lg font-semibold mb-4">Research Focus</h3>
                 <div className="flex flex-wrap gap-2">
                   <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Deep Learning</span>
                   <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Medical Imaging</span>

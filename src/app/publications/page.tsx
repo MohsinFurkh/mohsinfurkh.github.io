@@ -63,7 +63,7 @@ const journalArticles: Publication[] = [
     pages: '313-328',
     year: '2022',
     doi: '10.1504/IJAISC.2022.130558',
-    thumbnail: '/images/publications/ijaisc.png'
+    thumbnail: '/images/publications/ijaisc.jpg'
   },
   {
     id: 'j8',
@@ -75,7 +75,7 @@ const journalArticles: Publication[] = [
     pages: '986-994',
     year: '2019',
     doi: '10.21275/ART20194439',
-    thumbnail: '/images/publications/ijsr.png'
+    thumbnail: '/images/publications/ijsr.jpg'
   },
   {
     id: 'j4',
@@ -87,7 +87,7 @@ const journalArticles: Publication[] = [
     pages: '1-14',
     year: '2024',
     doi: '10.1504/IJSNET.2024.141613',
-    thumbnail: '/images/publications/ijsnet.png'
+    thumbnail: '/images/publications/ijsnet.jpg'
   },
   {
     id: 'j1',

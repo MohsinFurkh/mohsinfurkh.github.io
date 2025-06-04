@@ -7,7 +7,7 @@ interface Project {
   id: string;
   title: string;
   description: string;
-  category: 'medical' | 'computer-vision' | 'fuzzy-logic';
+  category: 'medical' | 'computer-vision' | 'fuzzy-logic' | 'web' | 'nlp';
   image: string;
   technologies: string[];
   highlights?: string[];
@@ -16,87 +16,132 @@ interface Project {
     title: string;
     link: string;
   }[];
+  links?: {
+    title: string;
+    url: string;
+  }[];
 }
 
 const projectsData: Project[] = [
   {
     id: 'proj1',
-    title: 'Breast Ultrasound Segmentation with UMA-Net',
-    description: 'A novel deep learning architecture for accurate segmentation of breast tumors in ultrasound images using multi-scale attention mechanisms and adaptive ensemble loss functions.',
+    title: 'EfficientU-Net for Breast Tumor Analysis',
+    description: 'A novel deep learning method for breast tumor segmentation in ultrasound images, combining EfficientNetB7 as an encoder with an Atrous Convolution block to improve segmentation accuracy.',
     category: 'medical',
-    image: '/images/projects/uma-net.png',
-    technologies: ['PyTorch', 'Deep Learning', 'Medical Image Analysis', 'Attention Mechanisms'],
+    image: '/images/projects/efficient-unet.jpg',
+    technologies: ['TensorFlow', 'EfficientNetB7', 'Atrous Convolution', 'Medical Image Analysis'],
     highlights: [
-      'Developed a new architecture that achieves state-of-the-art performance on benchmark datasets',
-      'Implemented adaptive ensemble loss to handle class imbalance and boundary uncertainty',
-      'Integrated multi-scale attention mechanisms to capture global context and local details',
-      'Demonstrated 95%+ accuracy in segmenting breast tumors in clinical datasets'
+      'Developed a lightweight architecture combining EfficientNetB7 with U-Net',
+      'Implemented Atrous Convolution blocks for better feature extraction',
+      'Achieved state-of-the-art performance on breast ultrasound datasets',
+      'Published in Neural Processing Letters (2023)'
     ],
     papers: [
       {
-        title: 'Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with uma-net',
-        link: 'https://doi.org/10.1007/s11517-025-03301-5'
+        title: 'EfficientU-Net: A Novel Deep Learning Method for Breast Tumor Segmentation and Classification in Ultrasound Images',
+        link: 'https://doi.org/10.1007/s11063-023-11333-x'
+      }
+    ],
+    links: [
+      {
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/EfficientU-Net'
       }
     ]
   },
   {
     id: 'proj2',
-    title: 'Fuzzy Rough Set Loss for Medical Image Segmentation',
-    description: 'A novel loss function based on fuzzy rough set theory that effectively handles boundary uncertainty in medical image segmentation tasks, improving performance over traditional losses.',
-    category: 'fuzzy-logic',
-    image: '/images/projects/fuzzy-rough.png',
-    technologies: ['PyTorch', 'Fuzzy Rough Sets', 'Medical Imaging', 'Loss Functions'],
+    title: 'UMA-Net for Breast Ultrasound Segmentation',
+    description: 'Advanced deep learning architecture incorporating multi-scale attention mechanisms and adaptive ensemble loss for accurate breast tumor segmentation in ultrasound images.',
+    category: 'medical',
+    image: '/images/projects/uma-net.png',
+    technologies: ['TensorFlow', 'Deep Learning', 'Attention Mechanisms', 'Medical Imaging'],
     highlights: [
-      'Formulated a new theoretical framework combining fuzzy rough sets with deep learning',
-      'Implemented the loss function in PyTorch and integrated with popular segmentation networks',
-      'Conducted extensive experiments on multiple medical imaging modalities',
-      'Demonstrated superior performance on boundary regions compared to existing methods'
+      'Proposed novel multi-scale attention mechanisms for better feature extraction',
+      'Developed adaptive ensemble loss function for improved training stability',
+      'Achieved superior performance on benchmark datasets',
+      'Published in Medical & Biological Engineering & Computing (2025)'
     ],
     papers: [
       {
-        title: 'Fuzzy rough set loss for handling boundary uncertainty in medical image segmentation',
-        link: '#'
+        title: 'Adaptive Ensemble Loss and Multi-Scale Attention in Breast Ultrasound Segmentation with UMA-Net',
+        link: 'https://doi.org/10.1007/s11517-025-33301-5'
+      }
+    ],
+    links: [
+      {
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/UMA-Net-with-Multi-Scale-Attention'
       }
     ]
   },
   {
     id: 'proj3',
-    title: 'Multi-Modal AttentionNet for Medical Image Classification',
-    description: 'A deep learning framework that combines information from multiple imaging modalities using a dual-branch feature extraction network and saliency maps for enhanced classification.',
-    category: 'medical',
-    image: '/images/projects/multi-modal.png',
-    technologies: ['TensorFlow', 'Multi-modal Learning', 'Attention Mechanisms', 'Medical Imaging'],
+    title: 'Genetic Algorithm for Feature Selection',
+    description: 'An ensemble approach combining deep learning and genetic algorithms for optimal feature selection in breast ultrasound image classification.',
+    category: 'computer-vision',
+    image: '/images/projects/genetic-algo.png',
+    technologies: ['TensorFlow', 'Genetic Algorithms', 'Feature Selection', 'Deep Learning'],
     highlights: [
-      'Designed a dual-branch architecture for extracting features from different imaging modalities',
-      'Implemented cross-modal attention to fuse complementary information',
-      'Generated interpretable saliency maps to visualize network decisions',
-      'Achieved improved diagnostic accuracy compared to single-modality approaches'
+      'Developed novel feature selection method using genetic algorithms',
+      'Integrated with deep learning models for improved classification',
+      'Achieved 4-9% improvement in accuracy on benchmark datasets',
+      'Published in Image and Vision Computing (2024)'
     ],
-    collaborators: ['Prof. A. Ganivada'],
     papers: [
       {
-        title: 'Multi-modal attentionnet for medical image classification with dual branch feature extraction and saliency maps',
-        link: '#'
+        title: 'Deep Learning and Genetic Algorithm-based Ensemble Model for Feature Selection and Classification of Breast Ultrasound Images',
+        link: 'https://doi.org/10.1016/j.imavis.2024.105018'
+      }
+    ],
+    links: [
+      {
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/Genetic-Algorithm-based-Feature-Selection'
       }
     ]
   },
   {
     id: 'proj4',
-    title: 'EfficientU-Net for Breast Tumor Analysis',
-    description: 'An efficient deep learning approach for simultaneous segmentation and classification of breast tumors in ultrasound images, optimized for clinical deployment.',
-    category: 'medical',
-    image: '/images/projects/efficientu.png',
-    technologies: ['PyTorch', 'U-Net', 'Efficient Neural Networks', 'Medical Image Analysis'],
+    title: 'GoalTrackr - Personal Goal Management',
+    description: 'A full-stack web application for tracking personal goals, tasks, and progress with visualization dashboards and journaling features.',
+    category: 'web',
+    image: '/images/projects/goal-tracker.png',
+    technologies: ['Next.js', 'React', 'MongoDB', 'Material UI', 'NextAuth'],
     highlights: [
-      'Developed a lightweight architecture for resource-constrained clinical environments',
-      'Implemented joint training for segmentation and classification tasks',
-      'Optimized for real-time inference on standard clinical workstations',
-      'Validated on multi-center clinical datasets with diverse imaging protocols'
+      'Built with modern web technologies including Next.js and MongoDB',
+      'Implements secure user authentication and data persistence',
+      'Features interactive dashboards with progress visualization',
+      'Live demo available at smart-goal-tracker.vercel.app'
     ],
-    papers: [
+    links: [
       {
-        title: 'Efficientu-net: A novel deep learning method for breast tumor segmentation and classification in ultrasound images',
-        link: 'https://doi.org/10.1007/s11063-023-11333-x'
+        title: 'Live Demo',
+        url: 'https://smart-goal-tracker.vercel.app/'
+      },
+      { 
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/GoalTracker'
+      }
+    ]
+  },
+  {
+    id: 'proj5',
+    title: 'IEEE BigMM Data Challenge',
+    description: 'Multi-task multimodal framework for predicting labels from tweets, developed for the IEEE BigMM Data Challenge.',
+    category: 'nlp',
+    image: '/images/projects/ieee-bigmm.png',
+    technologies: ['Python', 'TensorFlow', 'Transformers', 'Multimodal Learning'],
+    highlights: [
+      'Developed solution for multi-label tweet classification',
+      'Incorporated both text and image modalities',
+      'Implemented state-of-the-art transformer architectures',
+      'Competed in IEEE BigMM conference challenge'
+    ],
+    links: [
+      {
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/IEEE-BigMM-Data-Challenge'
       }
     ]
   }
@@ -118,10 +163,10 @@ export default function Projects() {
         
         {/* Category Filter */}
         <div className="flex justify-center mb-12">
-          <div className="inline-flex rounded-md shadow-sm" role="group">
+          <div className="inline-flex flex-wrap justify-center gap-2">
             <button
               type="button"
-              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-l-lg ${
+              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg ${
                 filter === 'all' 
                   ? 'bg-primary text-white' 
                   : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -132,7 +177,7 @@ export default function Projects() {
             </button>
             <button
               type="button"
-              className={`px-4 py-2 text-sm font-medium border-t border-b border-gray-200 ${
+              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg ${
                 filter === 'medical' 
                   ? 'bg-primary text-white' 
                   : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -143,7 +188,7 @@ export default function Projects() {
             </button>
             <button
               type="button"
-              className={`px-4 py-2 text-sm font-medium border-t border-b border-gray-200 ${
+              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg ${
                 filter === 'computer-vision' 
                   ? 'bg-primary text-white' 
                   : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -154,41 +199,71 @@ export default function Projects() {
             </button>
             <button
               type="button"
-              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg ${
-                filter === 'fuzzy-logic' 
+              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg ${
+                filter === 'web' 
                   ? 'bg-primary text-white' 
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
-              onClick={() => setFilter('fuzzy-logic')}
+              onClick={() => setFilter('web')}
             >
-              Fuzzy Logic
+              Web Development
+            </button>
+            <button
+              type="button"
+              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg ${
+                filter === 'nlp' 
+                  ? 'bg-primary text-white' 
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+              onClick={() => setFilter('nlp')}
+            >
+              NLP
             </button>
           </div>
         </div>
         
         {/* Projects List */}
         <div className="max-w-6xl mx-auto space-y-12">
-          {filteredProjects.map((project) => (
-            <div key={project.id} className="bg-white p-6 rounded-lg shadow-md">
+          {filteredProjects.map((project, index) => (
+            <div 
+              key={project.id} 
+              className="group bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+            >
               <div className="flex flex-col lg:flex-row gap-8">
                 {/* Project Image */}
-                <div className="lg:w-1/3 w-full h-64 relative bg-gray-200 rounded-md">
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                    <span>Project image placeholder</span>
-                  </div>
-                  {project.image && (
+                <div className="lg:w-1/3 w-full h-64 relative bg-gray-100 rounded-lg overflow-hidden shadow-md">
+                  {project.image ? (
                     <Image
                       src={project.image}
-                      alt={project.title}
+                      alt={`${project.title} screenshot`}
                       fill
-                      className="object-cover rounded-md"
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = `https://via.placeholder.com/800x600/6B7280/FFFFFF?text=${encodeURIComponent(project.title)}`;
+                      }}
+                      priority={index < 3} // Load first 3 images eagerly for better LCP
                     />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
+                      <span className="text-gray-500 text-sm">{project.title}</span>
+                    </div>
                   )}
                 </div>
                 
                 {/* Project Details */}
                 <div className="lg:w-2/3">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-3">{project.title}</h2>
+                  <h2 className="text-2xl font-bold text-gray-800 mb-3">
+                    <a 
+                      href={project.links?.[0]?.url || '#'} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="relative group-hover:text-primary transition-colors duration-300 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:-bottom-1 after:transition-all after:duration-300 group-hover:after:w-full"
+                    >
+                      {project.title}
+                    </a>
+                  </h2>
                   
                   <p className="text-gray-600 mb-4">{project.description}</p>
                   
@@ -237,6 +312,26 @@ export default function Projects() {
                           </li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+                  
+                  {/* Project Links */}
+                  {project.links && (
+                    <div className="mt-4">
+                      <h3 className="text-lg font-semibold mb-2">Links</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {project.links.map((link, idx) => (
+                          <a
+                            key={idx}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-3 py-1.5 bg-primary text-white rounded-md text-sm hover:bg-primary-dark transition-colors"
+                          >
+                            {link.title}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>

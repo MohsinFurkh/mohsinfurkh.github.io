@@ -22,9 +22,7 @@ export async function GET() {
     console.log('API response received');
     
     // Hardcoded values based on your Google Scholar profile
-    // This is example data - replace with your actual citation data by year
     const citationsByYear = [
-      
       { year: 2022, citations: 1 },
       { year: 2023, citations: 2 },
       { year: 2024, citations: 15 },

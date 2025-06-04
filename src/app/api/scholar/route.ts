@@ -24,11 +24,11 @@ export async function GET() {
     // Hardcoded values based on your Google Scholar profile
     // This is example data - replace with your actual citation data by year
     const citationsByYear = [
-      { year: 2020, citations: 5 },
-      { year: 2021, citations: 12 },
-      { year: 2022, citations: 20 },
-      { year: 2023, citations: 30 },
-      { year: 2024, citations: 37 },
+      
+      { year: 2022, citations: 1 },
+      { year: 2023, citations: 2 },
+      { year: 2024, citations: 15 },
+      { year: 2025, citations: 37 },
     ];
 
     return NextResponse.json({ 

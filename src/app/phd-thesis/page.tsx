@@ -34,37 +34,33 @@ export default function PhdThesis() {
             <h2 className="text-2xl font-bold text-primary mb-6">Key Research Contributions</h2>
             
             <div className="space-y-10">
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-3">1. EfficientU-Net: Parameter-Optimized Medical Image Segmentation</h3>
-                <p className="mb-4">
-                  Developed a novel U-Net variant that integrates depthwise separable convolutions and atrous convolution blocks to address the limitations of standard convolutions in medical image segmentation.
+            <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-primary mb-3">EfficientU-Net: Parameter-Optimized Medical Image Segmentation</h4>
+                <p className="mb-3">
+                  Developed EfficientU-Net, a novel deep learning model integrating EfficientNet-B7 and atrous convolution into the U-Net architecture, optimizing breast tumor segmentation and classification in ultrasound images with reduced computational complexity and enhanced accuracy.
                 </p>
-                <div className="space-y-2">
-                  <h4 className="font-semibold">Key Achievements:</h4>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li><span className="font-medium">100x reduction</span> in computational parameters compared to traditional U-Net</li>
-                    <li>Enhanced boundary localization accuracy for tumor segmentation</li>
-                    <li>Adaptive receptive field handling for varying tumor shapes and sizes</li>
-                    <li>Improved computational efficiency suitable for real-time clinical applications</li>
-                  </ul>
-                </div>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  <li><span className="font-medium">13x reduction</span> in parameters (1.31M vs. 17.27M in U-Net)</li>
+                  <li>Superior segmentation of malignant tumors with irregular shapes</li>
+                  <li>Enhanced boundary localization with adaptive receptive fields</li>
+                  <li><span className="font-medium">97.905% accuracy</span> in tumor classification (benign, malignant, normal)</li>
+                  <li>Validated on two public datasets using 5-fold cross-validation</li>
+                </ul>
               </div>
-
+              
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-3">2. UMA-Net with Adaptive Loss Functions</h3>
-                <p className="mb-4">
-                  Created an enhanced U-Net architecture featuring residual connections, attention mechanisms, and bottleneck atrous convolutions, coupled with a dynamic ensemble loss function.
+                <h4 className="text-xl font-semibold text-primary mb-3">2. UMA-Net with Adaptive Loss Functions</h4>
+                <p className="mb-3">
+                  Developed UMA-Net, an advanced U-Net variant integrating residual connections, attention mechanisms, and atrous convolutions, enhanced by a dynamic ensemble loss function to optimize medical image segmentation across diverse datasets.
                 </p>
-                <div className="space-y-2">
-                  <h4 className="font-semibold">Key Features:</h4>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Multi-scale contextual information capture without spatial resolution compromise</li>
-                    <li>Adaptive loss weighting that dynamically balances region overlap and boundary accuracy</li>
-                    <li>Superior generalization across five diverse breast ultrasound datasets (BUET, BUSI, Mendeley, OMI, UDIAT)</li>
-                    <li>Robust performance in handling class imbalance and noise in medical images</li>
-                  </ul>
-                </div>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  <li>Residual connections and attention blocks enhance feature integration and focus on critical regions</li>
+                  <li>Atrous convolutions enable multi-scale feature capture without compromising resolution</li>
+                  <li>Dynamic ensemble loss (BCE, Dice, Hausdorff, Tversky) adapts weights for balanced optimization</li>
+                  <li>Achieves superior generalization across five breast ultrasound datasets (BUET, BUSI, Mendeley, OMI, UDIAT)</li>
+                </ul>
               </div>
+              
 
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-semibold text-primary mb-3">3. Fuzzy Rough Set Loss for Boundary Precision</h3>
@@ -83,7 +79,20 @@ export default function PhdThesis() {
               </div>
 
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-3">4. Saliency-Guided AttentionNet (SGAN)</h3>
+                <h3 className="text-xl font-semibold text-primary mb-3">4. Deep Learning and Genetic Algorithm-based Ensemble Model for Feature Selection and Classification</h3>
+                <p className="mb-4">
+                  Developed a unified approach integrating MobileNet for feature extraction, Genetic Algorithms (GA) for feature selection, and an ensemble model for classification, optimizing medical image analysis with enhanced accuracy and efficiency.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  <li>MobileNet as an optimal feature extractor for medical images with minimal parameters</li>
+                  <li>GA-based feature selection to navigate complex feature spaces effectively</li>
+                  <li>Novel ensemble model with soft voting for robust classification decisions</li>
+                  <li>Addresses overfitting in limited data scenarios, enhancing model generalizability</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-primary mb-3">5. Saliency-Guided AttentionNet (SGAN)</h3>
                 <p className="mb-4">
                   Designed a dual-branch architecture leveraging Grad-CAM saliency maps for breast ultrasound classification.
                 </p>

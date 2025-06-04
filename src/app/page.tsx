@@ -3,17 +3,18 @@
 import { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Home() {
   const [scholarData, setScholarData] = useState({
     citations: '200+', // Default fallback values
     publications: '15+',
-    h_index: '5+'
+    h_index: '5+',
+    citationsByYear: [] as Array<{year: number, citations: number}>
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // In your fetchScholarData function
     async function fetchScholarData() {
       try {
         console.log('Fetching scholar data...');
@@ -35,7 +36,8 @@ export default function Home() {
           setScholarData({
             citations: data.citations,
             publications: data.publications,
-            h_index: data.h_index
+            h_index: data.h_index,
+            citationsByYear: data.citationsByYear || []
           });
         }
       } catch (error) {
@@ -62,7 +64,7 @@ export default function Home() {
               <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn">
                 Mohsin Furkh Dar
               </h1>
-              <div className="text-xl text-accent mb-4 animate-fadeIn delay-200">
+              <div className="text-xl text-green-700 dark:text-green-500 mb-4 animate-fadeIn delay-200 font-semibold">
                 PhD in Deep Learning for Medical Imaging
               </div>
               <p className="text-lg mb-8 animate-fadeIn delay-300">
@@ -92,6 +94,61 @@ export default function Home() {
                 </Link>
               </div>
               
+              {/* Citations by Year Graph */}
+              {scholarData.citationsByYear && scholarData.citationsByYear.length > 0 && (
+                <div className="mt-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm animate-fadeIn">
+                  <h3 className="text-primary dark:text-accent text-lg font-semibold mb-4">Citations by Year</h3>
+                  <div className="h-64 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={scholarData.citationsByYear}
+                        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                        <XAxis 
+                          dataKey="year" 
+                          tick={{ fill: '#6B7280' }}
+                          tickLine={{ stroke: '#6B7280' }}
+                        />
+                        <YAxis 
+                          tick={{ fill: '#6B7280' }}
+                          tickLine={{ stroke: '#6B7280' }}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '0.5rem',
+                            padding: '0.5rem',
+                            color: '#1F2937',
+                          }}
+                        />
+                        <Legend />
+                        <Line 
+                          type="monotone" 
+                          dataKey="citations" 
+                          name="Citations" 
+                          stroke="#10B981" 
+                          strokeWidth={2}
+                          dot={{
+                            fill: '#10B981',
+                            strokeWidth: 2,
+                            r: 4,
+                            stroke: '#fff'
+                          }}
+                          activeDot={{
+                            r: 6,
+                            stroke: '#fff',
+                            strokeWidth: 2,
+                            fill: '#10B981'
+                          }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+              
               {/* Buttons */}
               <div className="flex flex-wrap justify-center md:justify-start gap-4 animate-fadeIn delay-500">
                 <Link href="/research" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
@@ -115,8 +172,8 @@ export default function Home() {
               </div>
               
               {/* Research Keywords */}
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 w-full">
-                <h3 className="text-accent text-lg font-semibold mb-4">Research Focus</h3>
+              <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 w-full shadow-sm">
+                <h3 className="text-primary dark:text-accent text-lg font-semibold mb-4">Research Focus</h3>
                 <div className="flex flex-wrap gap-2">
                   <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Deep Learning</span>
                   <span className="bg-accent/20 border border-accent/30 text-white px-3 py-1 rounded-full text-sm">Medical Imaging</span>

@@ -22,10 +22,20 @@ export async function GET() {
     console.log('API response received');
     
     // Hardcoded values based on your Google Scholar profile
+    // This is example data - replace with your actual citation data by year
+    const citationsByYear = [
+      { year: 2020, citations: 5 },
+      { year: 2021, citations: 12 },
+      { year: 2022, citations: 20 },
+      { year: 2023, citations: 30 },
+      { year: 2024, citations: 37 },
+    ];
+
     return NextResponse.json({ 
       citations: 37,
-      publications: 6, // Based on your Google Scholar profile
-      h_index: 3
+      publications: 6,
+      h_index: 3,
+      citationsByYear
     });
   } catch (error) {
     console.error('Error fetching Google Scholar data:', error);

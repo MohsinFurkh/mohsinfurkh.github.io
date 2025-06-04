@@ -28,16 +28,22 @@ export default function About() {
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-xl font-semibold">PhD in Deep Learning for Medical Imaging</h3>
-                    <p className="text-gray-600">[University Name], [Year] - [Year]</p>
+                    <p className="text-gray-600">[University of Hyderabad], [2020] - [2025]</p>
                     <p className="mt-1">Thesis: "Advances in Deep Learning for Medical Image Segmentation and Classification"</p>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold">MSc in [Relevant Field]</h3>
-                    <p className="text-gray-600">[University Name], [Year] - [Year]</p>
+                    <h3 className="text-xl font-semibold">MPhill. [Computer Science]</h3>
+                    <p className="text-gray-600">[Mewar University], [2018] - [2019]</p>
+                    <p className="mt-1">Thesis: "Performance Comparision of Face Detection and Recognition Algorithms"</p>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold">BSc in [Relevant Field]</h3>
-                    <p className="text-gray-600">[University Name], [Year] - [Year]</p>
+                    <h3 className="text-xl font-semibold">MCA [Computer Application]</h3>
+                    <p className="text-gray-600">[University of Kashmir], [2013] - [2016]</p>
+                    <p className="mt-1">Dissertation: "SMS Intimation System for Online Leave Management."</p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold">BSc [Information Technology with Mathematics and Physics]</h3>
+                    <p className="text-gray-600">[University of Kashmir], [2010] - [2013]</p>
                   </div>
                 </div>
                 
@@ -67,17 +73,19 @@ export default function About() {
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg">
-                <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
-                  <span>Profile Photo</span>
-                </div>
+                <img 
+                  src="/images/Pic.jpg" 
+                  alt="Profile Photo"
+                  className="w-full h-64 object-cover rounded-lg"
+                />
               </div>
               
               <div className="mt-6 space-y-4">
                 <div>
                   <h3 className="font-semibold">Contact Information</h3>
-                  <p className="text-gray-600">[Your Email]</p>
-                  <p className="text-gray-600">[Your Institution]</p>
-                  <p className="text-gray-600">[Your Location]</p>
+                  <p className="text-gray-600">mohsinfurkh@gmail.com</p>
+                  <p className="text-gray-600">University of Hyderabad</p>
+                  <p className="text-gray-600">Hyderabad, India</p>
                 </div>
                 
                 <div>

@@ -21,7 +21,7 @@ export default function Navigation() {
             <Link href="/research" className="nav-link">Research</Link>
             <Link href="/publications" className="nav-link">Publications</Link>
             <Link href="/projects" className="nav-link">Projects</Link>
-            <Link href="/teaching" className="nav-link">Teaching</Link>
+            <Link href="/academic-profile" className="nav-link">Academic Profile</Link>
             <Link href="/blog" className="nav-link">Blog</Link>
             <Link href="/contact" className="nav-link">Contact</Link>
           </div>
@@ -118,7 +118,7 @@ export default function Navigation() {
                 <Link href="/research" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Research</Link>
                 <Link href="/publications" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Publications</Link>
                 <Link href="/projects" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Projects</Link>
-                <Link href="/teaching" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Teaching</Link>
+                <Link href="/academic-profile" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Academic Profile</Link>
                 <Link href="/blog" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Blog</Link>
                 <Link href="/contact" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Contact</Link>
               </div>

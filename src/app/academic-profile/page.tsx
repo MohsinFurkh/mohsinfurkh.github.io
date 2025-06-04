@@ -25,6 +25,12 @@ interface Presentation {
   description?: string;
 }
 
+interface Journal {
+  id: string;
+  name: string;
+  publisher: string;
+}
+
 // Teaching Experience
 const teachingExperience: Experience[] = [
   {
@@ -87,12 +93,56 @@ const presentations: Presentation[] = [
   }
 ];
 
-export default function Teaching() {
+// Journal Reviewer Experience
+const journals: Journal[] = [
+  {
+    id: 'j1',
+    name: 'IEEE Transactions on Medical Imaging',
+    publisher: 'IEEE'
+  },
+  {
+    id: 'j2',
+    name: 'Information Fusion',
+    publisher: 'Elsevier'
+  },
+  {
+    id: 'j3',
+    name: 'Journal of Clinical Ultrasound: Sonography and Other Imaging Techniques',
+    publisher: 'Wiley'
+  },
+  {
+    id: 'j4',
+    name: 'Neural Computing and Applications',
+    publisher: 'Springer'
+  },
+  {
+    id: 'j5',
+    name: 'Engineering Applications of Artificial Intelligence',
+    publisher: 'Elsevier'
+  },
+  {
+    id: 'j6',
+    name: 'Journal of Biomedical and Health Informatics',
+    publisher: 'IEEE'
+  },
+  {
+    id: 'j7',
+    name: 'Multimedia Tools and Applications',
+    publisher: 'Springer'
+  },
+  {
+    id: 'j8',
+    name: 'Image and Vision Computing',
+    publisher: 'Elsevier'
+  }
+];
+
+export default function AcademicProfile() {
   return (
     <div className="min-h-screen py-20">
       <div className="container max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-primary mb-12 text-center">
-          Teaching & Academic Service
+          Academic Profile & Service
         </h1>
         
         {/* Teaching Experience */}
@@ -143,7 +193,7 @@ export default function Teaching() {
         </section>
         
         {/* Conference Presentations and Service */}
-        <section>
+        <section className="mb-16">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b">Conference Presentations & Service</h2>
           <div className="space-y-6">
             {presentations.map((presentation) => (
@@ -160,7 +210,26 @@ export default function Teaching() {
             ))}
           </div>
         </section>
+
+        {/* Journal Reviewer Experience */}
+        <section>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b">Journal Reviewer Experience</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="text-gray-700 mb-4">I have served as a reviewer for the following peer-reviewed journals:</p>
+            <ul className="space-y-3">
+              {journals.map((journal) => (
+                <li key={journal.id} className="flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span className="text-gray-700">
+                    <span className="font-medium">{journal.name}</span>
+                    <span className="text-gray-500 text-sm ml-2">({journal.publisher})</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </div>
     </div>
   );
-} 
+}

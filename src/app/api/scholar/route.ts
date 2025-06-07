@@ -1,10 +1,15 @@
 // API route to fetch Google Scholar data
 import { NextResponse } from 'next/server';
+
 export async function GET() {
   try {
-    // You'll need to sign up for SerpAPI and get an API key
     const API_KEY = process.env.SERPAPI_KEY;
     const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Your Google Scholar ID
+    
+    if (!API_KEY) {
+      console.error('SERPAPI_KEY not found in environment variables');
+      return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
+    }
     
     console.log('Fetching Google Scholar data...');
     
@@ -20,21 +25,57 @@ export async function GET() {
     const data = await response.json();
     console.log('API response received');
     
-    // Hardcoded values based on your Google Scholar profile
-    const citationsByYear = [
-      { year: 2022, citations: 1 },
-      { year: 2023, citations: 2 },
-      { year: 2024, citations: 15 },
-      { year: 2025, citations: 38 },
-    ];
+    // Debug: Log the actual response structure
+    console.log('Full API response:', JSON.stringify(data, null, 2));
+    console.log('Author info:', data.author);
+    console.log('Cited by:', data.author?.cited_by);
+    console.log('Indices:', data.author?.indices);
+    console.log('Articles:', data.articles);
+    
+    // Log the full response structure for debugging
+    console.log('Full API response structure:', JSON.stringify({
+      author: data.author,
+      cited_by: data.cited_by,
+      articles: data.articles ? `Array(${data.articles.length})` : 'none',
+      // Add other top-level fields that might be present
+      ...Object.keys(data).reduce((acc, key) => {
+        if (!['author', 'cited_by', 'articles'].includes(key)) {
+          acc[key] = data[key];
+        }
+        return acc;
+      }, {} as Record<string, any>)
+    }, null, 2));
+
+    // Extract data from the API response
+    // Try different possible paths for the citation data
+    const authorInfo = data.author || {};
+    const citations = data.cited_by?.total || authorInfo.cited_by?.total || 0;
+    const hIndex = data.h_index || authorInfo.indices?.h_index || 0;
+    const publications = data.articles?.length || 0;
+    
+    // Extract citations by year from the graph data
+    const citationsGraph = data.cited_by?.graph || authorInfo.cited_by?.graph || [];
+    const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item: any) => ({
+      year: item.year,
+      citations: item.citations
+    })) : [];
+    
     return NextResponse.json({ 
-      citations: 38,
-      publications: 6,
-      h_index: 3,
-      citationsByYear
+      citations,
+      publications,
+      h_index: hIndex,
+      citationsByYear,
+      // Include raw data for debugging (remove in production)
+      debug: process.env.NODE_ENV === 'development' ? data : undefined
     });
+    
   } catch (error) {
     console.error('Error fetching Google Scholar data:', error);
-    return NextResponse.json({ error: 'Failed to fetch citation data' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    
+    return NextResponse.json({ 
+      error: 'Failed to fetch citation data',
+      message: errorMessage 
+    }, { status: 500 });
   }
 }

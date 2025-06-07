@@ -47,9 +47,9 @@ export async function GET() {
     }, null, 2));
 
     // Extract data from the API response
-    // Try different possible paths for the citation data
     const authorInfo = data.author || {};
-    const hIndex = data.h_index || authorInfo.indices?.h_index || 0;
+    // Use hardcoded h-index of 3 if not available from API
+    const hIndex = data.h_index || authorInfo.indices?.h_index || 3;
     const publications = data.articles?.length || 0;
     
     // Extract citations by year from the graph data

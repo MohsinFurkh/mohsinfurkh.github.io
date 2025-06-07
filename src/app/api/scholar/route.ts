@@ -25,6 +25,13 @@ export async function GET() {
     const data = await response.json();
     console.log('API response received');
     
+    // Debug: Log the actual response structure
+    console.log('Full API response:', JSON.stringify(data, null, 2));
+    console.log('Author info:', data.author);
+    console.log('Cited by:', data.author?.cited_by);
+    console.log('Indices:', data.author?.indices);
+    console.log('Articles:', data.articles);
+    
     // Extract data from the API response
     const authorInfo = data.author || {};
     const citations = authorInfo.cited_by?.total || 0;

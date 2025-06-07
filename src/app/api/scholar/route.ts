@@ -26,23 +26,66 @@ export async function GET() {
     console.log('API response received');
     
     // Debug: Log the actual response structure
-    console.log('Full API response:', JSON.stringify(data, null, 2));
-    console.log('Author info:', data.author);
-    console.log('Cited by:', data.author?.cited_by);
-    console.log('Indices:', data.author?.indices);
-    console.log('Articles:', data.articles);
+    console.log('Full API response keys:', Object.keys(data));
+    console.log('Author info keys:', data.author ? Object.keys(data.author) : 'No author');
     
-    // Extract data from the API response
+    // More detailed logging
+    if (data.author) {
+      console.log('Author cited_by:', data.author.cited_by);
+      console.log('Author indices:', data.author.indices);
+      console.log('Author table:', data.author.table);
+    }
+    
+    // Check if data is in different locations
+    console.log('Direct citations field:', data.citations);
+    console.log('Direct cited_by field:', data.cited_by);
+    
+    // Extract data from the API response - try multiple approaches
     const authorInfo = data.author || {};
-    const citations = authorInfo.cited_by?.total || 0;
-    const hIndex = authorInfo.indices?.h_index || 0;
+    
+    // Try to get citations from various possible locations
+    let citations = 0;
+    if (authorInfo.cited_by?.total) {
+      citations = authorInfo.cited_by.total;
+    } else if (authorInfo.table && Array.isArray(authorInfo.table)) {
+      // Sometimes citation data is in a table format
+      const citationRow = authorInfo.table.find((row: any) => 
+        row.field === 'Citations' || row.label === 'Citations'
+      );
+      if (citationRow && citationRow.value) {
+        citations = parseInt(citationRow.value.toString().replace(/,/g, ''));
+      }
+    }
+    
+    // Try to get h-index from various locations
+    let hIndex = 0;
+    if (authorInfo.indices?.h_index) {
+      hIndex = authorInfo.indices.h_index;
+    } else if (authorInfo.table && Array.isArray(authorInfo.table)) {
+      const hIndexRow = authorInfo.table.find((row: any) => 
+        row.field === 'h-index' || row.label === 'h-index'
+      );
+      if (hIndexRow && hIndexRow.value) {
+        hIndex = parseInt(hIndexRow.value.toString());
+      }
+    }
+    
     const publications = data.articles?.length || 0;
     
+    // Try to extract citations by year
+    let citationsByYear: Array<{year: number, citations: number}> = [];
+    
+    if (authorInfo.cited_by?.graph && Array.isArray(authorInfo.cited_by.graph)) {
+      citationsByYear = authorInfo.cited_by.graph.map((item: any) => ({
+        year: item.year,
+        citations: item.citations
+      }));
+    }
+    
+    console.log('Final extracted values:', { citations, hIndex, publications, citationsByYear: citationsByYear.length });
+    
     // Extract citations by year from the graph data
-    const citationsByYear = authorInfo.cited_by?.graph?.map((item: any) => ({
-      year: item.year,
-      citations: item.citations
-    })) || [];
+    citationsByYear = citationsByYear.length > 0 ? citationsByYear : [];
     
     return NextResponse.json({ 
       citations,

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import VisitorCounter from "@/components/VisitorCounter";
@@ -24,7 +23,6 @@ export default function RootLayout({
         <main className="min-h-screen bg-gray-50 pt-16">
           {children}
           <VisitorCounter />
-          <Analytics />
         </main>
       </body>
     </html>

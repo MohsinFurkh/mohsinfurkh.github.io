@@ -4,50 +4,51 @@ import { useEffect, useState } from 'react';
 
 export default function VisitorCounter() {
   const [visitorCount, setVisitorCount] = useState<number>(0);
-  const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isNewVisitor, setIsNewVisitor] = useState(false);
 
   useEffect(() => {
-    // This code runs only on the client side
-    setIsClient(true);
-    
-    // Check if this is a new visitor
-    const lastVisit = localStorage.getItem('lastVisit');
-    const now = new Date().toISOString();
-    
-    if (!lastVisit) {
-      // First time visitor
-      setIsNewVisitor(true);
-      
-      // Try to get the count from the server
-      const fetchCount = async () => {
-        try {
-          // This is a placeholder - in a real app, you'd call your own API
-          // For now, we'll just increment the local count
-          const newCount = (parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0) + 1;
-          localStorage.setItem('visitorCount', newCount.toString());
-          setVisitorCount(newCount);
-        } catch (error) {
-          console.error('Error fetching visitor count:', error);
-          // Fallback to local storage only
-          const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0;
-          setVisitorCount(localCount > 0 ? localCount : 1);
+    const recordVisit = async () => {
+      try {
+        // Check if this is a new visitor
+        const lastVisit = localStorage.getItem('lastVisit');
+        const now = new Date().toISOString();
+        
+        if (!lastVisit) {
+          setIsNewVisitor(true);
         }
-      };
-      
-      fetchCount();
-    } else {
-      // Returning visitor
-      const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0;
-      setVisitorCount(localCount);
-    }
-    
-    // Update last visit time
-    localStorage.setItem('lastVisit', now);
+        
+        // Record the visit with our API
+        const response = await fetch('/api/visits');
+        if (response.ok) {
+          const data = await response.json();
+          setVisitorCount(data.count);
+        } else {
+          console.error('Failed to record visit');
+          // Fallback to local storage if API fails
+          const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) + 1;
+          localStorage.setItem('visitorCount', localCount.toString());
+          setVisitorCount(localCount);
+        }
+        
+        // Update last visit time
+        localStorage.setItem('lastVisit', now);
+      } catch (error) {
+        console.error('Error recording visit:', error);
+        // Fallback to local storage if there's an error
+        const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) + 1;
+        localStorage.setItem('visitorCount', localCount.toString());
+        setVisitorCount(localCount);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    recordVisit();
   }, []);
 
-  // Don't render anything during SSR or if we're not on the client yet
-  if (!isClient) {
+  // Don't render anything during SSR
+  if (typeof window === 'undefined') {
     return null;
   }
   

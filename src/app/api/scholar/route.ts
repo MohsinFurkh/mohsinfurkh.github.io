@@ -48,9 +48,11 @@ export async function GET() {
     
   } catch (error) {
     console.error('Error fetching Google Scholar data:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    
     return NextResponse.json({ 
       error: 'Failed to fetch citation data',
-      message: error.message 
+      message: errorMessage 
     }, { status: 500 });
   }
 }

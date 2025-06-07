@@ -3,12 +3,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import dynamic from 'next/dynamic';
-
-// Dynamically import the VisitorCounter to disable SSR for this component
-const VisitorCounter = dynamic(() => import('@/components/VisitorCounter'), {
-  ssr: false,
-});
+import VisitorCounter from "@/components/VisitorCounter";
 
 const inter = Inter({ subsets: ["latin"] });
 

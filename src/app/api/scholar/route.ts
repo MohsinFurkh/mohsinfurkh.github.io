@@ -1,5 +1,40 @@
-// API route to fetch Google Scholar data
+// API route to fetch Google Scholar data with proper TypeScript types
 import { NextResponse } from 'next/server';
+
+// Type definitions for SerpAPI Google Scholar response
+interface CitationGraph {
+  year: number;
+  citations: number;
+}
+
+interface AuthorIndices {
+  h_index: number;
+  i10_index: number;
+}
+
+interface CitedBy {
+  total: number;
+  graph: CitationGraph[];
+}
+
+interface AuthorInfo {
+  cited_by: CitedBy;
+  indices: AuthorIndices;
+}
+
+interface ScholarArticle {
+  title: string;
+  authors: string;
+  publication: string;
+  cited_by: {
+    value: number;
+  };
+}
+
+interface SerpApiResponse {
+  author: AuthorInfo;
+  articles: ScholarArticle[];
+}
 
 export async function GET() {
   try {
@@ -22,17 +57,17 @@ export async function GET() {
       throw new Error(`API request failed: ${response.status}`);
     }
     
-    const data = await response.json();
+    const data: SerpApiResponse = await response.json();
     console.log('API response received');
     
-    // Extract data from the API response
+    // Extract data from the API response with proper typing
     const authorInfo = data.author || {};
     const citations = authorInfo.cited_by?.total || 0;
     const hIndex = authorInfo.indices?.h_index || 0;
     const publications = data.articles?.length || 0;
     
     // Extract citations by year from the graph data
-    const citationsByYear = authorInfo.cited_by?.graph?.map(item => ({
+    const citationsByYear = authorInfo.cited_by?.graph?.map((item: CitationGraph) => ({
       year: item.year,
       citations: item.citations
     })) || [];
@@ -48,9 +83,11 @@ export async function GET() {
     
   } catch (error) {
     console.error('Error fetching Google Scholar data:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    
     return NextResponse.json({ 
       error: 'Failed to fetch citation data',
-      message: error.message 
+      message: errorMessage 
     }, { status: 500 });
   }
 }

@@ -154,8 +154,8 @@ export default function Home() {
                 <Link href="/research" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
                   View Research
                 </Link>
-                <Link href="/cv.pdf" className="btn border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-full">
-                  Download CV
+                <Link href="/cv" className="btn border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-full">
+                  View CV
                 </Link>
               </div>
             </div>

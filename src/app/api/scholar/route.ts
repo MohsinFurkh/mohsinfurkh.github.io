@@ -60,14 +60,27 @@ export async function GET() {
       citations: item.citations
     })) : [];
     
-    return NextResponse.json({ 
+    const responseData = { 
       citations,
       publications,
       h_index: hIndex,
       citationsByYear,
       // Include raw data for debugging (remove in production)
-      debug: process.env.NODE_ENV === 'development' ? data : undefined
-    });
+      debug: process.env.NODE_ENV === 'development' ? {
+        ...data,
+        // Add a summary of the first few articles if they exist
+        articles_preview: data.articles?.slice(0, 2).map((a: any) => ({
+          title: a.title,
+          link: a.link,
+          citation_id: a.citation_id,
+          authors: a.authors
+        }))
+      } : undefined
+    };
+    
+    console.log('Processed scholar data:', JSON.stringify(responseData, null, 2));
+    
+    return NextResponse.json(responseData);
     
   } catch (error) {
     console.error('Error fetching Google Scholar data:', error);

@@ -26,11 +26,11 @@ export async function GET() {
       { year: 2022, citations: 1 },
       { year: 2023, citations: 2 },
       { year: 2024, citations: 15 },
-      { year: 2025, citations: 37 },
+      { year: 2025, citations: 38 },
     ];
 
     return NextResponse.json({ 
-      citations: 37,
+      citations: 38,
       publications: 6,
       h_index: 3,
       citationsByYear

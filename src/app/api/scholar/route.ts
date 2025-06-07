@@ -49,7 +49,6 @@ export async function GET() {
     // Extract data from the API response
     // Try different possible paths for the citation data
     const authorInfo = data.author || {};
-    const citations = data.cited_by?.total || authorInfo.cited_by?.total || 0;
     const hIndex = data.h_index || authorInfo.indices?.h_index || 0;
     const publications = data.articles?.length || 0;
     
@@ -59,6 +58,22 @@ export async function GET() {
       year: item.year,
       citations: item.citations
     })) : [];
+    
+    // Calculate total citations by summing up yearly citations
+    // The API sometimes doesn't provide the total, so we'll calculate it from the yearly data
+    const calculatedCitations = citationsByYear.reduce((sum, yearData) => sum + (yearData.citations || 0), 0);
+    
+    // Use the provided total if it exists and is greater than our calculated total
+    // Otherwise use our calculated total
+    const providedCitations = data.cited_by?.total || authorInfo.cited_by?.total || 0;
+    const citations = Math.max(providedCitations, calculatedCitations);
+    
+    console.log('Citation calculation:', {
+      providedCitations,
+      calculatedCitations,
+      finalCitations: citations,
+      citationsByYear
+    });
     
     const responseData = { 
       citations,

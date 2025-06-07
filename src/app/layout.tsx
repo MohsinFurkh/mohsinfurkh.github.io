@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import dynamic from 'next/dynamic';
+
+// Dynamically import the VisitorCounter to disable SSR for this component
+const VisitorCounter = dynamic(() => import('@/components/VisitorCounter'), {
+  ssr: false,
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +28,10 @@ export default function RootLayout({
         <Navigation />
         <main className="min-h-screen bg-gray-50 pt-16">
           {children}
+          <VisitorCounter />
+          <Analytics />
         </main>
       </body>
     </html>
   );
-} 
+}

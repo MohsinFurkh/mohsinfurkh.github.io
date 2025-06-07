@@ -4,30 +4,50 @@ import { useEffect, useState } from 'react';
 
 export default function VisitorCounter() {
   const [visitorCount, setVisitorCount] = useState<number>(0);
-  const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isNewVisitor, setIsNewVisitor] = useState(false);
 
   useEffect(() => {
     // This code runs only on the client side
     setIsClient(true);
     
-    // Count every visit, not just new visitors
-    const currentCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0;
-    const newCount = currentCount + 1;
-    localStorage.setItem('visitorCount', newCount.toString());
-    setVisitorCount(newCount);
-    
-    // Track if this is a new visitor (first visit)
+    // Check if this is a new visitor
     const lastVisit = localStorage.getItem('lastVisit');
     const now = new Date().toISOString();
+    
     if (!lastVisit) {
+      // First time visitor
       setIsNewVisitor(true);
+      
+      // Try to get the count from the server
+      const fetchCount = async () => {
+        try {
+          // This is a placeholder - in a real app, you'd call your own API
+          // For now, we'll just increment the local count
+          const newCount = (parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0) + 1;
+          localStorage.setItem('visitorCount', newCount.toString());
+          setVisitorCount(newCount);
+        } catch (error) {
+          console.error('Error fetching visitor count:', error);
+          // Fallback to local storage only
+          const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0;
+          setVisitorCount(localCount > 0 ? localCount : 1);
+        }
+      };
+      
+      fetchCount();
+    } else {
+      // Returning visitor
+      const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0;
+      setVisitorCount(localCount);
     }
+    
+    // Update last visit time
     localStorage.setItem('lastVisit', now);
   }, []);
 
-  // Don't render anything during SSR or if we're not on the client yet
-  if (!isClient) {
+  // Don't render anything during SSR
+  if (typeof window === 'undefined') {
     return null;
   }
   

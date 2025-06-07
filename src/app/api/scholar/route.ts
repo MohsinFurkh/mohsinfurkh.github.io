@@ -1,10 +1,15 @@
 // API route to fetch Google Scholar data
 import { NextResponse } from 'next/server';
+
 export async function GET() {
   try {
-    // You'll need to sign up for SerpAPI and get an API key
     const API_KEY = process.env.SERPAPI_KEY;
     const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Your Google Scholar ID
+    
+    if (!API_KEY) {
+      console.error('SERPAPI_KEY not found in environment variables');
+      return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
+    }
     
     console.log('Fetching Google Scholar data...');
     
@@ -20,21 +25,32 @@ export async function GET() {
     const data = await response.json();
     console.log('API response received');
     
-    // Hardcoded values based on your Google Scholar profile
-    const citationsByYear = [
-      { year: 2022, citations: 1 },
-      { year: 2023, citations: 2 },
-      { year: 2024, citations: 15 },
-      { year: 2025, citations: 38 },
-    ];
+    // Extract data from the API response
+    const authorInfo = data.author || {};
+    const citations = authorInfo.cited_by?.total || 0;
+    const hIndex = authorInfo.indices?.h_index || 0;
+    const publications = data.articles?.length || 0;
+    
+    // Extract citations by year from the graph data
+    const citationsByYear = authorInfo.cited_by?.graph?.map((item: any) => ({
+      year: item.year,
+      citations: item.citations
+    })) || [];
+    
     return NextResponse.json({ 
-      citations: 38,
-      publications: 6,
-      h_index: 3,
-      citationsByYear
+      citations,
+      publications,
+      h_index: hIndex,
+      citationsByYear,
+      // Include raw data for debugging (remove in production)
+      debug: process.env.NODE_ENV === 'development' ? data : undefined
     });
+    
   } catch (error) {
     console.error('Error fetching Google Scholar data:', error);
-    return NextResponse.json({ error: 'Failed to fetch citation data' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Failed to fetch citation data',
+      message: error.message 
+    }, { status: 500 });
   }
 }

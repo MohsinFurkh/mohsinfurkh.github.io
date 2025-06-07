@@ -5,21 +5,21 @@ export async function GET() {
     // You'll need to sign up for SerpAPI and get an API key
     const API_KEY = process.env.SERPAPI_KEY;
     const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Your Google Scholar ID
-
+    
     console.log('Fetching Google Scholar data...');
-
+    
     const response = await fetch(
-      https://serpapi.com/search.json?engine=google_scholar_author&author_id=${AUTHOR_ID}&api_key=${API_KEY}
+      `https://serpapi.com/search.json?engine=google_scholar_author&author_id=${AUTHOR_ID}&api_key=${API_KEY}`
     );
-
+    
     if (!response.ok) {
       console.error('SerpAPI response not OK:', response.status, response.statusText);
-      throw new Error(API request failed: ${response.status});
+      throw new Error(`API request failed: ${response.status}`);
     }
-
+    
     const data = await response.json();
     console.log('API response received');
-
+    
     // Hardcoded values based on your Google Scholar profile
     const citationsByYear = [
       { year: 2022, citations: 1 },

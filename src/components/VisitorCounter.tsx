@@ -9,7 +9,6 @@ export default function VisitorCounter() {
 
   useEffect(() => {
     // This code runs only on the client side
-    setIsClient(true);
     
     // Check if this is a new visitor
     const lastVisit = localStorage.getItem('lastVisit');

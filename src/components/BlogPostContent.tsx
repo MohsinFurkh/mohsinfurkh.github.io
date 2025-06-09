@@ -203,49 +203,11 @@ const PQCHealthcareApp: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans antialiased">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+      {/* In-page navigation */}
+      <div className="bg-white/80 backdrop-blur-sm sticky top-16 z-40 shadow-sm">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <span className="font-bold text-xl bg-gradient-to-r from-cyan-600 to-blue-700 bg-clip-text text-transparent">
-                PQC for Healthcare
-              </span>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {[
-                  { id: 'threat', label: 'The Quantum Threat' },
-                  { id: 'pqc', label: 'Explore PQC' },
-                  { id: 'applications', label: 'Applications' },
-                  { id: 'recommendations', label: 'Recommendations' }
-                ].map(({ id, label }) => (
-                  <button
-                    key={id}
-                    onClick={() => scrollToSection(id)}
-                    className="relative text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2 after:bg-cyan-600 after:transition-all after:duration-300 hover:after:w-full"
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </nav>
-        {mobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
+          <div className="flex justify-center">
+            <div className="flex space-x-1 py-2 overflow-x-auto">
               {[
                 { id: 'threat', label: 'The Quantum Threat' },
                 { id: 'pqc', label: 'Explore PQC' },
@@ -255,17 +217,17 @@ const PQCHealthcareApp: React.FC = () => {
                 <button
                   key={id}
                   onClick={() => scrollToSection(id)}
-                  className="block text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                  className="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-700 hover:text-cyan-700 focus:outline-none"
                 >
                   {label}
                 </button>
               ))}
             </div>
           </div>
-        )}
-      </header>
+        </nav>
+      </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <section id="hero" className="text-center mb-24">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">

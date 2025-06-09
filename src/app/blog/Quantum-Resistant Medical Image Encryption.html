@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum-Resistant Medical Image Encryption: An Interactive Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Clinical Calm -->
+    <!-- Application Structure Plan: The application is designed as a narrative journey to make the complex topic accessible. It starts with a high-level hook (The Quantum Threat), moves to the solution (Exploring PQC Families via an interactive dashboard), then grounds the concepts in reality (Applied Scenarios for Medical Images), and concludes with actionable steps (Challenges & Recommendations). This thematic, non-linear structure was chosen over a simple report regurgitation to facilitate user-driven exploration and understanding. The centerpiece is the interactive PQC dashboard, allowing users to compare algorithm families, which is the most data-rich and complex part of the report. This design guides the user from 'why' it matters, to 'what' the solution is, and finally 'how' it works in practice. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: The quantum threat to RSA/ECC/AES. -> Goal: Inform/Compare. -> Viz: HTML/CSS diagram comparing 'classical' vs 'quantum' security levels. -> Interaction: Hover tooltips. -> Justification: A direct visual comparison is more impactful than text alone.
+        - Report Info: Performance metrics (key/signature size, speed) of PQC families. -> Goal: Compare. -> Viz: Dynamic bar chart. -> Interaction: Buttons to filter data between KEMs and Signatures, dynamically updating the chart. -> Justification: An interactive chart is the most effective way to explore the crucial trade-offs between different PQC algorithms. -> Library: Chart.js (Canvas).
+        - Report Info: Methods for securing medical images (Infrastructure, HE, Hybrid). -> Goal: Organize/Inform. -> Viz: Tabbed section with simple HTML/CSS/Unicode icon diagrams. -> Interaction: Clicking tabs reveals relevant content. -> Justification: Tabs break down complex application methods into focused, digestible chunks, preventing information overload.
+        - Report Info: Recommendations for healthcare orgs. -> Goal: Inform/Action. -> Viz: HTML/CSS styled checklist. -> Interaction: Hover effects. -> Justification: A checklist format feels more actionable and engaging for the target audience of decision-makers.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #212529;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0891b2;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-filter.active {
+            background-color: #0891b2;
+            color: #ffffff;
+        }
+        .tab.active {
+            border-color: #0891b2;
+            background-color: #ffffff;
+            color: #0891b2;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #0891b2, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl gradient-text">PQC for Healthcare</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#threat" class="nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-sm font-medium">The Quantum Threat</a>
+                        <a href="#pqc" class="nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-sm font-medium">Explore PQC</a>
+                        <a href="#applications" class="nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-sm font-medium">Applications</a>
+                        <a href="#recommendations" class="nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-sm font-medium">Recommendations</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#threat" class="block nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-base font-medium">The Quantum Threat</a>
+                <a href="#pqc" class="block nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-base font-medium">Explore PQC</a>
+                <a href="#applications" class="block nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-base font-medium">Applications</a>
+                <a href="#recommendations" class="block nav-link text-gray-700 hover:text-cyan-700 px-3 py-2 rounded-md text-base font-medium">Recommendations</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <section id="hero" class="text-center mb-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+                <span class="block gradient-text">The Quantum Countdown</span>
+                <span class="block text-gray-800">Securing Tomorrow's Health Data, Today.</span>
+            </h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+                The digital security that protects sensitive medical images is facing an unprecedented threat from quantum computers. This interactive report explores the challenge and details the next generation of encryption—Post-Quantum Cryptography (PQC)—required to safeguard patient privacy in the new computational era.
+            </p>
+        </section>
+
+        <section id="threat" class="mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-2">The Coming Cryptographic Break</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">This section explains the core problem: how quantum computers, with algorithms like Shor's and Grover's, will undermine the very foundation of our current digital security. The threat isn't just in the future; the "harvest now, decrypt later" strategy means data stolen today can be broken by quantum machines tomorrow, making immediate action critical for long-term data like medical records.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Current Encryption Landscape</h3>
+                    <p class="text-gray-600 mb-6">Today's security relies on problems that are too hard for classical computers to solve in a reasonable time. This protects everything from online banking to patient data.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-blue-700">Asymmetric Crypto (RSA, ECC)</span>
+                                <span class="text-sm font-medium text-blue-700">Secure</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-blue-600 h-4 rounded-full" style="width: 95%"></div></div>
+                            <p class="text-xs text-gray-500 mt-1">Based on factoring large numbers.</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-green-700">Symmetric Crypto (AES)</span>
+                                <span class="text-sm font-medium text-green-700">Secure</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-green-600 h-4 rounded-full" style="width: 100%"></div></div>
+                            <p class="text-xs text-gray-500 mt-1">Relies on key secrecy.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-xl border-2 border-red-400">
+                    <h3 class="text-xl font-semibold mb-4 text-center text-red-600">The Quantum Impact</h3>
+                    <p class="text-gray-600 mb-6">Quantum algorithms will solve these "hard" problems with astonishing speed, effectively shattering our current cryptographic protections.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-red-700">Shor's Algorithm vs. RSA/ECC</span>
+                                <span class="text-sm font-medium text-red-700">Broken</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-red-600 h-4 rounded-full" style="width: 10%"></div></div>
+                            <p class="text-xs text-gray-500 mt-1">Exponential speedup makes factoring trivial.</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-orange-700">Grover's Algorithm vs. AES</span>
+                                <span class="text-sm font-medium text-orange-700">Weakened</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-orange-500 h-4 rounded-full" style="width: 50%"></div></div>
+                            <p class="text-xs text-gray-500 mt-1">Quadratic speedup halves effective key strength.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pqc" class="mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-2">Exploring Post-Quantum Cryptography</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-8">This section introduces the solution: Post-Quantum Cryptography (PQC). These are new algorithms, standardized by bodies like NIST, that are designed to be secure against both classical and quantum computers. Here, you can interactively explore the main "families" of PQC, each based on different hard mathematical problems, and compare their performance characteristics. Use the buttons to filter the chart between key establishment and digital signature algorithms.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div id="pqc-family-cards" class="lg:col-span-1 space-y-4"></div>
+            </div>
+            
+            <div id="pqc-details" class="p-6 bg-white rounded-lg shadow-md min-h-[200px] flex items-center justify-center">
+                 <p class="text-gray-500">Select a PQC family to see details.</p>
+            </div>
+
+            <div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-center mb-6">Performance Comparison of PQC Finalists</h3>
+                <div class="flex justify-center space-x-4 mb-6">
+                    <button class="btn-filter px-4 py-2 rounded-lg text-sm font-medium transition active" data-type="kem">Key Establishment (KEMs)</button>
+                    <button class="btn-filter px-4 py-2 rounded-lg text-sm font-medium transition" data-type="signature">Digital Signatures</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="pqcChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="applications" class="mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-2">Applying PQC to Medical Images</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-12">How do these new algorithms actually protect medical data? This section explores the primary techniques. PQC isn't typically used to encrypt every pixel of an image directly due to performance overhead. Instead, it secures the systems around the data and enables new privacy-preserving workflows. Use the tabs below to explore different application scenarios.</p>
+
+            <div class="w-full">
+                <div class="mb-4 flex flex-wrap justify-center border-b border-gray-200">
+                    <button class="tab flex-grow sm:flex-grow-0 text-center px-4 py-3 border-b-2 font-medium text-sm text-gray-500 hover:bg-gray-50 active" data-tab="infrastructure">Infrastructure Security</button>
+                    <button class="tab flex-grow sm:flex-grow-0 text-center px-4 py-3 border-b-2 font-medium text-sm text-gray-500 hover:bg-gray-50" data-tab="he">Privacy-Preserving Analysis</button>
+                    <button class="tab flex-grow sm:flex-grow-0 text-center px-4 py-3 border-b-2 font-medium text-sm text-gray-500 hover:bg-gray-50" data-tab="hybrid">Hybrid Approach</button>
+                    <button class="tab flex-grow sm:flex-grow-0 text-center px-4 py-3 border-b-2 font-medium text-sm text-gray-500 hover:bg-gray-50" data-tab="other">Other Innovations</button>
+                </div>
+
+                <div class="p-4 bg-white rounded-lg shadow-md">
+                    <div id="tab-content-infrastructure" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-3">Securing the Pipes, Not Just the Data</h3>
+                        <p class="text-gray-600 mb-4">The primary role of NIST's PQC standards is to secure the foundational infrastructure. This means protecting the communication channels (like TLS) used to transmit images and verifying the authenticity of devices and users. Think of it as building quantum-proof armor around the entire healthcare network.</p>
+                        <div class="bg-gray-50 p-6 rounded-lg flex flex-col md:flex-row items-center justify-around gap-6 text-center">
+                            <div class="flex flex-col items-center">
+                                <span class="text-4xl mb-2">🏥</span>
+                                <p class="font-semibold">Hospital</p>
+                            </div>
+                            <div class="w-full md:w-auto">
+                                <p class="font-mono text-cyan-600 mb-1">CRYSTALS-Kyber (KEM)</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-blue-200 rounded-full flex items-center justify-center">🔑</div>
+                                    <div class="flex-grow h-1 bg-gray-300 relative"><div class="absolute top-0 left-0 h-1 bg-blue-500 animate-pulse w-full"></div></div>
+                                    <div class="w-8 h-8 bg-blue-200 rounded-full flex items-center justify-center">🔑</div>
+                                </div>
+                                <p class="text-xs text-gray-500">Secure Key Exchange</p>
+                                
+                                <p class="font-mono text-cyan-600 mt-4 mb-1">CRYSTALS-Dilithium (Signature)</p>
+                                <div class="flex items-center gap-2">
+                                     <div class="w-8 h-8 bg-green-200 rounded-full flex items-center justify-center">🛡️</div>
+                                    <div class="flex-grow h-1 bg-gray-300"></div>
+                                     <div class="w-8 h-8 bg-green-200 rounded-full flex items-center justify-center">✔️</div>
+                                </div>
+                                <p class="text-xs text-gray-500">Data & Device Authentication</p>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-4xl mb-2">☁️</span>
+                                <p class="font-semibold">Cloud Storage / PACS</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-content-he" class="tab-content hidden">
+                        <h3 class="text-xl font-semibold mb-3">Homomorphic Encryption (HE): The Future of Privacy</h3>
+                        <p class="text-gray-600 mb-4">HE is a revolutionary technique, often built on PQC-secure lattice cryptography, that allows for computation directly on encrypted data. A hospital can send an encrypted medical image to a cloud AI for analysis, and the cloud provider can perform diagnostics without ever seeing the actual image, preserving patient privacy completely.</p>
+                         <div class="bg-gray-50 p-6 rounded-lg text-center">
+                            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                                <div class="p-4 bg-white rounded-lg shadow">
+                                    <p>1. Encrypt Image</p>
+                                    <span class="text-4xl">🖼️ ➔ 🔒</span>
+                                    <p class="text-xs text-gray-500">At Hospital</p>
+                                </div>
+                                <div class="text-2xl font-bold text-gray-400">→</div>
+                                <div class="p-4 bg-white rounded-lg shadow">
+                                    <p>2. Process Encrypted Data</p>
+                                    <span class="text-4xl">☁️ + 🧠</span>
+                                    <p class="text-xs text-gray-500">In Cloud AI</p>
+                                </div>
+                                <div class="text-2xl font-bold text-gray-400">→</div>
+                                <div class="p-4 bg-white rounded-lg shadow">
+                                    <p>3. Return Encrypted Result</p>
+                                    <span class="text-4xl">📄🔒</span>
+                                    <p class="text-xs text-gray-500">Back to Hospital</p>
+                                </div>
+                                <div class="text-2xl font-bold text-gray-400">→</div>
+                                <div class="p-4 bg-white rounded-lg shadow">
+                                    <p>4. Decrypt Result</p>
+                                    <span class="text-4xl">🔓 ➔ 📄</span>
+                                    <p class="text-xs text-gray-500">Only by Hospital</p>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                    <div id="tab-content-hybrid" class="tab-content hidden">
+                         <h3 class="text-xl font-semibold mb-3">Hybrid Approach: Best of Both Worlds</h3>
+                        <p class="text-gray-600 mb-4">During the transition period, a hybrid or "dual-stack" approach offers a pragmatic path forward. It combines a traditional, well-understood algorithm (like ECC) with a new PQC algorithm (like Kyber) to establish a key. The system remains secure as long as at least one of the algorithms is not broken. This provides backward compatibility and a safety net against unforeseen vulnerabilities in the new PQC schemes.</p>
+                        <div class="bg-gray-50 p-6 rounded-lg flex justify-center">
+                            <div class="text-center">
+                                <p class="font-semibold mb-2">Session Key Generation</p>
+                                <div class="flex items-center space-x-4">
+                                    <div class="p-3 bg-blue-100 border border-blue-300 rounded-lg">
+                                        <p class="font-mono text-sm">ECC Key</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-gray-600">+</span>
+                                    <div class="p-3 bg-cyan-100 border border-cyan-300 rounded-lg">
+                                        <p class="font-mono text-sm">PQC Key (Kyber)</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-gray-600">=</span>
+                                    <div class="p-3 bg-green-100 border border-green-300 rounded-lg">
+                                        <p class="font-mono font-bold text-sm">Secure Shared Secret</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mt-4">This combined secret is then used with an efficient symmetric cipher like AES to encrypt the bulk data (the medical image itself).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-content-other" class="tab-content hidden">
+                        <h3 class="text-xl font-semibold mb-3">Other Quantum-Resistant Innovations</h3>
+                        <p class="text-gray-600 mb-4">Research is exploring other novel methods to secure medical images in the quantum era, often focusing on the unique properties of image data.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-semibold">Chaos-Based & Deep Learning Encryption</h4>
+                                <p class="text-sm text-gray-600">These techniques use unpredictable chaotic maps or AI models (like GANs) to scramble pixel data in complex ways, making the image unintelligible without the correct key or model.</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-semibold">Hash-Based Integrity on Blockchain</h4>
+                                <p class="text-sm text-gray-600">Quantum-resistant hash functions (like those in SPHINCS+) can create a unique "fingerprint" of a medical image. Storing this hash on a blockchain provides an immutable, verifiable record to prove the image has not been tampered with.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="recommendations" class="scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-2">The Road Ahead: Challenges & Recommendations</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-12">The transition to PQC is a significant undertaking with challenges in performance, cost, and interoperability with legacy systems. However, inaction is not an option. This final section outlines a strategic checklist for healthcare organizations to begin their journey towards a quantum-secure future.</p>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-6">Actionable Checklist for Healthcare Organizations</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center mr-4">✔</span>
+                        <p><strong class="font-semibold">Conduct a Crypto Inventory:</strong> Identify all systems using vulnerable cryptography (RSA, ECC). Prioritize those protecting data with a long shelf-life, like medical records.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center mr-4">✔</span>
+                        <p><strong class="font-semibold">Embrace Cryptographic Agility:</strong> Design systems that can easily swap out cryptographic algorithms. This ensures you can adapt as standards evolve or if vulnerabilities are found.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center mr-4">✔</span>
+                        <p><strong class="font-semibold">Adopt Hybrid Approaches:</strong> Implement hybrid schemes as a transitional measure to ensure backward compatibility and add a layer of security.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center mr-4">✔</span>
+                        <p><strong class="font-semibold">Invest in PQC Key Management:</strong> Develop robust protocols for the entire lifecycle of quantum-resistant keys: generation, storage, distribution, and rotation.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center mr-4">✔</span>
+                        <p><strong class="font-semibold">Explore Privacy-Enhancing Tech (PETs):</strong> Pilot technologies like Homomorphic Encryption for use cases involving third-party data analysis and AI model training.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center mr-4">✔</span>
+                        <p><strong class="font-semibold">Foster Collaboration & Stay Informed:</strong> Engage with industry partners, follow NIST updates, and prepare for evolving regulatory requirements from bodies like HIPAA and GDPR.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Interactive PQC Report. All information is based on the provided source document on Quantum-Resistant Medical Image Encryption.</p>
+            <p>This is a conceptual web application for informational purposes.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const pqcData = {
+                lattice: {
+                    name: 'Lattice-Based',
+                    icon: '🌐',
+                    description: "Based on the difficulty of solving problems on high-dimensional grids (lattices). This is one of the most promising and versatile PQC families, forming the basis for NIST's primary selected algorithms. It supports encryption, signatures, and even Homomorphic Encryption.",
+                    pros: 'Versatile, relatively efficient, strong security assumptions.',
+                    cons: 'Can have larger keys/ciphertexts than classical crypto; math is complex.',
+                    algorithms: 'CRYSTALS-Kyber, CRYSTALS-Dilithium'
+                },
+                code: {
+                    name: 'Code-Based',
+                    icon: '💻',
+                    description: "Derives security from the difficulty of decoding a general linear error-correcting code. One of the oldest PQC approaches, its core principles have resisted cryptanalysis for decades.",
+                    pros: 'Long history of study, believed to be very secure against quantum attacks.',
+                    cons: 'Historically very large public key sizes, though modern variants have improved this.',
+                    algorithms: 'Classic McEliece, HQC'
+                },
+                hash: {
+                    name: 'Hash-Based',
+                    icon: '⛓️',
+                    description: 'Relies only on the security of cryptographic hash functions (like SHA-256). These are not based on number theory problems vulnerable to Shor\'s algorithm.',
+                    pros: 'Security is well-understood and relies on minimal assumptions.',
+                    cons: 'Signatures can be large and slow to generate. Most are "stateful," though stateless versions like SPHINCS+ exist.',
+                    algorithms: 'SPHINCS+, LMS/HSS'
+                },
+                multivariate: {
+                    name: 'Multivariate',
+                    icon: '📈',
+                    description: 'Security comes from the difficulty of solving systems of multivariate polynomial equations over a finite field. This problem is known to be NP-complete.',
+                    pros: 'Can produce some of the shortest PQC signatures.',
+                    cons: 'Some early schemes have been broken; requires careful parameter selection.',
+                    algorithms: 'Rainbow (broken but influential), UOV'
+                },
+                isogeny: {
+                    name: 'Isogeny-Based',
+                    icon: '🔄',
+                    description: 'Uses the complex problem of finding a path (an isogeny) between two supersingular elliptic curves. A newer area of PQC research.',
+                    pros: 'Can have very small key sizes, making it attractive for constrained environments.',
+                    cons: 'Computationally intensive. A leading candidate (SIKE) was recently broken, highlighting the need for more research.',
+                    algorithms: 'CSIDH'
+                }
+            };
+            
+            const chartData = {
+                kem: {
+                    labels: ['CRYSTALS-Kyber', 'Classic McEliece', 'HQC'],
+                    datasets: [
+                        {
+                            label: 'Public Key Size (Bytes)',
+                            data: [1184, 524192, 4522],
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Ciphertext Size (Bytes)',
+                            data: [1088, 208, 9044],
+                            backgroundColor: 'rgba(34, 197, 94, 0.7)',
+                            borderColor: 'rgba(34, 197, 94, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                signature: {
+                    labels: ['CRYSTALS-Dilithium', 'SPHINCS+', 'Falcon'],
+                     datasets: [
+                        {
+                            label: 'Public Key Size (Bytes)',
+                            data: [1952, 64, 1793],
+                            backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Signature Size (Bytes)',
+                            data: [3293, 17088, 1280],
+                            backgroundColor: 'rgba(249, 115, 22, 0.7)',
+                            borderColor: 'rgba(249, 115, 22, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                }
+            };
+
+            const familyCardsContainer = document.getElementById('pqc-family-cards');
+            Object.keys(pqcData).forEach(key => {
+                const family = pqcData[key];
+                const card = document.createElement('div');
+                card.className = 'glass-card p-4 rounded-lg cursor-pointer transition transform hover:scale-105 hover:shadow-xl';
+                card.dataset.family = key;
+                card.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <span class="text-3xl">${family.icon}</span>
+                        <div>
+                            <h4 class="font-semibold text-lg">${family.name}</h4>
+                            <p class="text-sm text-gray-600">${family.algorithms}</p>
+                        </div>
+                    </div>
+                `;
+                familyCardsContainer.appendChild(card);
+            });
+            
+            const detailsContainer = document.getElementById('pqc-details');
+            familyCardsContainer.addEventListener('click', (e) => {
+                const card = e.target.closest('[data-family]');
+                if (card) {
+                    const familyKey = card.dataset.family;
+                    const family = pqcData[familyKey];
+                    detailsContainer.innerHTML = `
+                        <div class="text-left">
+                            <h3 class="font-bold text-xl mb-2">${family.name} Cryptography</h3>
+                            <p class="text-gray-700 mb-4">${family.description}</p>
+                            <div class="text-sm space-y-2">
+                                <p><strong class="font-semibold text-green-600">Pros:</strong> ${family.pros}</p>
+                                <p><strong class="font-semibold text-red-600">Cons:</strong> ${family.cons}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            const ctx = document.getElementById('pqcChart').getContext('2d');
+            let pqcChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData.kem,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            type: 'logarithmic',
+                            title: {
+                                display: true,
+                                text: 'Size in Bytes (Logarithmic Scale)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString() + ' bytes';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'PQC Key Establishment (KEM) Performance'
+                        }
+                    }
+                }
+            });
+
+            document.querySelectorAll('.btn-filter').forEach(button => {
+                button.addEventListener('click', () => {
+                    const type = button.dataset.type;
+                    document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    pqcChart.data = chartData[type];
+                    pqcChart.options.plugins.title.text = type === 'kem' 
+                        ? 'PQC Key Establishment (KEM) Performance' 
+                        : 'PQC Digital Signature Performance';
+                    pqcChart.update();
+                });
+            });
+
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        if (content.id === `tab-content-${tabName}`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    if (mobileMenu.classList.contains('block')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

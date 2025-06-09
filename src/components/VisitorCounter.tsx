@@ -8,43 +8,29 @@ export default function VisitorCounter() {
   const [isNewVisitor, setIsNewVisitor] = useState(false);
 
   useEffect(() => {
-    const recordVisit = async () => {
-      try {
-        // Check if this is a new visitor
-        const lastVisit = localStorage.getItem('lastVisit');
-        const now = new Date().toISOString();
-        
-        if (!lastVisit) {
-          setIsNewVisitor(true);
-        }
-        
-        // Record the visit with our API
-        const response = await fetch('/api/visits');
-        if (response.ok) {
-          const data = await response.json();
-          setVisitorCount(data.count);
-        } else {
-          console.error('Failed to record visit');
-          // Fallback to local storage if API fails
-          const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) + 1;
-          localStorage.setItem('visitorCount', localCount.toString());
-          setVisitorCount(localCount);
-        }
-        
-        // Update last visit time
-        localStorage.setItem('lastVisit', now);
-      } catch (error) {
-        console.error('Error recording visit:', error);
-        // Fallback to local storage if there's an error
-        const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) + 1;
-        localStorage.setItem('visitorCount', localCount.toString());
-        setVisitorCount(localCount);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    recordVisit();
+    // This code runs only on the client side
+    
+    // Check if this is a new visitor
+    const lastVisit = localStorage.getItem('lastVisit');
+    const now = new Date().toISOString();
+    
+    if (!lastVisit) {
+      // First time visitor
+      setIsNewVisitor(true);
+      
+      // Increment the local count
+      const newCount = (parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0) + 1;
+      localStorage.setItem('visitorCount', newCount.toString());
+      setVisitorCount(newCount);
+    } else {
+      // Returning visitor
+      const localCount = parseInt(localStorage.getItem('visitorCount') || '0', 10) || 0;
+      setVisitorCount(localCount);
+    }
+    
+    // Update last visit time
+    localStorage.setItem('lastVisit', now);
+    setIsLoading(false);
   }, []);
 
   // Don't render anything during SSR

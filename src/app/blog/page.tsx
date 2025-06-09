@@ -3,8 +3,31 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
+  external: boolean;
+  url?: string;
+  slug?: string;
+}
+
 // This would typically come from an API or CMS
-const blogPosts = [
+const blogPosts: BlogPost[] = [
+  {
+    id: 13,
+    title: 'Quantum-Resistant Medical Image Encryption',
+    excerpt: 'An interactive exploration of post-quantum cryptography for securing medical imaging data against future quantum computing threats.',
+    date: 'June 9, 2025',
+    readTime: '10 min read',
+    category: 'Cybersecurity',
+    external: false,
+    slug: 'quantum-resistant-medical-image-encryption'
+  },
+  
   {
     id: 1,
     title: 'PhD in Medical Image Analysis',
@@ -216,15 +239,22 @@ export default function Blog() {
                     <span className="text-sm text-gray-500">{post.date} · {post.readTime}</span>
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                    <Link href={post.external ? post.url : `/blog/${post.id}`} className="hover:text-primary transition-colors">
+                    <Link 
+                      href={post.external ? post.url || '#' : `/blog/${post.slug || post.id}`} 
+                      className="hover:text-primary transition-colors"
+                      target={post.external ? "_blank" : "_self"}
+                      rel={post.external ? "noopener noreferrer" : undefined}
+                    >
                       {post.title}
                     </Link>
                   </h2>
                   <p className="text-gray-600 mb-4">{post.excerpt}</p>
                   <div className="flex justify-between items-center">
                     <Link 
-                      href={post.external ? post.url : `/blog/${post.id}`} 
+                      href={post.external ? post.url || '#' : `/blog/${post.slug || post.id}`} 
                       className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
+                      target={post.external ? "_blank" : "_self"}
+                      rel={post.external ? "noopener noreferrer" : undefined}
                     >
                       Read more
                       <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -38,33 +38,39 @@ export default function QuantumResistantMedicalImageEncryption() {
     }
   };
   useEffect(() => {
-    // This effect will run on the client side after the component mounts
-    const script = document.createElement('script');
-    script.src = 'https://cdn.tailwindcss.com';
-    script.async = true;
-    script.onload = () => {
-      // Initialize any scripts that need to run after tailwind is loaded
-      if (typeof window !== 'undefined') {
-        // Add your interactive scripts here
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            if (targetId) {
-              const targetElement = document.querySelector(targetId);
-              if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-              }
-            }
-          });
-        });
+    if (typeof window === 'undefined') return;
+
+    // Handle hash-based navigation
+    const handleHashNavigation = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      const href = target.getAttribute('href');
+      
+      if (!href) return;
+      
+      // Only handle hash links
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetElement = document.getElementById(href.substring(1));
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        } else if (href === '#') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }
     };
-    document.head.appendChild(script);
 
+    // Add event listeners to all anchor tags with hash links
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+      link.removeEventListener('click', handleHashNavigation as EventListener);
+      link.addEventListener('click', handleHashNavigation as EventListener);
+    });
+
+    // Cleanup
     return () => {
-      // Cleanup
-      document.head.removeChild(script);
+      anchorLinks.forEach(link => {
+        link.removeEventListener('click', handleHashNavigation as EventListener);
+      });
     };
   }, []);
 

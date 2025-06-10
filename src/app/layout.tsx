@@ -14,6 +14,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Deep Learning for Medical Image Analysis",
   description: "Research portfolio in Deep Learning and Medical Image Analysis",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

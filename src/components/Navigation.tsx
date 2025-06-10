@@ -10,8 +10,17 @@ export default function Navigation() {
     <nav className="bg-white shadow-md fixed w-full z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-xl font-bold text-primary">
-            Mohsin Furkh Dar
+          <Link href="/" className="flex items-center text-xl font-bold text-primary">
+            <img 
+              src="/images/icon.jpg" 
+              alt="Profile" 
+              className="w-8 h-8 rounded-full mr-2 object-cover"
+              onError={(e) => {
+                // Fallback to a placeholder if the image fails to load
+                e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXVzZXIiPjxwYXRoIGQ9Ik0xOSAyMXYtMmE0IDQgMCAwIDAtNC00SDlhNCA0IDAgMCAwLTQgNHYyIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI3IiByPSI0Ii8+PC9zdmc+'
+              }}
+            />
+            <span>Mohsin Furkh Dar</span>
           </Link>
 
           {/* Desktop Navigation */}

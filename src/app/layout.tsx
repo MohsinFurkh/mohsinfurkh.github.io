@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   description: "Research portfolio in Deep Learning and Medical Image Analysis",
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/images/icon.jpg', sizes: '512x512', type: 'image/jpg' },
+      { url: '/images/icon.jpg', type: 'image/jpg' },
     ],
     apple: [
-      { url: '/favicon.ico' },
+      { url: '/images/icon.jpg' },
     ],
   },
   manifest: '/site.webmanifest',
@@ -36,8 +36,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="/images/icon.jpg" type="image/jpg" />
+        <link rel="apple-touch-icon" href="/images/icon.jpg" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <body className={inter.className}>

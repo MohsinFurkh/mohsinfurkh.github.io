@@ -26,74 +26,65 @@ export async function GET() {
     console.log('API response received');
     
     // Debug: Log the actual response structure
-    console.log('Full API response:', JSON.stringify(data, null, 2));
-    console.log('Author info:', data.author);
-    console.log('Cited by:', data.author?.cited_by);
-    console.log('Indices:', data.author?.indices);
-    console.log('Articles:', data.articles);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Full API response:', JSON.stringify(data, null, 2));
+    }
     
-    // Log the full response structure for debugging
-    console.log('Full API response structure:', JSON.stringify({
-      author: data.author,
-      cited_by: data.cited_by,
-      articles: data.articles ? `Array(${data.articles.length})` : 'none',
-      // Add other top-level fields that might be present
-      ...Object.keys(data).reduce((acc, key) => {
-        if (!['author', 'cited_by', 'articles'].includes(key)) {
-          acc[key] = data[key];
-        }
-        return acc;
-      }, {} as Record<string, any>)
-    }, null, 2));
-
-    // Extract data from the API response
+    // Extract data based on SerpAPI Google Scholar Author response structure
     const authorInfo = data.author || {};
-    // Use hardcoded h-index of 3 if not available from API
-    const hIndex = data.h_index || authorInfo.indices?.h_index || 3;
+    
+    // Get total citations - usually in author.cited_by.total
+    const totalCitations = authorInfo.cited_by?.total || 0;
+    
+    // Get h-index from author indices
+    const hIndex = authorInfo.indices?.h_index || 0;
+    
+    // Get i10-index if available
+    const i10Index = authorInfo.indices?.i10_index || 0;
+    
+    // Get publications count from articles array length
     const publications = data.articles?.length || 0;
     
     // Extract citations by year from the graph data
-    const citationsGraph = data.cited_by?.graph || authorInfo.cited_by?.graph || [];
-    const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item: any) => ({
-      year: item.year,
-      citations: item.citations
-    })) : [];
+    // This is typically in author.cited_by.graph
+    const citationsGraph = authorInfo.cited_by?.graph || [];
+    const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item) => ({
+      year: parseInt(item.year),
+      citations: parseInt(item.citations)
+    })).sort((a, b) => a.year - b.year) : [];
     
-    // Calculate total citations by summing up yearly citations
-    // The API sometimes doesn't provide the total, so we'll calculate it from the yearly data
-    const calculatedCitations = citationsByYear.reduce((sum, yearData) => sum + (yearData.citations || 0), 0);
+    // If we have yearly data but no total, calculate it
+    let finalCitations = totalCitations;
+    if (totalCitations === 0 && citationsByYear.length > 0) {
+      finalCitations = citationsByYear.reduce((sum, yearData) => sum + yearData.citations, 0);
+    }
     
-    // Use the provided total if it exists and is greater than our calculated total
-    // Otherwise use our calculated total
-    const providedCitations = data.cited_by?.total || authorInfo.cited_by?.total || 0;
-    const citations = Math.max(providedCitations, calculatedCitations);
-    
-    console.log('Citation calculation:', {
-      providedCitations,
-      calculatedCitations,
-      finalCitations: citations,
-      citationsByYear
+    console.log('Extracted data:', {
+      citations: finalCitations,
+      publications,
+      h_index: hIndex,
+      i10_index: i10Index,
+      citationsByYear: citationsByYear.length
     });
     
     const responseData = { 
-      citations,
+      citations: finalCitations,
       publications,
       h_index: hIndex,
+      i10_index: i10Index,
       citationsByYear,
-      // Include raw data for debugging (remove in production)
-      debug: process.env.NODE_ENV === 'development' ? {
-        ...data,
-        // Add a summary of the first few articles if they exist
-        articles_preview: data.articles?.slice(0, 2).map((a: any) => ({
-          title: a.title,
-          link: a.link,
-          citation_id: a.citation_id,
-          authors: a.authors
-        }))
-      } : undefined
+      author_name: authorInfo.name || 'Unknown',
+      author_affiliation: authorInfo.affiliations?.[0] || '',
+      // Include debug info in development
+      ...(process.env.NODE_ENV === 'development' && {
+        debug: {
+          raw_author: authorInfo,
+          articles_count: data.articles?.length || 0,
+          has_graph_data: !!authorInfo.cited_by?.graph,
+          graph_years: citationsGraph.map(item => item.year)
+        }
+      })
     };
-    
-    console.log('Processed scholar data:', JSON.stringify(responseData, null, 2));
     
     return NextResponse.json(responseData);
     
@@ -103,7 +94,14 @@ export async function GET() {
     
     return NextResponse.json({ 
       error: 'Failed to fetch citation data',
-      message: errorMessage 
+      message: errorMessage,
+      // Provide fallback data in case of API failure
+      fallback: {
+        citations: 0,
+        publications: 0,
+        h_index: 0,
+        citationsByYear: []
+      }
     }, { status: 500 });
   }
 }

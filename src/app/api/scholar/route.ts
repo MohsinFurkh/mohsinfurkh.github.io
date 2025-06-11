@@ -22,11 +22,21 @@ interface AuthorInfo {
   affiliations?: string[];
   cited_by?: CitedBy;
   indices?: AuthorIndices;
+  cited_by_total?: number;
+  h_index?: number;
+  i10_index?: number;
 }
 
 interface ScholarApiResponse {
   author?: AuthorInfo;
   articles?: any[];
+  cited_by?: CitedBy;
+  h_index?: number;
+  i10_index?: number;
+  citations?: number;
+  graph?: CitationGraphItem[];
+  indices?: AuthorIndices;
+  [key: string]: any; // Allow for unexpected fields
 }
 
 export async function GET() {
@@ -55,27 +65,52 @@ export async function GET() {
     
     // Debug: Log the actual response structure
     if (process.env.NODE_ENV === 'development') {
-      console.log('Full API response:', JSON.stringify(data, null, 2));
+      console.log('=== FULL API RESPONSE ===');
+      console.log(JSON.stringify(data, null, 2));
+      console.log('=== AUTHOR OBJECT ===');
+      console.log(JSON.stringify(data.author, null, 2));
+      console.log('=== CITED BY OBJECT ===');
+      console.log(JSON.stringify(data.author?.cited_by, null, 2));
+      console.log('=== INDICES OBJECT ===');
+      console.log(JSON.stringify(data.author?.indices, null, 2));
+      console.log('=== TOP LEVEL KEYS ===');
+      console.log(Object.keys(data));
     }
     
     // Extract data based on SerpAPI Google Scholar Author response structure
     const authorInfo = data.author || {};
     
-    // Get total citations - usually in author.cited_by.total
-    const totalCitations = authorInfo.cited_by?.total || 0;
+    // Try multiple possible locations for total citations
+    const totalCitations = authorInfo.cited_by?.total || 
+                          data.cited_by?.total || 
+                          authorInfo.cited_by_total || 
+                          data.citations || 
+                          0;
     
-    // Get h-index from author indices
-    const hIndex = authorInfo.indices?.h_index || 0;
+    // Try multiple possible locations for h-index
+    const hIndex = authorInfo.indices?.h_index || 
+                   data.h_index || 
+                   authorInfo.h_index || 
+                   data.indices?.h_index || 
+                   0;
     
-    // Get i10-index if available
-    const i10Index = authorInfo.indices?.i10_index || 0;
+    // Try multiple possible locations for i10-index
+    const i10Index = authorInfo.indices?.i10_index || 
+                     data.i10_index || 
+                     authorInfo.i10_index || 
+                     data.indices?.i10_index || 
+                     0;
     
     // Get publications count from articles array length
     const publications = data.articles?.length || 0;
     
     // Extract citations by year from the graph data
-    // This is typically in author.cited_by.graph
-    const citationsGraph = authorInfo.cited_by?.graph || [];
+    // Try multiple possible locations for graph data
+    const citationsGraph = authorInfo.cited_by?.graph || 
+                          data.cited_by?.graph || 
+                          data.graph || 
+                          [];
+    
     const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item: CitationGraphItem) => ({
       year: parseInt(item.year),
       citations: parseInt(item.citations)
@@ -87,12 +122,14 @@ export async function GET() {
       finalCitations = citationsByYear.reduce((sum, yearData) => sum + yearData.citations, 0);
     }
     
-    console.log('Extracted data:', {
-      citations: finalCitations,
+    console.log('Extracted data before processing:', {
+      totalCitations,
+      hIndex,
+      i10Index,
       publications,
-      h_index: hIndex,
-      i10_index: i10Index,
-      citationsByYear: citationsByYear.length
+      citationsByYear: citationsByYear.length,
+      authorName: authorInfo.name,
+      graphDataExists: !!citationsGraph.length
     });
     
     const responseData = { 

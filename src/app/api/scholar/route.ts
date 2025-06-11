@@ -73,8 +73,28 @@ export async function GET() {
       console.log(JSON.stringify(data.author?.cited_by, null, 2));
       console.log('=== INDICES OBJECT ===');
       console.log(JSON.stringify(data.author?.indices, null, 2));
+      console.log('=== SEARCHING FOR H-INDEX ===');
+      console.log('data.author?.indices?.h_index:', data.author?.indices?.h_index);
+      console.log('data.h_index:', data.h_index);
+      console.log('data.author?.h_index:', data.author?.h_index);
+      console.log('data.indices?.h_index:', data.indices?.h_index);
       console.log('=== TOP LEVEL KEYS ===');
       console.log(Object.keys(data));
+      
+      // Search for any property containing 'h_index' or 'i10_index'
+      const searchForIndices = (obj: any, path = '') => {
+        for (const [key, value] of Object.entries(obj)) {
+          const currentPath = path ? `${path}.${key}` : key;
+          if (key.includes('h_index') || key.includes('i10_index') || key.includes('index')) {
+            console.log(`Found index-related field: ${currentPath} =`, value);
+          }
+          if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+            searchForIndices(value, currentPath);
+          }
+        }
+      };
+      console.log('=== SEARCHING FOR ANY INDEX FIELDS ===');
+      searchForIndices(data);
     }
     
     // Extract data based on SerpAPI Google Scholar Author response structure
@@ -87,18 +107,30 @@ export async function GET() {
                           data.citations || 
                           0;
     
-    // Try multiple possible locations for h-index
+    // Try multiple possible locations for h-index with more aggressive searching
     const hIndex = authorInfo.indices?.h_index || 
                    data.h_index || 
                    authorInfo.h_index || 
-                   data.indices?.h_index || 
+                   data.indices?.h_index ||
+                   data.author?.hindex ||
+                   data.hindex ||
+                   authorInfo.hindex ||
+                   // Sometimes it might be in a different format
+                   (typeof data.author?.indices === 'object' ? 
+                     Object.values(data.author.indices).find(v => typeof v === 'number' && v > 0) : null) ||
                    0;
     
-    // Try multiple possible locations for i10-index
+    // Try multiple possible locations for i10-index with more aggressive searching
     const i10Index = authorInfo.indices?.i10_index || 
                      data.i10_index || 
                      authorInfo.i10_index || 
-                     data.indices?.i10_index || 
+                     data.indices?.i10_index ||
+                     data.author?.i10index ||
+                     data.i10index ||
+                     authorInfo.i10index ||
+                     // Check for alternative naming
+                     data.author?.indices?.['i10_index'] ||
+                     data.author?.indices?.['i10-index'] ||
                      0;
     
     // Get publications count from articles array length

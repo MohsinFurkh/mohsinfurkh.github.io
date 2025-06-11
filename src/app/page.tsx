@@ -7,12 +7,16 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 export default function Home() {
   const [scholarData, setScholarData] = useState({
-    citations: '200+', // Default fallback values
-    publications: '15+',
-    h_index: '5+',
-    citationsByYear: [] as Array<{year: number, citations: number}>
+    citations: 0,
+    publications: 0,
+    h_index: 0,
+    i10_index: 0,
+    citationsByYear: [] as Array<{year: number, citations: number}>,
+    author_name: '',
+    author_affiliation: ''
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchScholarData() {
@@ -21,27 +25,38 @@ export default function Home() {
         const response = await fetch('/api/scholar');
         console.log('Response status:', response.status);
         
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Error response:', errorText);
-          throw new Error(`API request failed: ${response.status}`);
-        }
-        
         const data = await response.json();
         console.log('Scholar data received:', data);
         
+        if (!response.ok) {
+          // Handle API errors but use fallback data if provided
+          if (data.fallback) {
+            setScholarData(data.fallback);
+          }
+          throw new Error(data.message || `API request failed: ${response.status}`);
+        }
+        
         if (data.error) {
           console.error('API returned error:', data.error);
+          if (data.fallback) {
+            setScholarData(data.fallback);
+          }
+          setError(data.error);
         } else {
           setScholarData({
-            citations: data.citations,
-            publications: data.publications,
-            h_index: data.h_index,
-            citationsByYear: data.citationsByYear || []
+            citations: data.citations || 0,
+            publications: data.publications || 0,
+            h_index: data.h_index || 0,
+            i10_index: data.i10_index || 0,
+            citationsByYear: data.citationsByYear || [],
+            author_name: data.author_name || '',
+            author_affiliation: data.author_affiliation || ''
           });
+          setError(null);
         }
       } catch (error) {
         console.error('Error fetching scholar data:', error);
+        setError(error instanceof Error ? error.message : 'Failed to fetch data');
       } finally {
         setIsLoading(false);
       }
@@ -50,7 +65,13 @@ export default function Home() {
     fetchScholarData();
   }, []);
 
-  // Update the Stats section in your existing code
+  // Format numbers for display
+  const formatNumber = (num: number) => {
+    if (num === 0) return '0';
+    if (num >= 1000) return `${(num / 1000).toFixed(1)}k`;
+    return num.toString();
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -72,30 +93,70 @@ export default function Home() {
                 Passionate about translating cutting-edge research into clinical impact.
               </p>
               
+              {/* Error message */}
+              {error && (
+                <div className="bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-3 mb-6">
+                  <p className="text-sm text-yellow-200">
+                    Note: Scholar data may not be current due to API limitations
+                  </p>
+                </div>
+              )}
+              
               {/* Stats - Updated with real-time data */}
               <div className="flex flex-wrap justify-center md:justify-start gap-8 mb-8 animate-fadeIn delay-400">
-                <Link href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-center group hover:scale-105 transition-transform">
+                <Link 
+                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-center group hover:scale-105 transition-transform"
+                >
                   <span className="block text-2xl font-bold text-accent group-hover:underline">
-                    {isLoading ? '...' : scholarData.publications}
+                    {isLoading ? '...' : formatNumber(scholarData.publications)}
                   </span>
                   <span className="text-sm opacity-80">Publications</span>
                 </Link>
-                <Link href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-center group hover:scale-105 transition-transform">
+                
+                <Link 
+                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-center group hover:scale-105 transition-transform"
+                >
                   <span className="block text-2xl font-bold text-accent group-hover:underline">
-                    {isLoading ? '...' : scholarData.citations}
+                    {isLoading ? '...' : formatNumber(scholarData.citations)}
                   </span>
                   <span className="text-sm opacity-80">Citations</span>
                 </Link>
-                <Link href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-center group hover:scale-105 transition-transform">
+                
+                <Link 
+                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-center group hover:scale-105 transition-transform"
+                >
                   <span className="block text-2xl font-bold text-accent group-hover:underline">
                     {isLoading ? '...' : scholarData.h_index}
                   </span>
                   <span className="text-sm opacity-80">h-index</span>
                 </Link>
+                
+                {scholarData.i10_index > 0 && (
+                  <Link 
+                    href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-center group hover:scale-105 transition-transform"
+                  >
+                    <span className="block text-2xl font-bold text-accent group-hover:underline">
+                      {scholarData.i10_index}
+                    </span>
+                    <span className="text-sm opacity-80">i10-index</span>
+                  </Link>
+                )}
               </div>
               
               {/* Citations by Year Graph */}
-              {scholarData.citationsByYear && scholarData.citationsByYear.length > 0 && (
+              {!isLoading && scholarData.citationsByYear && scholarData.citationsByYear.length > 0 && (
                 <div className="mt-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm animate-fadeIn">
                   <h3 className="text-primary dark:text-accent text-lg font-semibold mb-4">Citations by Year</h3>
                   <div className="h-64 w-full">
@@ -109,6 +170,7 @@ export default function Home() {
                           dataKey="year" 
                           tick={{ fill: '#6B7280' }}
                           tickLine={{ stroke: '#6B7280' }}
+                          domain={['dataMin', 'dataMax']}
                         />
                         <YAxis 
                           tick={{ fill: '#6B7280' }}
@@ -116,28 +178,30 @@ export default function Home() {
                         />
                         <Tooltip 
                           contentStyle={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
                             border: '1px solid #e5e7eb',
                             borderRadius: '0.5rem',
-                            padding: '0.5rem',
+                            padding: '0.75rem',
                             color: '#1F2937',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                           }}
+                          formatter={(value, name) => [`${value} citations`, 'Citations in ' + scholarData.citationsByYear.find(d => d.citations === value)?.year]}
+                          labelFormatter={(year) => `Year: ${year}`}
                         />
-                        <Legend />
                         <Line 
                           type="monotone" 
                           dataKey="citations" 
                           name="Citations" 
                           stroke="#10B981" 
-                          strokeWidth={2}
+                          strokeWidth={3}
                           dot={{
                             fill: '#10B981',
                             strokeWidth: 2,
-                            r: 4,
+                            r: 5,
                             stroke: '#fff'
                           }}
                           activeDot={{
-                            r: 6,
+                            r: 7,
                             stroke: '#fff',
                             strokeWidth: 2,
                             fill: '#10B981'
@@ -145,6 +209,16 @@ export default function Home() {
                         />
                       </LineChart>
                     </ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+              
+              {/* Loading state for graph */}
+              {isLoading && (
+                <div className="mt-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                  <div className="animate-pulse">
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/3 mb-4"></div>
+                    <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded"></div>
                   </div>
                 </div>
               )}

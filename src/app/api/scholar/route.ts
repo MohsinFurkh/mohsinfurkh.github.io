@@ -1,6 +1,34 @@
 // API route to fetch Google Scholar data
 import { NextResponse } from 'next/server';
 
+// Type definitions for SerpAPI Google Scholar response
+interface CitationGraphItem {
+  year: string;
+  citations: string;
+}
+
+interface AuthorIndices {
+  h_index?: number;
+  i10_index?: number;
+}
+
+interface CitedBy {
+  total?: number;
+  graph?: CitationGraphItem[];
+}
+
+interface AuthorInfo {
+  name?: string;
+  affiliations?: string[];
+  cited_by?: CitedBy;
+  indices?: AuthorIndices;
+}
+
+interface ScholarApiResponse {
+  author?: AuthorInfo;
+  articles?: any[];
+}
+
 export async function GET() {
   try {
     const API_KEY = process.env.SERPAPI_KEY;
@@ -22,7 +50,7 @@ export async function GET() {
       throw new Error(`API request failed: ${response.status}`);
     }
     
-    const data = await response.json();
+    const data: ScholarApiResponse = await response.json();
     console.log('API response received');
     
     // Debug: Log the actual response structure
@@ -48,7 +76,7 @@ export async function GET() {
     // Extract citations by year from the graph data
     // This is typically in author.cited_by.graph
     const citationsGraph = authorInfo.cited_by?.graph || [];
-    const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item) => ({
+    const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item: CitationGraphItem) => ({
       year: parseInt(item.year),
       citations: parseInt(item.citations)
     })).sort((a, b) => a.year - b.year) : [];
@@ -81,7 +109,7 @@ export async function GET() {
           raw_author: authorInfo,
           articles_count: data.articles?.length || 0,
           has_graph_data: !!authorInfo.cited_by?.graph,
-          graph_years: citationsGraph.map(item => item.year)
+          graph_years: citationsGraph.map((item: CitationGraphItem) => item.year)
         }
       })
     };

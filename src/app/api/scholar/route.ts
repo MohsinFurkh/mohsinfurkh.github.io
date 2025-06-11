@@ -90,27 +90,6 @@ export async function GET() {
     // Extract data based on SerpAPI Google Scholar Author response structure
     const authorInfo = data.author || {};
     
-    // Try multiple possible locations for total citations
-    const totalCitations = authorInfo.cited_by?.total || 
-                          data.cited_by?.total || 
-                          authorInfo.cited_by_total || 
-                          data.citations || 
-                          0;
-    
-    // Try multiple possible locations for h-index, fallback to calculated value
-    const hIndex = authorInfo.indices?.h_index || 
-                   data.h_index || 
-                   authorInfo.h_index || 
-                   data.indices?.h_index || 
-                   calculatedHIndex;
-    
-    // Try multiple possible locations for i10-index, fallback to calculated value
-    const i10Index = authorInfo.indices?.i10_index || 
-                     data.i10_index || 
-                     authorInfo.i10_index || 
-                     data.indices?.i10_index || 
-                     calculatedI10Index;
-    
     // Get publications count from articles array length
     const publications = data.articles?.length || 0;
     
@@ -153,6 +132,27 @@ export async function GET() {
         publicationsWithCitations: citationCounts.length
       });
     }
+    
+    // Try multiple possible locations for total citations
+    const totalCitations = authorInfo.cited_by?.total || 
+                          data.cited_by?.total || 
+                          authorInfo.cited_by_total || 
+                          data.citations || 
+                          0;
+    
+    // Try multiple possible locations for h-index, fallback to calculated value
+    const hIndex = authorInfo.indices?.h_index || 
+                   data.h_index || 
+                   authorInfo.h_index || 
+                   data.indices?.h_index || 
+                   calculatedHIndex;
+    
+    // Try multiple possible locations for i10-index, fallback to calculated value
+    const i10Index = authorInfo.indices?.i10_index || 
+                     data.i10_index || 
+                     authorInfo.i10_index || 
+                     data.indices?.i10_index || 
+                     calculatedI10Index;
     
     // Extract citations by year from the graph data
     // Try multiple possible locations for graph data

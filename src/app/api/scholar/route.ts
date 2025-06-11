@@ -15,6 +15,16 @@ interface AuthorIndices {
 interface CitedBy {
   total?: number;
   graph?: CitationGraphItem[];
+  value?: number; // For individual articles
+}
+
+interface Article {
+  title?: string;
+  cited_by?: CitedBy;
+  cited_by_count?: number;
+  citations?: number;
+  num_citations?: number;
+  [key: string]: any;
 }
 
 interface AuthorInfo {
@@ -29,7 +39,7 @@ interface AuthorInfo {
 
 interface ScholarApiResponse {
   author?: AuthorInfo;
-  articles?: any[];
+  articles?: Article[];
   cited_by?: CitedBy;
   h_index?: number;
   i10_index?: number;
@@ -73,28 +83,8 @@ export async function GET() {
       console.log(JSON.stringify(data.author?.cited_by, null, 2));
       console.log('=== INDICES OBJECT ===');
       console.log(JSON.stringify(data.author?.indices, null, 2));
-      console.log('=== SEARCHING FOR H-INDEX ===');
-      console.log('data.author?.indices?.h_index:', data.author?.indices?.h_index);
-      console.log('data.h_index:', data.h_index);
-      console.log('data.author?.h_index:', data.author?.h_index);
-      console.log('data.indices?.h_index:', data.indices?.h_index);
       console.log('=== TOP LEVEL KEYS ===');
       console.log(Object.keys(data));
-      
-      // Search for any property containing 'h_index' or 'i10_index'
-      const searchForIndices = (obj: any, path = '') => {
-        for (const [key, value] of Object.entries(obj)) {
-          const currentPath = path ? `${path}.${key}` : key;
-          if (key.includes('h_index') || key.includes('i10_index') || key.includes('index')) {
-            console.log(`Found index-related field: ${currentPath} =`, value);
-          }
-          if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-            searchForIndices(value, currentPath);
-          }
-        }
-      };
-      console.log('=== SEARCHING FOR ANY INDEX FIELDS ===');
-      searchForIndices(data);
     }
     
     // Extract data based on SerpAPI Google Scholar Author response structure
@@ -107,34 +97,62 @@ export async function GET() {
                           data.citations || 
                           0;
     
-    // Try multiple possible locations for h-index with more aggressive searching
+    // Try multiple possible locations for h-index, fallback to calculated value
     const hIndex = authorInfo.indices?.h_index || 
                    data.h_index || 
                    authorInfo.h_index || 
-                   data.indices?.h_index ||
-                   data.author?.hindex ||
-                   data.hindex ||
-                   authorInfo.hindex ||
-                   // Sometimes it might be in a different format
-                   (typeof data.author?.indices === 'object' ? 
-                     Object.values(data.author.indices).find(v => typeof v === 'number' && v > 0) : null) ||
-                   0;
+                   data.indices?.h_index || 
+                   calculatedHIndex;
     
-    // Try multiple possible locations for i10-index with more aggressive searching
+    // Try multiple possible locations for i10-index, fallback to calculated value
     const i10Index = authorInfo.indices?.i10_index || 
                      data.i10_index || 
                      authorInfo.i10_index || 
-                     data.indices?.i10_index ||
-                     data.author?.i10index ||
-                     data.i10index ||
-                     authorInfo.i10index ||
-                     // Check for alternative naming
-                     data.author?.indices?.['i10_index'] ||
-                     data.author?.indices?.['i10-index'] ||
-                     0;
+                     data.indices?.i10_index || 
+                     calculatedI10Index;
     
     // Get publications count from articles array length
     const publications = data.articles?.length || 0;
+    
+    // Calculate h-index and i10-index manually from publications data
+    let calculatedHIndex = 0;
+    let calculatedI10Index = 0;
+    
+    if (data.articles && Array.isArray(data.articles)) {
+      // Extract citation counts for each publication
+      const citationCounts = data.articles
+        .map((article: any) => {
+          // Try different possible fields for citation count
+          return article.cited_by?.value || 
+                 article.cited_by_count || 
+                 article.citations || 
+                 article.num_citations || 
+                 0;
+        })
+        .filter((count: number) => count > 0) // Only include publications with citations
+        .sort((a: number, b: number) => b - a); // Sort in descending order
+      
+      console.log('Citation counts per publication:', citationCounts);
+      
+      // Calculate h-index: largest number h such that h publications have at least h citations each
+      for (let i = 0; i < citationCounts.length; i++) {
+        if (citationCounts[i] >= i + 1) {
+          calculatedHIndex = i + 1;
+        } else {
+          break;
+        }
+      }
+      
+      // Calculate i10-index: number of publications with at least 10 citations
+      calculatedI10Index = citationCounts.filter((count: number) => count >= 10).length;
+      
+      console.log('Manual calculation results:', {
+        hIndex: calculatedHIndex,
+        i10Index: calculatedI10Index,
+        totalPublications: publications,
+        publicationsWithCitations: citationCounts.length
+      });
+    }
     
     // Extract citations by year from the graph data
     // Try multiple possible locations for graph data

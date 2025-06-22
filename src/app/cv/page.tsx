@@ -50,13 +50,28 @@ const cvData: Section[] = [
     title: 'Experience',
     content: [
       {
+        title: 'Full Stack Web Developer',
+        subtitle: 'Freelance',
+        date: '2022 - Present',
+        description: 'Web Development Projects',
+        items: [
+          'Developed Shifa.AI - An AI-powered healthcare platform with symptom analysis and health assessments using Next.js, TypeScript, and Google Gemini AI',
+          'Created UGC NET CS HUB - An e-learning platform for UGC NET CS aspirants with practice questions and performance tracking',
+          'Built GoalTrackr - A personal goal management application with task tracking and progress visualization',
+          'Implemented responsive UIs with modern frameworks like Tailwind CSS and Headless UI',
+          'Integrated various APIs including Google Gemini AI, OpenAI, and custom backend services',
+          'Set up CI/CD pipelines for automated testing and deployment using Vercel'
+        ]
+      },
+      {
         title: 'Teaching Assistant',
         subtitle: 'University of Hyderabad',
         date: '2022 - 2024',
         description: 'School of Computer and Information Sciences',
         items: [
           'Mentored 10+ IMTech and MTech students in Deep Learning and Computer Vision',
-          'Mentored two research assistants in projects on Fuzzy Rough Kernel-Based Extreme Learning Machine and Mineral Prospectivity Classification using Deep CNNs'
+          'Mentored two research assistants in projects on Fuzzy Rough Kernel-Based Extreme Learning Machine and Mineral Prospectivity Classification using Deep CNNs',
+          'Conducted workshops on web development technologies including React, Next.js, and modern JavaScript/TypeScript'
         ]
       },
       {
@@ -66,7 +81,8 @@ const cvData: Section[] = [
         description: 'School of Computer and Information Sciences',
         items: [
           'Managed and maintained computational resources in the AI Lab',
-          'Provided technical support for researchers and students'
+          'Provided technical support for researchers and students',
+          'Developed internal web tools for lab resource management using modern web technologies'
         ]
       },
       {
@@ -75,8 +91,9 @@ const cvData: Section[] = [
         date: '2019',
         description: 'Department of Computer Science',
         items: [
-          'Taught undergraduate computer science courses',
-          'Developed curriculum and assessment materials'
+          'Taught undergraduate computer science courses including Web Development and Programming',
+          'Developed curriculum and assessment materials for web technologies',
+          'Guided students in web development projects and applications'
         ]
       }
     ]

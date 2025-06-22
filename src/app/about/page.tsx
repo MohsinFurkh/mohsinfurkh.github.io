@@ -48,23 +48,35 @@ export default function About() {
                 </div>
                 
                 <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Skills</h2>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <h3 className="font-semibold mb-2">Technical</h3>
+                    <h3 className="font-semibold mb-2">Web Development</h3>
+                    <ul className="space-y-1">
+                      <li>Next.js, React, TypeScript</li>
+                      <li>Node.js, Express, MongoDB</li>
+                      <li>Tailwind CSS, Headless UI</li>
+                      <li>Authentication (NextAuth, JWT)</li>
+                      <li>RESTful APIs, GraphQL</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">AI/ML & Research</h3>
                     <ul className="space-y-1">
                       <li>Python, PyTorch, TensorFlow</li>
                       <li>Medical Imaging (DICOM, NIfTI)</li>
                       <li>Computer Vision & Deep Learning</li>
-                      <li>Cloud Computing (AWS, GCP)</li>
+                      <li>Algorithm Development</li>
+                      <li>Data Analysis & Visualization</li>
                     </ul>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Research</h3>
+                    <h3 className="font-semibold mb-2">Tools & Platforms</h3>
                     <ul className="space-y-1">
-                      <li>Algorithm Development</li>
-                      <li>Data Analysis & Visualization</li>
-                      <li>Scientific Writing</li>
-                      <li>Peer Review</li>
+                      <li>Git, GitHub, GitLab</li>
+                      <li>Docker, Kubernetes</li>
+                      <li>AWS, GCP, Vercel</li>
+                      <li>CI/CD Pipelines</li>
+                      <li>Agile/Scrum Methodologies</li>
                     </ul>
                   </div>
                 </div>

@@ -86,11 +86,12 @@ export default function Home() {
                 Mohsin Furkh Dar
               </h1>
               <div className="text-xl text-green-700 dark:text-green-500 mb-4 animate-fadeIn delay-200 font-semibold">
-                PhD in Deep Learning for Medical Imaging
+                PhD in Deep Learning for Medical Imaging & Full Stack Developer
               </div>
               <p className="text-lg mb-8 animate-fadeIn delay-300">
-                Advancing healthcare through innovative AI solutions for medical image segmentation and classification. 
-                Passionate about translating cutting-edge research into clinical impact.
+                Bridging the gap between AI research and practical applications through innovative web solutions. 
+                I specialize in building intelligent web applications that leverage cutting-edge AI/ML technologies 
+                to solve real-world problems in healthcare, education, and beyond.
               </p>
               
               {/* Error message */}
@@ -102,134 +103,25 @@ export default function Home() {
                 </div>
               )}
               
-              {/* Stats - Updated with real-time data */}
-              <div className="flex flex-wrap justify-center md:justify-start gap-8 mb-8 animate-fadeIn delay-400">
-                <Link 
-                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-center group hover:scale-105 transition-transform"
-                >
-                  <span className="block text-2xl font-bold text-accent group-hover:underline">
-                    {isLoading ? '...' : formatNumber(scholarData.publications)}
-                  </span>
-                  <span className="text-sm opacity-80">Publications</span>
-                </Link>
-                
-                <Link 
-                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-center group hover:scale-105 transition-transform"
-                >
-                  <span className="block text-2xl font-bold text-accent group-hover:underline">
-                    {isLoading ? '...' : formatNumber(scholarData.citations)}
-                  </span>
-                  <span className="text-sm opacity-80">Citations</span>
-                </Link>
-                
-                <Link 
-                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-center group hover:scale-105 transition-transform"
-                >
-                  <span className="block text-2xl font-bold text-accent group-hover:underline">
-                    {isLoading ? '...' : scholarData.h_index}
-                  </span>
-                  <span className="text-sm opacity-80">h-index</span>
-                </Link>
-                
-                {scholarData.i10_index > 0 && (
-                  <Link 
-                    href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-center group hover:scale-105 transition-transform"
-                  >
-                    <span className="block text-2xl font-bold text-accent group-hover:underline">
-                      {scholarData.i10_index}
-                    </span>
-                    <span className="text-sm opacity-80">i10-index</span>
-                  </Link>
-                )}
-              </div>
-              
-              {/* Citations by Year Graph */}
-              {!isLoading && scholarData.citationsByYear && scholarData.citationsByYear.length > 0 && (
-                <div className="mt-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm animate-fadeIn">
-                  <h3 className="text-primary dark:text-accent text-lg font-semibold mb-4">Citations by Year</h3>
-                  <div className="h-64 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={scholarData.citationsByYear}
-                        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                        <XAxis 
-                          dataKey="year" 
-                          tick={{ fill: '#6B7280' }}
-                          tickLine={{ stroke: '#6B7280' }}
-                          domain={['dataMin', 'dataMax']}
-                        />
-                        <YAxis 
-                          tick={{ fill: '#6B7280' }}
-                          tickLine={{ stroke: '#6B7280' }}
-                        />
-                        <Tooltip 
-                          contentStyle={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '0.5rem',
-                            padding: '0.75rem',
-                            color: '#1F2937',
-                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                          }}
-                          formatter={(value, name) => [`${value} citations`, 'Citations in ' + scholarData.citationsByYear.find(d => d.citations === value)?.year]}
-                          labelFormatter={(year) => `Year: ${year}`}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="citations" 
-                          name="Citations" 
-                          stroke="#10B981" 
-                          strokeWidth={3}
-                          dot={{
-                            fill: '#10B981',
-                            strokeWidth: 2,
-                            r: 5,
-                            stroke: '#fff'
-                          }}
-                          activeDot={{
-                            r: 7,
-                            stroke: '#fff',
-                            strokeWidth: 2,
-                            fill: '#10B981'
-                          }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-              )}
-              
-              {/* Loading state for graph */}
-              {isLoading && (
-                <div className="mt-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
-                  <div className="animate-pulse">
-                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/3 mb-4"></div>
-                    <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                  </div>
-                </div>
-              )}
-              
               {/* Buttons */}
-              <div className="flex flex-wrap justify-center md:justify-start gap-4 animate-fadeIn delay-500">
-                <Link href="/research" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
-                  View Research
+              <div className="flex flex-wrap gap-4 mt-8 animate-fadeIn delay-400">
+                <Link 
+                  href="/research" 
+                  className="px-6 py-3 bg-white text-primary rounded-full font-medium hover:bg-gray-100 transition-colors"
+                >
+                  View My Research
                 </Link>
-                <Link href="/cv" className="btn border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-full">
-                  View CV
+                <Link 
+                  href="/projects" 
+                  className="px-6 py-3 bg-accent text-white rounded-full font-medium hover:bg-accent/90 transition-colors"
+                >
+                  Explore Projects
+                </Link>
+                <Link 
+                  href="#web-projects" 
+                  className="px-6 py-3 border-2 border-white text-white rounded-full font-medium hover:bg-white/10 transition-colors"
+                >
+                  Web Development Work
                 </Link>
               </div>
             </div>

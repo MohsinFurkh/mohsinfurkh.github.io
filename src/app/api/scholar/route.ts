@@ -1,4 +1,4 @@
-// API route to fetch Google Scholar data
+// API route to fetch Google Scholar data with individual paper citations
 import { NextResponse } from 'next/server';
 
 // Type definitions for SerpAPI Google Scholar response
@@ -24,6 +24,10 @@ interface Article {
   cited_by_count?: number;
   citations?: number;
   num_citations?: number;
+  year?: string | number;
+  authors?: string;
+  publication?: string;
+  link?: string;
   [key: string]: any;
 }
 
@@ -35,6 +39,15 @@ interface AuthorInfo {
   cited_by_total?: number;
   h_index?: number;
   i10_index?: number;
+}
+
+interface ProcessedPaper {
+  title: string;
+  citations: number;
+  year?: number;
+  authors?: string;
+  publication?: string;
+  link?: string;
 }
 
 interface ScholarApiResponse {
@@ -79,38 +92,64 @@ export async function GET() {
       console.log(JSON.stringify(data, null, 2));
       console.log('=== AUTHOR OBJECT ===');
       console.log(JSON.stringify(data.author, null, 2));
-      console.log('=== CITED BY OBJECT ===');
-      console.log(JSON.stringify(data.author?.cited_by, null, 2));
-      console.log('=== INDICES OBJECT ===');
-      console.log(JSON.stringify(data.author?.indices, null, 2));
-      console.log('=== TOP LEVEL KEYS ===');
-      console.log(Object.keys(data));
+      console.log('=== SAMPLE ARTICLE ===');
+      console.log(JSON.stringify(data.articles?.[0], null, 2));
     }
     
     // Extract data based on SerpAPI Google Scholar Author response structure
     const authorInfo = data.author || {};
     
+    // Process individual papers with their citation counts
+    const papers: ProcessedPaper[] = [];
+    const citationCounts: number[] = [];
+    
+    if (data.articles && Array.isArray(data.articles)) {
+      data.articles.forEach((article: Article) => {
+        // Try different possible fields for citation count
+        const citationCount = article.cited_by?.value || 
+                             article.cited_by_count || 
+                             article.citations || 
+                             article.num_citations || 
+                             0;
+        
+        // Extract year, handling both string and number formats
+        let year: number | undefined;
+        if (article.year) {
+          const yearNum = typeof article.year === 'string' ? parseInt(article.year) : article.year;
+          if (!isNaN(yearNum)) {
+            year = yearNum;
+          }
+        }
+        
+        const paper: ProcessedPaper = {
+          title: article.title || 'Untitled',
+          citations: citationCount,
+          year,
+          authors: article.authors,
+          publication: article.publication,
+          link: article.link
+        };
+        
+        papers.push(paper);
+        
+        // Only include papers with citations for h-index calculation
+        if (citationCount > 0) {
+          citationCounts.push(citationCount);
+        }
+      });
+      
+      // Sort citation counts for h-index calculation
+      citationCounts.sort((a, b) => b - a);
+    }
+    
     // Get publications count from articles array length
-    const publications = data.articles?.length || 0;
+    const publications = papers.length;
     
     // Calculate h-index and i10-index manually from publications data
     let calculatedHIndex = 0;
     let calculatedI10Index = 0;
     
-    if (data.articles && Array.isArray(data.articles)) {
-      // Extract citation counts for each publication
-      const citationCounts = data.articles
-        .map((article: any) => {
-          // Try different possible fields for citation count
-          return article.cited_by?.value || 
-                 article.cited_by_count || 
-                 article.citations || 
-                 article.num_citations || 
-                 0;
-        })
-        .filter((count: number) => count > 0) // Only include publications with citations
-        .sort((a: number, b: number) => b - a); // Sort in descending order
-      
+    if (citationCounts.length > 0) {
       console.log('Citation counts per publication:', citationCounts);
       
       // Calculate h-index: largest number h such that h publications have at least h citations each
@@ -155,7 +194,6 @@ export async function GET() {
                      calculatedI10Index;
     
     // Extract citations by year from the graph data
-    // Try multiple possible locations for graph data
     const citationsGraph = authorInfo.cited_by?.graph || 
                           data.cited_by?.graph || 
                           data.graph || 
@@ -172,6 +210,17 @@ export async function GET() {
       finalCitations = citationsByYear.reduce((sum, yearData) => sum + yearData.citations, 0);
     }
     
+    // Sort papers by citation count (descending) and then by year (descending)
+    const sortedPapers = papers.sort((a, b) => {
+      if (a.citations !== b.citations) {
+        return b.citations - a.citations; // Higher citations first
+      }
+      // If citations are equal, sort by year (newer first)
+      const yearA = a.year || 0;
+      const yearB = b.year || 0;
+      return yearB - yearA;
+    });
+    
     console.log('Extracted data before processing:', {
       totalCitations,
       hIndex,
@@ -179,7 +228,7 @@ export async function GET() {
       publications,
       citationsByYear: citationsByYear.length,
       authorName: authorInfo.name,
-      graphDataExists: !!citationsGraph.length
+      papersWithCitations: papers.filter(p => p.citations > 0).length
     });
     
     const responseData = { 
@@ -188,6 +237,7 @@ export async function GET() {
       h_index: hIndex,
       i10_index: i10Index,
       citationsByYear,
+      papers: sortedPapers, // Include individual papers with citations
       author_name: authorInfo.name || 'Unknown',
       author_affiliation: authorInfo.affiliations?.[0] || '',
       // Include debug info in development
@@ -196,7 +246,8 @@ export async function GET() {
           raw_author: authorInfo,
           articles_count: data.articles?.length || 0,
           has_graph_data: !!authorInfo.cited_by?.graph,
-          graph_years: citationsGraph.map((item: CitationGraphItem) => item.year)
+          graph_years: citationsGraph.map((item: CitationGraphItem) => item.year),
+          sample_paper: papers[0] // First paper for debugging
         }
       })
     };
@@ -215,7 +266,9 @@ export async function GET() {
         citations: 0,
         publications: 0,
         h_index: 0,
-        citationsByYear: []
+        i10_index: 0,
+        citationsByYear: [],
+        papers: []
       }
     }, { status: 500 });
   }

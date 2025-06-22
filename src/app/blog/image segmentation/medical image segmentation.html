@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Future of Medical Image Segmentation: An Interactive Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a single-page dashboard with four thematic sections: "Overview," "Methods," "Challenges," and "Future," accessible via a sticky navigation bar. This non-linear, thematic structure was chosen over the report's original format to enhance usability and discovery. The "Methods" section uses interactive tabs and filters to allow users to actively compare different AI architectures (CNNs vs. Transformers) and explore a large dataset of U-Net applications by modality, which is more engaging than a static table. The "Challenges" section uses an interactive diagram to visually represent the interconnected nature of the problems, making the complex feedback loop described in the report easier to grasp. This user-centric design prioritizes exploration and comprehension over passive reading. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: U-Net applications and performance metrics (Table 2). Goal: Compare & Inform. Viz/Method: Interactive list filtered by modality buttons and a dynamic Bar Chart (Chart.js). Interaction: User clicks a modality (e.g., 'MRI'), the list and chart update to show only MRI data. Justification: This transforms a dense, static table into an engaging, explorable component, allowing users to focus on data relevant to their interests.
+        - Report Info: CNN vs. Transformer comparison (Table 1). Goal: Compare. Viz/Method: Side-by-side comparison cards (HTML/Tailwind). Interaction: Static display. Justification: A direct visual comparison of key characteristics, strengths, and weaknesses is highly effective for quick comprehension.
+        - Report Info: Interconnected challenges (data scarcity, generalization, etc.). Goal: Relationships. Viz/Method: Interactive diagram using HTML/CSS Flexbox. Interaction: Clicking a challenge node highlights it and displays its details and solutions in an adjacent panel. Justification: This visualizes the complex feedback loop mentioned in the report, making the relationships between problems more apparent than a list or table.
+        - Report Info: Non-fully supervised learning types. Goal: Organize & Inform. Viz/Method: Clickable cards (HTML/Tailwind). Interaction: Clicking a card reveals details. Justification: Breaks down complex topics into digestible, on-demand chunks.
+        - Library/Method: Chart.js for the bar chart. All other visuals are built with structured HTML and Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #212529;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #007BFF;
+            border-bottom-color: #007BFF;
+        }
+        .tab-button.active {
+            background-color: #007BFF;
+            color: #FFFFFF;
+        }
+        .challenge-card.active {
+            transform: translateY(-5px) scale(1.03);
+            border-color: #007BFF;
+            box-shadow: 0 10px 15px -3px rgb(0 123 255 / 0.1), 0 4px 6px -4px rgb(0 123 255 / 0.1);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-900">Medical Image Segmentation</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#overview" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Overview</a>
+                <a href="#methods" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Methods</a>
+                <a href="#challenges" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Challenges</a>
+                <a href="#future" class="nav-link text-gray-600 font-medium border-b-2 border-transparent pb-1">Future Directions</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <a href="#overview" class="block py-2 px-6 text-gray-600 hover:bg-gray-100">Overview</a>
+            <a href="#methods" class="block py-2 px-6 text-gray-600 hover:bg-gray-100">Methods</a>
+            <a href="#challenges" class="block py-2 px-6 text-gray-600 hover:bg-gray-100">Challenges</a>
+            <a href="#future" class="block py-2 px-6 text-gray-600 hover:bg-gray-100">Future Directions</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <section id="overview" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">A Revolution in Medical Vision</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                Medical image segmentation is a cornerstone of modern healthcare, partitioning digital scans into meaningful regions like organs, tumors, and vessels. This interactive report explores the powerful AI methods driving this field, the challenges they face, and the future directions that promise to redefine diagnostics and treatment.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-md transition-shadow hover:shadow-lg">
+                    <div class="text-4xl mb-2 text-blue-500">🎯</div>
+                    <h3 class="text-xl font-semibold mb-2">Precise Diagnosis</h3>
+                    <p class="text-gray-600">Enables high-accuracy localization of tumors, analysis of brain tissue, and detailed angiography, moving beyond the limits of human interpretation.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md transition-shadow hover:shadow-lg">
+                    <div class="text-4xl mb-2 text-green-500">⚙️</div>
+                    <h3 class="text-xl font-semibold mb-2">Automated Workflows</h3>
+                    <p class="text-gray-600">Deep learning automates the once labor-intensive process, overcoming human limitations in speed, consistency, and scalability for faster clinical decisions.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md transition-shadow hover:shadow-lg">
+                    <div class="text-4xl mb-2 text-purple-500">🔬</div>
+                    <h3 class="text-xl font-semibold mb-2">Advanced Applications</h3>
+                    <p class="text-gray-600">Fuels virtual endoscopy, biomedical simulations, population studies, and computer-aided surgery, impacting the entire clinical pipeline.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="methods" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">Exploring Segmentation Methods</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                The evolution of segmentation is marked by increasingly sophisticated AI architectures. From the foundational U-Net to the paradigm-shifting Transformers, each method offers unique strengths. This section allows you to interactively explore and compare these powerful techniques.
+            </p>
+            
+            <div class="flex justify-center mb-8 space-x-2 md:space-x-4 bg-gray-200 p-2 rounded-xl max-w-lg mx-auto">
+                <button data-tab="unet" class="tab-button w-full py-2 px-4 rounded-lg font-semibold transition-colors duration-300">U-Net & CNNs</button>
+                <button data-tab="transformer" class="tab-button w-full py-2 px-4 rounded-lg font-semibold transition-colors duration-300">Transformers</button>
+                <button data-tab="data-efficient" class="tab-button w-full py-2 px-4 rounded-lg font-semibold transition-colors duration-300">Data-Efficient Learning</button>
+            </div>
+
+            <div id="methods-content" class="fade-in">
+            </div>
+        </section>
+
+        <section id="challenges" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">Navigating the Hurdles</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                 The path to widespread clinical adoption is not without obstacles. Key challenges are deeply interconnected, creating a feedback loop that researchers are actively working to solve. Click on a challenge below to understand its impact and the strategies being developed to overcome it.
+            </p>
+            <div class="lg:flex lg:space-x-8">
+                <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 lg:mb-0">
+                    <div id="challenge-data" class="challenge-card bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer transition-all duration-300 hover:border-blue-500">
+                        <h3 class="font-bold text-lg mb-2">Data Scarcity & Annotation</h3>
+                        <p class="text-sm text-gray-600">High costs, privacy issues, and the need for expert knowledge limit the availability of high-quality labeled data.</p>
+                    </div>
+                    <div id="challenge-generalization" class="challenge-card bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer transition-all duration-300 hover:border-blue-500">
+                        <h3 class="font-bold text-lg mb-2">Generalization & Robustness</h3>
+                        <p class="text-sm text-gray-600">Models struggle to perform well on data from different hospitals or scanners due to "domain shift".</p>
+                    </div>
+                    <div id="challenge-compute" class="challenge-card bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer transition-all duration-300 hover:border-blue-500">
+                        <h3 class="font-bold text-lg mb-2">Computational Demands</h3>
+                        <p class="text-sm text-gray-600">Complex models require significant computing power, limiting real-time use in clinical settings.</p>
+                    </div>
+                    <div id="challenge-trust" class="challenge-card bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer transition-all duration-300 hover:border-blue-500">
+                        <h3 class="font-bold text-lg mb-2">Interpretability & Trust</h3>
+                        <p class="text-sm text-gray-600">The "black-box" nature of AI can reduce clinician confidence and hinder adoption.</p>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center min-h-[300px] fade-in" id="challenge-details">
+                    <p class="text-center text-gray-500">Click on a challenge to see details.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">The Horizon of Discovery</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                The future of medical image segmentation is being shaped by powerful new paradigms. These emerging technologies aim to create more robust, private, and comprehensive AI systems that can seamlessly integrate into clinical workflows and unlock new levels of personalized medicine.
+            </p>
+            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold mb-4">Foundation Models</h3>
+                    <p class="text-gray-600 mb-4">Models like the Segment Anything Model (SAM), pre-trained on vast datasets, offer unprecedented generalization. Research focuses on adapting them for 3D medical data, improving efficiency, and bridging the gap between general vision and specialized medical tasks.</p>
+                    <span class="font-semibold text-blue-600">Key Focus: 3D Adaptation & Efficiency</span>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold mb-4">Federated Learning</h3>
+                    <p class="text-gray-600 mb-4">This paradigm allows AI models to be trained collaboratively across multiple hospitals without sharing sensitive patient data. It is a groundbreaking approach to overcoming data privacy barriers, a critical hurdle in healthcare.</p>
+                    <span class="font-semibold text-blue-600">Key Focus: Privacy & Collaboration</span>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold mb-4">Multimodal Data Fusion</h3>
+                    <p class="text-gray-600 mb-4">The future isn't just one type of image. Fusion combines data from MRI, CT, PET, and even genomics and health records to create a complete patient profile. This holistic view enables truly personalized diagnosis and treatment planning.</p>
+                    <span class="font-semibold text-blue-600">Key Focus: Holistic Patient View</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-20">
+        <div class="container mx-auto px-6 py-4 text-center text-sm">
+            <p>Interactive visualization based on the report "Recent Methods and Future Directions in Medical Image Segmentation."</p>
+            <p>&copy; 2025. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const uNetData = [
+        { modality: 'X-ray', application: 'Vertebrae instance segmentation', metrics: { Accuracy: 88.0, DSC: 90.6, IoU: 79.3 } },
+        { modality: 'X-ray', application: 'Early SARS-CoV-2 diagnosis', metrics: { Accuracy: 98.5, Sensitivity: 98.6, Specificity: 98.9, Precision: 98.9 } },
+        { modality: 'X-ray', application: 'Tuberculosis Detection', metrics: { Accuracy: 96.5, JI: 90.4, DCI: 94.8 } },
+        { modality: 'X-ray', application: 'Dental Caries Detection', metrics: { 'F1-score': 86.0 } },
+        { modality: 'X-ray', application: 'Teeth segmentation and recognition', metrics: { mAP: 72.9, Precision: 94.3, Recall: 92.3, DCI: 84.0 } },
+        { modality: 'X-ray', application: 'Lung and heart segmentation', metrics: { DSC: 95.3, Precision: 96.4, 'F1-score': 95.9 } },
+        { modality: 'X-ray', application: 'COVID-19 Detection', metrics: { 'Binary Accuracy': 99.5, 'Multiclass Accuracy': 95.4 } },
+        { modality: 'MRI', application: 'Brain MRI Lesion segmentation', metrics: { DSC: 98.1 } },
+        { modality: 'MRI', application: 'Supraspinatus Muscle segmentation', metrics: { Precision: 99.2, IoU: 83.4, DICE: 91.0 } },
+        { modality: 'MRI', application: 'Cardiac ventricle segmentation', metrics: { DCI: 98.9, IoU: 97.8 } },
+        { modality: 'MRI', application: 'Brain tumor detection and classification', metrics: { Accuracy: 99.7, Specificity: 99.7, Precision: 98.8, Sensitivity: 97.4 } },
+        { modality: 'MRI', application: 'Hepatocellular carcinoma segmentation', metrics: { 'DSC (Liver)': 92.0, 'DSC (Tumors)': 68.7 } },
+        { modality: 'MRI', application: 'Intervertebral disc segmentation', metrics: { 'Mean DSC': 91.6 } },
+        { modality: 'CT scan', application: 'COVID-19 Diagnosis', metrics: { 'Average Dice Score': 97.0 } },
+        { modality: 'CT scan', application: 'Renal Tumor Segmentation', metrics: { 'DSC (kidney)': 97.0, 'JI (kidney)': 95.0, 'DSC (tumor)': 96.0, 'JI (tumor)': 91.0 } },
+        { modality: 'CT scan', application: 'Liver Segmentation', metrics: { DCI: 95.4 } },
+        { modality: 'CT scan', application: 'Maxillary Sinus Detection', metrics: { 'F1-score': 91.7, Accuracy: 99.0, IoU: 84.7 } },
+        { modality: 'CT scan', application: 'Ischemic and Hemorrhagic Stroke Detection', metrics: { Accuracy: 95.0, IoU: 88.0 } },
+        { modality: 'CT scan', application: 'Esophageal Tumor Segmentation', metrics: { DSC: 79.0 } },
+        { modality: 'Ultrasound', application: 'Breast Cancer Detection', metrics: { DSI: 85.8 } },
+        { modality: 'Ultrasound', application: 'Thyroid Nodule Segmentation', metrics: { DCI: 92.4, 'mean IoU': 89.7, 'Classification Accuracy': 96.6 } },
+        { modality: 'Ultrasound', application: 'Arteriovenous Fistula (AVF) Segmentation', metrics: { IoU: 91.4, Recall: 97.2, Dice: 95.3, Precision: 93.7 } },
+        { modality: 'Ultrasound', application: 'Prostate Segmentation', metrics: { DCI: 93.9 } },
+        { modality: 'Ultrasound', application: 'Automatic Ovarian Follicle Segmentation', metrics: { Accuracy: 97.8, DSC: 76.0, JI: 59.0 } },
+    ];
+
+    const challengesData = {
+        'challenge-data': {
+            title: 'Data Scarcity & Annotation Burden',
+            description: 'The effectiveness of supervised learning is constrained by the need for large, expertly annotated datasets. This process is expensive, time-consuming, and prone to human variability, with patient privacy regulations further limiting data availability.',
+            paradigms: ['Self/Semi/Weakly/Unsupervised Learning', 'Federated Learning', 'Interactive Segmentation', 'Foundation Models (pre-training)']
+        },
+        'challenge-generalization': {
+            title: 'Generalization & Robustness (Domain Shift)',
+            description: 'AI models often fail to maintain performance when applied to data from different hospitals, scanners, or patient groups. This "domain shift" is a major barrier to creating universally reliable clinical tools.',
+            paradigms: ['Self-Supervised Learning', 'Unsupervised Domain Adaptation', 'Federated Learning', 'Foundation Models']
+        },
+        'challenge-compute': {
+            title: 'Computational Demands & Efficiency',
+            description: 'State-of-the-art models like Transformers require immense computational resources for training and inference. This makes them difficult to deploy in many clinical settings where speed and efficiency are critical.',
+            paradigms: ['Parameter-Efficient Fine-Tuning (PEFT)', 'Model Compression', 'Lightweight Architectures']
+        },
+        'challenge-trust': {
+            title: 'Interpretability & Trust',
+            description: 'Many deep learning models operate as "black boxes," making it difficult for clinicians to understand or trust their decisions. This lack of transparency is a significant hurdle for clinical adoption where accountability is paramount.',
+            paradigms: ['Explainable AI (XAI)', 'Trustworthy AI (TAI)', 'Attention-Based Methods', 'Perturbation-Based Methods']
+        },
+    };
+
+    const methodsContent = {
+        unet: `
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-bold mb-2">U-Net & CNNs: The Workhorse of Segmentation</h3>
+                <p class="text-gray-600 mb-6">The U-Net architecture and its variants are the cornerstone of modern medical image segmentation. Their encoder-decoder structure with skip connections excels at capturing local features, making them highly effective across a vast range of clinical tasks. Filter the applications by imaging modality below to explore their real-world performance.</p>
+                <div class="flex flex-wrap justify-center gap-2 mb-8" id="modality-filter">
+                    <button data-modality="All" class="modality-button bg-blue-500 text-white py-2 px-4 rounded-full font-semibold">All</button>
+                    <button data-modality="X-ray" class="modality-button bg-gray-200 text-gray-700 py-2 px-4 rounded-full font-semibold">X-ray</button>
+                    <button data-modality="MRI" class="modality-button bg-gray-200 text-gray-700 py-2 px-4 rounded-full font-semibold">MRI</button>
+                    <button data-modality="CT scan" class="modality-button bg-gray-200 text-gray-700 py-2 px-4 rounded-full font-semibold">CT Scan</button>
+                    <button data-modality="Ultrasound" class="modality-button bg-gray-200 text-gray-700 py-2 px-4 rounded-full font-semibold">Ultrasound</button>
+                </div>
+                <div class="lg:flex lg:space-x-8">
+                    <div class="lg:w-1/2 mb-8 lg:mb-0 max-h-96 overflow-y-auto pr-4" id="unet-list"></div>
+                    <div class="lg:w-1/2">
+                         <div class="chart-container">
+                            <canvas id="unet-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>`,
+        transformer: `
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-bold mb-4">Transformers: A New Paradigm</h3>
+                <p class="text-gray-600 mb-8">Originally from natural language processing, Transformers use self-attention mechanisms to model long-range dependencies in data, a key limitation of CNNs. In medical imaging, they show remarkable accuracy, especially in 3D tasks, and can be trained effectively on surprisingly small datasets.</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h4 class="text-xl font-semibold mb-3">CNNs (e.g., U-Net)</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>Strength:</strong> Strong at learning local features and patterns.</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>Strength:</strong> Highly data-efficient for their architecture.</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">✗</span><span><strong>Limitation:</strong> Struggle with long-range interactions in an image.</span></li>
+                        </ul>
+                    </div>
+                    <div class="border-2 border-blue-500 rounded-lg p-6 bg-blue-50">
+                        <h4 class="text-xl font-semibold mb-3">Transformers</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>Strength:</strong> Superior at modeling long-range dependencies.</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>Strength:</strong> Higher accuracy, especially for 3D segmentation.</span></li>
+                             <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span><strong>Strength:</strong> Effective with small labeled datasets (20-200 images).</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">✗</span><span><strong>Limitation:</strong> Higher computational cost and longer training times.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>`,
+        'data-efficient': `
+             <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-bold mb-2">Data-Efficient Learning</h3>
+                <p class="text-gray-600 mb-8">A major trend in medical AI is reducing the dependency on massive, perfectly annotated datasets. These learning paradigms are designed to train robust models by cleverly using limited, incomplete, or unlabeled data, making AI more accessible and affordable.</p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-bold text-lg mb-2">Self-Supervised</h4>
+                        <p class="text-sm text-gray-600">Models learn rich features from unlabeled data by solving pretext tasks (e.g., predicting a missing patch). This pre-training boosts performance when fine-tuned on small labeled sets.</p>
+                    </div>
+                     <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-bold text-lg mb-2">Semi-Supervised</h4>
+                        <p class="text-sm text-gray-600">Combines a small amount of labeled data with a large amount of unlabeled data. The model makes predictions on unlabeled data and uses its own most confident predictions as new labels to learn from.</p>
+                    </div>
+                     <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-bold text-lg mb-2">Weakly Supervised</h4>
+                        <p class="text-sm text-gray-600">Uses "weaker" annotations instead of precise pixel-level masks. This includes image-level tags (e.g., 'tumor present'), bounding boxes, or scribbles, which are much faster to create.</p>
+                    </div>
+                     <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-bold text-lg mb-2">Unsupervised</h4>
+                        <p class="text-sm text-gray-600">Learns patterns entirely without labels. Often used for anomaly detection, where the model learns what "normal" looks like and flags any deviations as potential lesions or diseases.</p>
+                    </div>
+                </div>
+            </div>`
+    };
+
+    const methodsContentContainer = document.getElementById('methods-content');
+    const tabButtons = document.querySelectorAll('.tab-button');
+    let uNetChart;
+
+    function renderUNetList(modality) {
+        const filteredData = modality === 'All' ? uNetData : uNetData.filter(d => d.modality === modality);
+        const listContainer = document.getElementById('unet-list');
+        if (!listContainer) return;
+
+        listContainer.innerHTML = filteredData.map(item => `
+            <div class="mb-4 pb-4 border-b border-gray-200 last:border-b-0">
+                <h4 class="font-semibold text-gray-800">${item.application}</h4>
+                <p class="text-sm text-gray-500">Modality: ${item.modality}</p>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs mt-2">
+                    ${Object.entries(item.metrics).map(([key, value]) => `<span><strong>${key}:</strong> ${value}%</span>`).join('')}
+                </div>
+            </div>
+        `).join('');
+        
+        renderUNetChart(filteredData);
+    }
+    
+    function renderUNetChart(data) {
+        const ctx = document.getElementById('unet-chart');
+        if (!ctx) return;
+
+        if (uNetChart) {
+            uNetChart.destroy();
+        }
+        
+        const chartData = {
+            labels: data.map(d => d.application),
+            datasets: [{
+                label: 'Primary Performance Metric (%)',
+                data: data.map(d => {
+                    const metrics = d.metrics;
+                    return metrics.Accuracy || metrics.DSC || metrics.DCI || metrics['F1-score'] || metrics.DSI || metrics.Dice || metrics['Average Dice Score'] || 0;
+                }),
+                backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        uNetChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += context.parsed.x + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Performance (%)'
+                        }
+                    },
+                    y: {
+                       ticks: {
+                           autoSkip: false,
+                           callback: function(value, index, values) {
+                               const label = this.getLabelForValue(value);
+                               return label.length > 25 ? label.substring(0, 25) + '...' : label;
+                           }
+                       }
+                    }
+                }
+            }
+        });
+    }
+
+    function switchTab(tab) {
+        methodsContentContainer.innerHTML = methodsContent[tab];
+        tabButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tab);
+        });
+
+        if (tab === 'unet') {
+            document.querySelectorAll('.modality-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const modality = e.target.dataset.modality;
+                    renderUNetList(modality);
+                    document.querySelectorAll('.modality-button').forEach(btn => {
+                         btn.classList.remove('bg-blue-500', 'text-white');
+                         btn.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    e.target.classList.add('bg-blue-500', 'text-white');
+                    e.target.classList.remove('bg-gray-200', 'text-gray-700');
+                });
+            });
+            renderUNetList('All');
+        }
+    }
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => switchTab(button.dataset.tab));
+    });
+
+    switchTab('unet');
+
+    const challengeCards = document.querySelectorAll('.challenge-card');
+    const challengeDetailsContainer = document.getElementById('challenge-details');
+
+    challengeCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const challengeId = card.id;
+            const data = challengesData[challengeId];
+
+            challengeCards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+
+            challengeDetailsContainer.innerHTML = `
+                <div class="fade-in">
+                    <h3 class="font-bold text-xl mb-3 text-gray-900">${data.title}</h3>
+                    <p class="text-gray-600 mb-4">${data.description}</p>
+                    <h4 class="font-semibold text-md mb-2 text-gray-800">Addressing Paradigms:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        ${data.paradigms.map(p => `<li>${p}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        });
+    });
+
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 120) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

@@ -103,6 +103,67 @@ const projectsData: Project[] = [
   },
   {
     id: 'proj4',
+    title: 'Shifa.AI - AI-Powered Healthcare Platform',
+    description: 'An advanced healthcare platform providing AI-powered medical assistance, symptom analysis, and personalized health assessments with secure data management.',
+    category: 'web',
+    image: '/images/projects/shifa-ai.png',
+    technologies: [
+      'Next.js', 
+      'TypeScript', 
+      'Tailwind CSS', 
+      'MongoDB', 
+      'NextAuth.js',
+      'Google Gemini AI',
+      'OpenAI',
+      'Mongoose ODM',
+      'Headless UI'
+    ],
+    highlights: [
+      'AI-powered symptom analysis and health assessments using Google Gemini AI and OpenAI',
+      'Secure user authentication with JWT and NextAuth.js integration',
+      'Responsive UI built with Tailwind CSS and Headless UI components',
+      'MongoDB database with Mongoose for secure medical data management',
+      'Modern development setup with TypeScript and Next.js API routes',
+      'Real-time toast notifications for user feedback'
+    ],
+    links: [
+      {
+        title: 'Live Demo',
+        url: 'https://shifa-ai.vercel.app/'
+      },
+      {
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/Shifa.AI'
+      }
+    ]
+  },
+  {
+    id: 'proj5',
+    title: 'UGC NET CS HUB',
+    description: 'A specialized e-learning platform tailored for aspirants preparing for the UGC NET (University Grants Commission - National Eligibility Test) in Computer Science and Applications.',
+    category: 'web',
+    image: '/images/projects/ugc-net-cs-hub.png',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Prisma', 'NextAuth.js', 'Tailwind CSS'],
+    highlights: [
+      'Comprehensive question bank with detailed solutions and explanations',
+      'Practice modes including subject-wise, topic-specific, and difficulty-based questions',
+      'Performance analytics and progress tracking for effective learning',
+      'Secure authentication with role-based access control',
+      'Admin dashboard for content management and user monitoring'
+    ],
+    links: [
+      {
+        title: 'Live Demo',
+        url: 'https://ntanetcs.vercel.app/'
+      },
+      {
+        title: 'GitHub Repository',
+        url: 'https://github.com/MohsinFurkh/NTANETCS'
+      }
+    ]
+  },
+  {
+    id: 'proj6',
     title: 'GoalTrackr - Personal Goal Management',
     description: 'A full-stack web application for tracking personal goals, tasks, and progress with visualization dashboards and journaling features.',
     category: 'web',
@@ -126,7 +187,7 @@ const projectsData: Project[] = [
     ]
   },
   {
-    id: 'proj5',
+    id: 'proj7',
     title: 'IEEE BigMM Data Challenge',
     description: 'Multi-task multimodal framework for predicting labels from tweets, developed for the IEEE BigMM Data Challenge.',
     category: 'nlp',

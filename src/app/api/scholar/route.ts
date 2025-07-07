@@ -75,7 +75,7 @@ export async function GET() {
     console.log('Fetching Google Scholar data...');
     
     const url = `https://scholar.google.com/citations?user=${AUTHOR_ID}&hl=en`;
-    const apiUrl = `https://app.scrapingbee.com/api/v1/?api_key=${SCRAPINGBEE_API_KEY}&url=${encodeURIComponent(url)}&render_js=false`;
+    const apiUrl = `https://app.scrapingbee.com/api/v1/?api_key=${API_KEY}&url=${encodeURIComponent(url)}&render_js=false`;
     const response = await fetch(apiUrl);
     
     if (!response.ok) {

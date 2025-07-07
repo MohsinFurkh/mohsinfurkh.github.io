@@ -34,6 +34,10 @@ interface ScholarJsonData {
     'h-index'?: CitationMetrics;
     'i10-index'?: CitationMetrics;
   };
+  citations_by_year?: Array<{
+    year: number;
+    citations: number;
+  }>;
   research_interests: string[];
   publications: Publication[];
   coauthors: any[];

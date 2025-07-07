@@ -84,7 +84,7 @@ function parseGoogleScholarHTML(html: string): ScholarApiResponse {
 
     // Extract papers - this is more complex with regex
     const articles: Article[] = [];
-    const paperRowRegex = /class="gsc_a_tr"[^>]*>(.*?)<\/tr>/gs;
+    const paperRowRegex = /class="gsc_a_tr"[^>]*>([\s\S]*?)<\/tr>/g;
     const paperRows = html.match(paperRowRegex);
 
     if (paperRows) {
@@ -358,7 +358,7 @@ async function fetchFromSemanticScholar(authorId: string): Promise<ScholarApiRes
 export async function GET() {
   try {
     const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Replace with your actual Google Scholar ID
-    let data: ScholarApiResponse;
+    let data: ScholarApiResponse | null = null;
     let dataSource = 'unknown';
 
     console.log('Attempting to fetch Google Scholar data...');

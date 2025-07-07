@@ -235,6 +235,17 @@ export default function Home() {
                 <Link href="/cv" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
                   View CV
                 </Link>
+                <Link 
+                  href="https://mohsinfurkh.github.io/Presentations/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="btn bg-white text-primary border border-accent hover:bg-gray-50 px-6 py-3 rounded-full flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  Teaching Materials
+                </Link>
               </div>
             </div>
             
@@ -242,7 +253,7 @@ export default function Home() {
               <div className="relative h-64 w-64 md:h-80 md:w-80 rounded-full p-1 bg-gradient-to-r from-accent to-primary mb-8 animate-float">
                 <Image
                   src="/images/profile_pic.jpg"
-                  alt="Professional headshot of Dr. Mohsin Furkh Dar"
+                  alt="Professional headshot of Mohsin Furkh Dar"
                   fill
                   className="rounded-full object-cover"
                   priority

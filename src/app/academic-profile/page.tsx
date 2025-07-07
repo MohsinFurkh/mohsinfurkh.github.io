@@ -229,6 +229,39 @@ export default function AcademicProfile() {
             </ul>
           </div>
         </section>
+
+         {/* Academic Notes and Presentation Lectures */}
+        <section className="mt-16">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b">Academic Notes & Presentation Lectures</h2>
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-lg shadow-md border border-blue-100">
+            <div className="flex items-center mb-4">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800">Educational Resources</h3>
+                <p className="text-gray-600">Access my comprehensive collection of academic materials</p>
+              </div>
+            </div>
+            <p className="text-gray-700 mb-6">
+              Explore my curated collection of academic notes, presentation slides, and educational materials 
+              covering various topics in Computer Science, Machine Learning, and Deep Learning.
+            </p>
+            <a 
+              href="https://mohsinfurkh.github.io/Presentations/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              Visit Academic Resources
+            </a>
+          </div>
+        </section>
       </div>
     </div>
   );

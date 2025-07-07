@@ -536,11 +536,21 @@ export async function GET() {
                           data.graph || 
                           [];
     
-    const citationsByYear = Array.isArray(citationsGraph) ? 
-      citationsGraph.map((item: CitationGraphItem) => ({
-        year: parseInt(item.year),
-        citations: parseInt(item.citations)
-      })).sort((a, b) => a.year - b.year) : [];
+    // Process citations by year, ensuring we have valid numbers and filtering out invalid entries
+    let citationsByYear: Array<{year: number, citations: number}> = [];
+    if (Array.isArray(citationsGraph)) {
+      citationsByYear = citationsGraph
+        .map((item: CitationGraphItem) => {
+          const year = parseInt(item.year);
+          const citations = parseInt(item.citations);
+          return {
+            year: isNaN(year) ? 0 : year,
+            citations: isNaN(citations) ? 0 : citations
+          };
+        })
+        .filter(item => item.year > 0) // Filter out invalid years
+        .sort((a, b) => a.year - b.year);
+    }
     
     const sortedPapers = papers.sort((a, b) => {
       if (a.citations !== b.citations) {
@@ -551,12 +561,20 @@ export async function GET() {
       return yearB - yearA;
     });
     
+    // Ensure we have at least some citation data
+    const hasCitationData = citationsByYear.length > 0 || totalCitations > 0;
+    
     const responseData = { 
       citations: totalCitations,
       publications,
       h_index: hIndex,
       i10_index: i10Index,
-      citationsByYear,
+      citationsByYear: hasCitationData ? citationsByYear : [
+        // Default data if no citations are available
+        { year: new Date().getFullYear() - 2, citations: 0 },
+        { year: new Date().getFullYear() - 1, citations: 0 },
+        { year: new Date().getFullYear(), citations: totalCitations || 0 }
+      ],
       papers: sortedPapers,
       author_name: authorInfo.name || 'Unknown',
       author_affiliation: authorInfo.affiliations?.[0] || '',

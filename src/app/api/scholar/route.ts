@@ -84,7 +84,7 @@ function parseGoogleScholarHTML(html: string): ScholarApiResponse {
 
     // Extract papers - this is more complex with regex
     const articles: Article[] = [];
-    const paperRowRegex = /class="gsc_a_tr"[^>]*>(.*?)<\/tr>/gs;
+    const paperRowRegex = /class="gsc_a_tr"[^>]*>([\s\S]*?)<\/tr>/g;
     const paperRows = html.match(paperRowRegex);
 
     if (paperRows) {

@@ -360,7 +360,10 @@ export async function GET() {
     const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Replace with your actual Google Scholar ID
     let data: ScholarApiResponse = {
       author: {},
-      articles: []
+      articles: [],
+      cited_by: {},
+      h_index: 0,
+      i10_index: 0
     };
     let dataSource = 'unknown';
 

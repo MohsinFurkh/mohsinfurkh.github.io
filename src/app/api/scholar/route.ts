@@ -1,46 +1,46 @@
-// API route to fetch Google Scholar data with individual paper citations
+// API route to fetch Google Scholar data from local JSON file
 import { NextResponse } from 'next/server';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
-// Type definitions for SerpAPI Google Scholar response
-interface CitationGraphItem {
+// Type definitions for the JSON file structure
+interface CitationMetrics {
+  all_time: string;
+  since_2019: string;
+}
+
+interface Publication {
+  title: string;
+  authors: string;
+  journal: string;
+  citations: number;
   year: string;
-  citations: string;
+  scholar_url: string;
 }
 
-interface AuthorIndices {
-  h_index?: number;
-  i10_index?: number;
+interface BasicInfo {
+  name: string;
+  affiliation: string;
+  email_domain: string;
+  profile_image: string;
 }
 
-interface CitedBy {
-  total?: number;
-  graph?: CitationGraphItem[];
-  value?: number; // For individual articles
+interface ScholarJsonData {
+  user_id: string;
+  profile_url: string;
+  basic_info: BasicInfo;
+  citation_metrics: {
+    citations?: CitationMetrics;
+    'h-index'?: CitationMetrics;
+    'i10-index'?: CitationMetrics;
+  };
+  research_interests: string[];
+  publications: Publication[];
+  coauthors: any[];
+  fetch_timestamp: string;
 }
 
-interface Article {
-  title?: string;
-  cited_by?: CitedBy;
-  cited_by_count?: number;
-  citations?: number;
-  num_citations?: number;
-  year?: string | number;
-  authors?: string;
-  publication?: string;
-  link?: string;
-  [key: string]: any;
-}
-
-interface AuthorInfo {
-  name?: string;
-  affiliations?: string[];
-  cited_by?: CitedBy;
-  indices?: AuthorIndices;
-  cited_by_total?: number;
-  h_index?: number;
-  i10_index?: number;
-}
-
+// Response format types (keeping the same as original)
 interface ProcessedPaper {
   title: string;
   citations: number;
@@ -50,165 +50,48 @@ interface ProcessedPaper {
   link?: string;
 }
 
-interface ScholarApiResponse {
-  author?: AuthorInfo;
-  articles?: Article[];
-  cited_by?: CitedBy;
-  h_index?: number;
-  i10_index?: number;
-  citations?: number;
-  graph?: CitationGraphItem[];
-  indices?: AuthorIndices;
-  [key: string]: any; // Allow for unexpected fields
+interface CitationByYear {
+  year: number;
+  citations: number;
 }
 
 export async function GET() {
   try {
-    const API_KEY = process.env.SCRAPINGBEE_API_KEY;
-    const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Your Google Scholar ID
+    // Path to the JSON file (adjust path as needed)
+    const jsonFilePath = join(process.cwd(), 'scholar_profile_DGm9l2wAAAAJ.json');
     
-    if (!API_KEY) {
-      console.error('SCRAPINGBEE_API_KEY not found in environment variables');
-      return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
-    }
+    console.log('Reading Google Scholar data from JSON file...');
     
-    console.log('Fetching Google Scholar data...');
+    // Read and parse the JSON file
+    const fileContent = readFileSync(jsonFilePath, 'utf8');
+    const data: ScholarJsonData = JSON.parse(fileContent);
     
-    const url = `https://scholar.google.com/citations?user=${AUTHOR_ID}&hl=en`;
-    const apiUrl = `https://app.scrapingbee.com/api/v1/?api_key=${API_KEY}&url=${encodeURIComponent(url)}&render_js=false`;
-    const response = await fetch(apiUrl);
+    console.log('JSON file read successfully');
     
-    if (!response.ok) {
-      console.error('SerpAPI response not OK:', response.status, response.statusText);
-      throw new Error(`API request failed: ${response.status}`);
-    }
+    // Extract basic information
+    const authorInfo = data.basic_info;
+    const citationMetrics = data.citation_metrics;
     
-    const data: ScholarApiResponse = await response.json();
-    console.log('API response received');
-    
-    // Debug: Log the actual response structure
-    if (process.env.NODE_ENV === 'development') {
-      console.log('=== FULL API RESPONSE ===');
-      console.log(JSON.stringify(data, null, 2));
-      console.log('=== AUTHOR OBJECT ===');
-      console.log(JSON.stringify(data.author, null, 2));
-      console.log('=== SAMPLE ARTICLE ===');
-      console.log(JSON.stringify(data.articles?.[0], null, 2));
-    }
-    
-    // Extract data based on SerpAPI Google Scholar Author response structure
-    const authorInfo = data.author || {};
-    
-    // Process individual papers with their citation counts
-    const papers: ProcessedPaper[] = [];
-    const citationCounts: number[] = [];
-    
-    if (data.articles && Array.isArray(data.articles)) {
-      data.articles.forEach((article: Article) => {
-        // Try different possible fields for citation count
-        const citationCount = article.cited_by?.value || 
-                             article.cited_by_count || 
-                             article.citations || 
-                             article.num_citations || 
-                             0;
-        
-        // Extract year, handling both string and number formats
-        let year: number | undefined;
-        if (article.year) {
-          const yearNum = typeof article.year === 'string' ? parseInt(article.year) : article.year;
-          if (!isNaN(yearNum)) {
-            year = yearNum;
-          }
-        }
-        
-        const paper: ProcessedPaper = {
-          title: article.title || 'Untitled',
-          citations: citationCount,
-          year,
-          authors: article.authors,
-          publication: article.publication,
-          link: article.link
-        };
-        
-        papers.push(paper);
-        
-        // Only include papers with citations for h-index calculation
-        if (citationCount > 0) {
-          citationCounts.push(citationCount);
-        }
-      });
-      
-      // Sort citation counts for h-index calculation
-      citationCounts.sort((a, b) => b - a);
-    }
-    
-    // Get publications count from articles array length
-    const publications = papers.length;
-    
-    // Calculate h-index and i10-index manually from publications data
-    let calculatedHIndex = 0;
-    let calculatedI10Index = 0;
-    
-    if (citationCounts.length > 0) {
-      console.log('Citation counts per publication:', citationCounts);
-      
-      // Calculate h-index: largest number h such that h publications have at least h citations each
-      for (let i = 0; i < citationCounts.length; i++) {
-        if (citationCounts[i] >= i + 1) {
-          calculatedHIndex = i + 1;
-        } else {
-          break;
+    // Process publications into the expected format
+    const papers: ProcessedPaper[] = data.publications.map((pub: Publication) => {
+      // Parse year from string, handling cases where it might be 'N/A'
+      let year: number | undefined;
+      if (pub.year && pub.year !== 'N/A') {
+        const yearNum = parseInt(pub.year);
+        if (!isNaN(yearNum)) {
+          year = yearNum;
         }
       }
       
-      // Calculate i10-index: number of publications with at least 10 citations
-      calculatedI10Index = citationCounts.filter((count: number) => count >= 10).length;
-      
-      console.log('Manual calculation results:', {
-        hIndex: calculatedHIndex,
-        i10Index: calculatedI10Index,
-        totalPublications: publications,
-        publicationsWithCitations: citationCounts.length
-      });
-    }
-    
-    // Try multiple possible locations for total citations
-    const totalCitations = authorInfo.cited_by?.total || 
-                          data.cited_by?.total || 
-                          authorInfo.cited_by_total || 
-                          data.citations || 
-                          0;
-    
-    // Try multiple possible locations for h-index, fallback to calculated value
-    const hIndex = authorInfo.indices?.h_index || 
-                   data.h_index || 
-                   authorInfo.h_index || 
-                   data.indices?.h_index || 
-                   calculatedHIndex;
-    
-    // Try multiple possible locations for i10-index, fallback to calculated value
-    const i10Index = authorInfo.indices?.i10_index || 
-                     data.i10_index || 
-                     authorInfo.i10_index || 
-                     data.indices?.i10_index || 
-                     calculatedI10Index;
-    
-    // Extract citations by year from the graph data
-    const citationsGraph = authorInfo.cited_by?.graph || 
-                          data.cited_by?.graph || 
-                          data.graph || 
-                          [];
-    
-    const citationsByYear = Array.isArray(citationsGraph) ? citationsGraph.map((item: CitationGraphItem) => ({
-      year: parseInt(item.year),
-      citations: parseInt(item.citations)
-    })).sort((a, b) => a.year - b.year) : [];
-    
-    // If we have yearly data but no total, calculate it
-    let finalCitations = totalCitations;
-    if (totalCitations === 0 && citationsByYear.length > 0) {
-      finalCitations = citationsByYear.reduce((sum, yearData) => sum + yearData.citations, 0);
-    }
+      return {
+        title: pub.title || 'Untitled',
+        citations: pub.citations || 0,
+        year,
+        authors: pub.authors || '',
+        publication: pub.journal || '',
+        link: pub.scholar_url || ''
+      };
+    });
     
     // Sort papers by citation count (descending) and then by year (descending)
     const sortedPapers = papers.sort((a, b) => {
@@ -221,7 +104,56 @@ export async function GET() {
       return yearB - yearA;
     });
     
-    console.log('Extracted data before processing:', {
+    // Extract metrics from the JSON data
+    const totalCitations = parseInt(citationMetrics.citations?.all_time || '0');
+    const hIndex = parseInt(citationMetrics['h-index']?.all_time || '0');
+    const i10Index = parseInt(citationMetrics['i10-index']?.all_time || '0');
+    const publications = data.publications.length;
+    
+    // Generate citations by year from publication data
+    // Group publications by year and sum their citations
+    const citationsByYearMap = new Map<number, number>();
+    
+    papers.forEach(paper => {
+      if (paper.year && paper.citations > 0) {
+        const currentCitations = citationsByYearMap.get(paper.year) || 0;
+        citationsByYearMap.set(paper.year, currentCitations + paper.citations);
+      }
+    });
+    
+    // Convert to array and sort by year
+    const citationsByYear: CitationByYear[] = Array.from(citationsByYearMap.entries())
+      .map(([year, citations]) => ({ year, citations }))
+      .sort((a, b) => a.year - b.year);
+    
+    // If we don't have yearly data, create a simple estimation
+    if (citationsByYear.length === 0 && totalCitations > 0) {
+      // Create a rough distribution based on publication years
+      const publicationYears = papers
+        .filter(p => p.year)
+        .map(p => p.year as number)
+        .sort((a, b) => a - b);
+      
+      if (publicationYears.length > 0) {
+        const minYear = Math.min(...publicationYears);
+        const maxYear = Math.max(...publicationYears);
+        const yearRange = maxYear - minYear + 1;
+        
+        // Distribute citations across years (this is an approximation)
+        for (let year = minYear; year <= maxYear; year++) {
+          const papersInYear = papers.filter(p => p.year === year).length;
+          if (papersInYear > 0) {
+            const avgCitationsPerYear = Math.floor(totalCitations / yearRange);
+            citationsByYear.push({
+              year,
+              citations: avgCitationsPerYear * papersInYear
+            });
+          }
+        }
+      }
+    }
+    
+    console.log('Processed data:', {
       totalCitations,
       hIndex,
       i10Index,
@@ -231,22 +163,24 @@ export async function GET() {
       papersWithCitations: papers.filter(p => p.citations > 0).length
     });
     
-    const responseData = { 
-      citations: finalCitations,
+    const responseData = {
+      citations: totalCitations,
       publications,
       h_index: hIndex,
       i10_index: i10Index,
       citationsByYear,
-      papers: sortedPapers, // Include individual papers with citations
+      papers: sortedPapers,
       author_name: authorInfo.name || 'Unknown',
-      author_affiliation: authorInfo.affiliations?.[0] || '',
+      author_affiliation: authorInfo.affiliation || '',
+      research_interests: data.research_interests || [],
+      last_updated: data.fetch_timestamp,
       // Include debug info in development
       ...(process.env.NODE_ENV === 'development' && {
         debug: {
-          raw_author: authorInfo,
-          articles_count: data.articles?.length || 0,
-          has_graph_data: !!authorInfo.cited_by?.graph,
-          graph_years: citationsGraph.map((item: CitationGraphItem) => item.year),
+          json_file_path: jsonFilePath,
+          total_publications: data.publications.length,
+          papers_with_citations: papers.filter(p => p.citations > 0).length,
+          citation_metrics_raw: citationMetrics,
           sample_paper: papers[0] // First paper for debugging
         }
       })
@@ -255,13 +189,28 @@ export async function GET() {
     return NextResponse.json(responseData);
     
   } catch (error) {
-    console.error('Error fetching Google Scholar data:', error);
+    console.error('Error reading Google Scholar JSON file:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     
+    // Check if it's a file not found error
+    if (errorMessage.includes('ENOENT')) {
+      return NextResponse.json({ 
+        error: 'Scholar profile JSON file not found',
+        message: 'Please ensure scholar_profile_DGm9l2wAAAAJ.json exists in the project root directory',
+        fallback: {
+          citations: 0,
+          publications: 0,
+          h_index: 0,
+          i10_index: 0,
+          citationsByYear: [],
+          papers: []
+        }
+      }, { status: 404 });
+    }
+    
     return NextResponse.json({ 
-      error: 'Failed to fetch citation data',
+      error: 'Failed to read citation data from JSON file',
       message: errorMessage,
-      // Provide fallback data in case of API failure
       fallback: {
         citations: 0,
         publications: 0,

@@ -64,19 +64,19 @@ interface ScholarApiResponse {
 
 export async function GET() {
   try {
-    const API_KEY = process.env.SERPAPI_KEY;
+    const API_KEY = process.env.SCRAPINGBEE_API_KEY;
     const AUTHOR_ID = 'DGm9l2wAAAAJ'; // Your Google Scholar ID
     
     if (!API_KEY) {
-      console.error('SERPAPI_KEY not found in environment variables');
+      console.error('SCRAPINGBEE_API_KEY not found in environment variables');
       return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
     }
     
     console.log('Fetching Google Scholar data...');
     
-    const response = await fetch(
-      `https://serpapi.com/search.json?engine=google_scholar_author&author_id=${AUTHOR_ID}&api_key=${API_KEY}`
-    );
+    const url = `https://scholar.google.com/citations?user=${authorId}&hl=en`;
+    const apiUrl = `https://app.scrapingbee.com/api/v1/?api_key=${SCRAPINGBEE_API_KEY}&url=${encodeURIComponent(url)}&render_js=false`;
+    const response = await fetch(apiUrl);
     
     if (!response.ok) {
       console.error('SerpAPI response not OK:', response.status, response.statusText);

@@ -20,6 +20,7 @@
     "@vercel/kv": "^3.0.0",
     "autoprefixer": "^10.4.17",
     "chart.js": "^4.4.9",
+    "cheerio": "^1.0.0-rc.12",
     "lucide-react": "^0.513.0",
     "next": "14.1.0",
     "postcss": "^8.4.35",
@@ -29,5 +30,8 @@
     "swr": "^2.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.31"
   }
 }

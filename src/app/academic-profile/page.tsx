@@ -229,6 +229,28 @@ export default function AcademicProfile() {
             </ul>
           </div>
         </section>
+        
+        {/* Teaching Materials */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b">Teaching Materials</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-medium text-primary mb-3">Presentations & Educational Resources</h3>
+            <p className="text-gray-600 mb-4">
+              Access my collection of lecture notes, presentations, MCQs, and research presentations that I've used in my teaching and research activities.
+            </p>
+            <a 
+              href="https://mohsinfurkh.github.io/Presentations/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+            >
+              View Teaching Materials
+              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </section>
       </div>
     </div>
   );

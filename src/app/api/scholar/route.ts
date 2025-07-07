@@ -93,9 +93,16 @@ function parseGoogleScholarHTML(html: string): ScholarApiResponse {
         const titleMatch = row.match(/class="gsc_a_at"[^>]*>([^<]+)</);
         const title = titleMatch ? titleMatch[1].trim() : `Paper ${index + 1}`;
 
-        // Extract authors (usually the next text after title)
+        // Extract authors
         const authorMatch = row.match(/class="gs_gray"[^>]*>([^<]+)</);
         const authors = authorMatch ? authorMatch[1].trim() : '';
+        
+        // Extract venue (second gs_gray span)
+        let venue = '';
+        const venueMatch = row.replace(/class="gs_gray"[^>]*>[^<]+</, '').match(/class="gs_gray"[^>]*>([^<]+)</);
+        if (venueMatch) {
+          venue = venueMatch[1].trim();
+        }
 
         // Extract citations
         const citationMatch = row.match(/class="gsc_a_ac[^"]*"[^>]*>([^<]*)</);
@@ -111,12 +118,33 @@ function parseGoogleScholarHTML(html: string): ScholarApiResponse {
         const linkMatch = row.match(/href="([^"]*)"[^>]*class="gsc_a_at"/);
         const link = linkMatch ? `https://scholar.google.com${linkMatch[1]}` : '';
 
+        // Determine publication type based on venue
+        let publicationType = 'Journal Article'; // default
+        if (venue.toLowerCase().includes('conference') || 
+            venue.toLowerCase().includes('proc.') || 
+            venue.toLowerCase().includes('workshop') ||
+            title.toLowerCase().includes('conference')) {
+          publicationType = 'Conference Paper';
+        } else if (venue.toLowerCase().includes('arxiv')) {
+          publicationType = 'Preprint';
+        } else if (venue.toLowerCase().includes('thesis') || 
+                  title.toLowerCase().includes('thesis')) {
+          publicationType = 'Thesis';
+        }
+
+        // Special case for the specific conference paper
+        if (title.includes('Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation')) {
+          publicationType = 'Conference Paper';
+        }
+
         articles.push({
           title,
           authors,
           cited_by: { value: citations },
           year,
-          link
+          link,
+          publication: venue || 'Journal',
+          publicationType
         });
       });
     }

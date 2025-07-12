@@ -236,7 +236,7 @@ export default function Home() {
                   View CV
                 </Link>
                 <Link 
-                  href="https://mohsinfurkh.github.io/Presentations/" 
+                  href="https://mohsinfurkh.github.io/academic-portal/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="btn bg-white text-primary border border-accent hover:bg-gray-50 px-6 py-3 rounded-full flex items-center gap-2"

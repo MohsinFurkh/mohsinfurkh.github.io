@@ -1,0 +1,151 @@
+{
+  "user_id": "DGm9l2wAAAAJ",
+  "profile_url": "https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en",
+  "basic_info": {
+    "name": "Mohsin Furkh Dar",
+    "affiliation": "Assistant Professor UPES Dehradun",
+    "email_domain": "Verified email at ddn.upes.ac.in - Homepage",
+    "profile_image": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=DGm9l2wAAAAJ&citpid=1"
+  },
+  "citation_metrics": {
+    "citations": {
+      "all_time": "52",
+      "since_2019": "52"
+    },
+    "h-index": {
+      "all_time": "3",
+      "since_2019": "3"
+    },
+    "i10-index": {
+      "all_time": "2",
+      "since_2019": "2"
+    }
+  },
+  "research_interests": [
+    "Deep Learning for Medical Imaging"
+  ],
+  "publications": [
+    {
+      "title": "Efficientu-net: a novel deep learning method for breast tumor segmentation and classification in ultrasound images",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
+      "citations": 27,
+      "year": "2023"
+    },
+    {
+      "title": "Deep learning and genetic algorithm-based ensemble model for feature selection and classification of breast ultrasound images",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:2osOgNQ5qMEC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Image and Vision Computing 146, 105018, 2024",
+      "citations": 17,
+      "year": "2024"
+    },
+    {
+      "title": "Design and analysis of a robust security layer for software defined network framework",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:qjMakFHDy7sC",
+      "authors": "AN Alhaj, ND Patel, A Singh, RK Bondugula, MF Dar, J Ahamed",
+      "journal": "International Journal of Sensor Networks 46 (1), 1-14, 2024",
+      "citations": 4,
+      "year": "2024"
+    },
+    {
+      "title": "Latent fingerprint enhancement and matching using intuitionistic type-2 fuzzy",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:d1gkVwhDpl0C",
+      "authors": "S Mukhtar, MF Dar, A Kaur",
+      "journal": "International Journal of Artificial Intelligence and Soft Computing 7 (4 …, 2022",
+      "citations": 2,
+      "year": "2022"
+    },
+    {
+      "title": "Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with UMA-Net",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Tyk-4Ss8FVUC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Medical & Biological Engineering & Computing 63 (6), 1697-1713, 2025",
+      "citations": 1,
+      "year": "2025"
+    },
+    {
+      "title": "Performance Comparison of Face Detection and Recognition Algorithms",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:W7OEmFMy1HYC",
+      "authors": "MF Dar, S Dixit",
+      "journal": "International Journal of Science and Research 8 (1), 986-994, 2019",
+      "citations": 1,
+      "year": "2019"
+    },
+    {
+      "title": "Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:eQOLeE2rZwMC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "International Conference on Computing and Communication Networks, 1-12, 2024",
+      "citations": 0,
+      "year": "2024"
+    }
+  ],
+  "coauthors": [
+    {
+      "name": "Avatharam Ganivada",
+      "scholar_url": "https://scholar.google.com/citations?user=ajlzmN0AAAAJ&hl=en",
+      "user_id": "ajlzmN0AAAAJ"
+    },
+    {
+      "name": "Ali Nadim Alhaj",
+      "scholar_url": "https://scholar.google.com/citations?user=Js-55m8AAAAJ&hl=en",
+      "user_id": "Js-55m8AAAAJ"
+    },
+    {
+      "name": "Dr. ND Patel",
+      "scholar_url": "https://scholar.google.com/citations?user=HYxbUHMAAAAJ&hl=en",
+      "user_id": "HYxbUHMAAAAJ"
+    },
+    {
+      "name": "Dr. Ajeet Singh",
+      "scholar_url": "https://scholar.google.com/citations?user=RgIdMoIAAAAJ&hl=en",
+      "user_id": "RgIdMoIAAAAJ"
+    },
+    {
+      "name": "Dr. Rohit Kumar Bondugula",
+      "scholar_url": "https://scholar.google.com/citations?user=e3-AdYgAAAAJ&hl=en",
+      "user_id": "e3-AdYgAAAAJ"
+    },
+    {
+      "name": "Dr. Jameel Ahamed",
+      "scholar_url": "https://scholar.google.com/citations?user=0DhTHaEAAAAJ&hl=en",
+      "user_id": "0DhTHaEAAAAJ"
+    },
+    {
+      "name": "Amandeep Kaur",
+      "scholar_url": "https://scholar.google.com/citations?user=68a6g7QAAAAJ&hl=en",
+      "user_id": "68a6g7QAAAAJ"
+    },
+    {
+      "name": "Sayima Mukhtar",
+      "scholar_url": "https://scholar.google.com/citations?user=8CNtpD0AAAAJ&hl=en",
+      "user_id": "8CNtpD0AAAAJ"
+    },
+    {
+      "name": "Dixit Sarvottam",
+      "scholar_url": "https://scholar.google.com/citations?user=oIQXbPcAAAAJ&hl=en",
+      "user_id": "oIQXbPcAAAAJ"
+    }
+  ],
+  "citations_by_year": [
+    {
+      "year": 2022,
+      "citations": 1
+    },
+    {
+      "year": 2023,
+      "citations": 1
+    },
+    {
+      "year": 2024,
+      "citations": 17
+    },
+    {
+      "year": 2025,
+      "citations": 33
+    }
+  ],
+  "fetch_timestamp": "2025-09-13 22:48:44"
+}

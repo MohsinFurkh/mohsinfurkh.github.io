@@ -9,8 +9,8 @@
   },
   "citation_metrics": {
     "citations": {
-      "all_time": "61",
-      "since_2019": "61"
+      "all_time": "63",
+      "since_2019": "63"
     },
     "h-index": {
       "all_time": "3",
@@ -38,7 +38,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:2osOgNQ5qMEC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Image and Vision Computing 146, 105018, 2024",
-      "citations": 19,
+      "citations": 21,
       "year": "2024"
     },
     {
@@ -144,8 +144,13 @@
     },
     {
       "year": 2025,
-      "citations": 42
+      "citations": 43
+    },
+    {
+      "year": 2026,
+      "citations": 1
     }
   ],
   "fetch_timestamp": "2025-12-16 18:07:58"
+
 }

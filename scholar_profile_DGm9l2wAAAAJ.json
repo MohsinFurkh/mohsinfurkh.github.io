@@ -9,12 +9,12 @@
   },
   "citation_metrics": {
     "citations": {
-      "all_time": "63",
-      "since_2019": "63"
+      "all_time": "70",
+      "since_2019": "70"
     },
     "h-index": {
-      "all_time": "3",
-      "since_2019": "3"
+      "all_time": "4",
+      "since_2019": "4"
     },
     "i10-index": {
       "all_time": "2",
@@ -30,7 +30,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
-      "citations": 31,
+      "citations": 33,
       "year": "2023"
     },
     {
@@ -38,7 +38,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:2osOgNQ5qMEC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Image and Vision Computing 146, 105018, 2024",
-      "citations": 21,
+      "citations": 25,
       "year": "2024"
     },
     {
@@ -54,7 +54,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Tyk-4Ss8FVUC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Medical & Biological Engineering & Computing 63 (6), 1697-1713, 2025",
-      "citations": 3,
+      "citations": 4,
       "year": "2025"
     },
     {
@@ -80,6 +80,14 @@
       "journal": "International Conference on Computing and Communication Networks, 1-12, 2024",
       "citations": 0,
       "year": "2024"
+    },
+    {
+      "title": "Fuzzy rough set loss for deep learning-based precise medical image segmentation",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Se3iqnhoufwC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Computerized Medical Imaging and Graphics, 102716, 2026",
+      "citations": 0,
+      "year": "2026"
     }
   ],
   "coauthors": [
@@ -140,17 +148,18 @@
     },
     {
       "year": 2024,
-      "citations": 17
+      "citations": 18
     },
     {
       "year": 2025,
-      "citations": 43
+      "citations": 48
     },
     {
       "year": 2026,
-      "citations": 1
+      "citations": 2
     }
   ],
-  "fetch_timestamp": "2025-12-16 18:07:58"
+  "fetch_timestamp": "2026-01-26 09:22:58"
 
 }
+

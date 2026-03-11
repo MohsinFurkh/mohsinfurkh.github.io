@@ -9,8 +9,8 @@
   },
   "citation_metrics": {
     "citations": {
-      "all_time": "79",
-      "since_2019": "79"
+      "all_time": "83",
+      "since_2019": "83"
     },
     "h-index": {
       "all_time": "4",
@@ -38,7 +38,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:2osOgNQ5qMEC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Image and Vision Computing 146, 105018, 2024",
-      "citations": 27,
+      "citations": 30,
       "year": "2024"
     },
     {
@@ -46,7 +46,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:qjMakFHDy7sC",
       "authors": "AN Alhaj, ND Patel, A Singh, RK Bondugula, MF Dar, J Ahamed",
       "journal": "International Journal of Sensor Networks 46 (1), 1-14, 2024",
-      "citations": 5,
+      "citations": 6,
       "year": "2024"
     },
     {
@@ -156,12 +156,13 @@
     },
     {
       "year": 2026,
-      "citations": 9
+      "citations": 13
     }
   ],
   "fetch_timestamp": "2026-01-26 09:22:58"
 
 }
+
 
 
 

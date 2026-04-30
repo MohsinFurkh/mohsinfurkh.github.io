@@ -6,64 +6,24 @@ import Link from "next/link";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Home() {
-  const [scholarData, setScholarData] = useState({
-    citations: 0,
-    publications: 0,
-    h_index: 0,
-    i10_index: 0,
-    citationsByYear: [] as Array<{year: number, citations: number}>,
-    author_name: '',
-    author_affiliation: ''
-  });
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchScholarData() {
-      try {
-        console.log('Fetching scholar data...');
-        const response = await fetch('/api/scholar');
-        console.log('Response status:', response.status);
-        
-        const data = await response.json();
-        console.log('Scholar data received:', data);
-        
-        if (!response.ok) {
-          // Handle API errors but use fallback data if provided
-          if (data.fallback) {
-            setScholarData(data.fallback);
-          }
-          throw new Error(data.message || `API request failed: ${response.status}`);
-        }
-        
-        if (data.error) {
-          console.error('API returned error:', data.error);
-          if (data.fallback) {
-            setScholarData(data.fallback);
-          }
-          setError(data.error);
-        } else {
-          setScholarData({
-            citations: data.citations || 0,
-            publications: data.publications || 0,
-            h_index: data.h_index || 0,
-            i10_index: data.i10_index || 0,
-            citationsByYear: data.citationsByYear || [],
-            author_name: data.author_name || '',
-            author_affiliation: data.author_affiliation || ''
-          });
-          setError(null);
-        }
-      } catch (error) {
-        console.error('Error fetching scholar data:', error);
-        setError(error instanceof Error ? error.message : 'Failed to fetch data');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchScholarData();
-  }, []);
+  // Hardcoded Google Scholar metrics (update manually every 3-4 months)
+  const scholarData = {
+    citations: 83,
+    publications: 8,
+    h_index: 4,
+    i10_index: 2,
+    citationsByYear: [
+      { year: 2022, citations: 1 },
+      { year: 2023, citations: 1 },
+      { year: 2024, citations: 18 },
+      { year: 2025, citations: 50 },
+      { year: 2026, citations: 13 }
+    ] as Array<{year: number, citations: number}>,
+    author_name: 'Mohsin Furkh Dar',
+    author_affiliation: 'Assistant Professor, UPES Dehradun'
+  };
+  const isLoading = false;
+  const error = null;
 
   // Format numbers for display
   const formatNumber = (num: number) => {
@@ -83,15 +43,18 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="text-center md:text-left">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn">
-                Mohsin Furkh Dar
+                Dr. Mohsin Furkh Dar
               </h1>
-              <div className="text-xl text-green-700 dark:text-green-500 mb-4 animate-fadeIn delay-200 font-semibold">
-                PhD in Deep Learning for Medical Imaging & Full Stack Developer
+              <div className="text-xl text-green-700 dark:text-green-500 mb-2 animate-fadeIn delay-200 font-semibold">
+                Assistant Professor | Medical AI Researcher
               </div>
-              <p className="text-lg mb-8 animate-fadeIn delay-300">
-                Bridging the gap between AI research and practical applications through innovative web solutions. 
-                I specialize in building intelligent web applications that leverage cutting-edge AI/ML technologies 
-                to solve real-world problems in healthcare, education, and beyond.
+              <div className="text-lg text-white/90 mb-4 animate-fadeIn delay-300">
+                School of Computer Science, UPES Dehradun
+              </div>
+              <p className="text-lg mb-8 animate-fadeIn delay-400">
+                I lead research on deep learning for medical image analysis, with a focus on efficient segmentation architectures, 
+                novel loss functions, and interpretable classification systems for breast ultrasound and multi-modal imaging. 
+                My work aims to make expert-level clinical image interpretation accessible in low-resource settings.
               </p>
               
               {/* Error message */}
@@ -224,27 +187,55 @@ export default function Home() {
                 </div>
               )}
               
-              {/* Buttons */}
-              <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-8 animate-fadeIn delay-500">
-                <Link href="/research" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
-                  View Research
-                </Link>
-                <Link href="/projects" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
-                  View Projects
-                </Link>
-                <Link href="/cv" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
-                  View CV
-                </Link>
-                <Link 
-                  href="https://mohsinfurkh.github.io/academic-portal/" 
+              {/* Profile Links */}
+              <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-6 animate-fadeIn delay-500">
+                <a 
+                  href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ&hl=en" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="btn bg-white text-primary border border-accent hover:bg-gray-50 px-6 py-3 rounded-full flex items-center gap-2"
+                  className="inline-flex items-center gap-1.5 text-sm text-white/80 hover:text-white transition-colors"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/>
                   </svg>
-                  Teaching Materials
+                  Google Scholar
+                </a>
+                <span className="text-white/40">|</span>
+                <a 
+                  href="https://orcid.org/0009-0000-0000-0000" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-white/80 hover:text-white transition-colors"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.894 8.221l-1.97-.001c-.156 0-.33.157-.33.522v6.097c0 .366.174.523.33.523h1.97c.155 0 .33-.157.33-.523V8.743c0-.365-.175-.522-.33-.522zM12 5.67c1.155 0 2.104.896 2.203 2.03h.005v.438h-.005c-.1 1.135-1.048 2.03-2.203 2.03-1.218 0-2.207-.988-2.207-2.207S10.782 5.67 12 5.67zm-2.895 2.593h-.005v5.475c0 .366.174.523.33.523h1.97c.156 0 .33-.157.33-.523V8.263c0-.365-.174-.522-.33-.522h-1.97c-.155 0-.33.157-.33.522v.438h-.005c-.1-1.135-1.048-2.03-2.203-2.03-1.218 0-2.207.988-2.207 2.207s.989 2.207 2.207 2.207c1.155 0 2.104-.895 2.203-2.03z"/>
+                  </svg>
+                  ORCID
+                </a>
+                <span className="text-white/40">|</span>
+                <a 
+                  href="https://www.semanticscholar.org/author/Mohsin-Furkh-Dar/12345678" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-white/80 hover:text-white transition-colors"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                  </svg>
+                  Semantic Scholar
+                </a>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4 animate-fadeIn delay-600">
+                <Link href="/publications" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
+                  View Publications
+                </Link>
+                <Link href="/lab" className="btn bg-accent text-white hover:bg-accent/90 px-6 py-3 rounded-full">
+                  Join the Lab
+                </Link>
+                <Link href="/cv" className="btn bg-white text-primary border border-accent hover:bg-gray-50 px-6 py-3 rounded-full">
+                  View CV
                 </Link>
               </div>
             </div>

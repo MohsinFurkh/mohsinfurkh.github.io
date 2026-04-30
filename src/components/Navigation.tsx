@@ -24,13 +24,14 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-6">
             <Link href="/" className="nav-link">Home</Link>
             <Link href="/about" className="nav-link">About</Link>
             <Link href="/research" className="nav-link">Research</Link>
+            <Link href="/lab" className="nav-link">Lab</Link>
             <Link href="/publications" className="nav-link">Publications</Link>
-            <Link href="/projects" className="nav-link">Projects</Link>
-            <Link href="/academic-profile" className="nav-link">Academic Profile</Link>
+            <Link href="/teaching" className="nav-link">Teaching</Link>
+            <Link href="/news" className="nav-link">News</Link>
             <Link href="/blog" className="nav-link">Blog</Link>
             <Link href="/contact" className="nav-link">Contact</Link>
           </div>
@@ -125,9 +126,10 @@ export default function Navigation() {
                 <Link href="/" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Home</Link>
                 <Link href="/about" className="nav-link-mobile" onClick={() => setIsOpen(false)}>About</Link>
                 <Link href="/research" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Research</Link>
+                <Link href="/lab" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Lab</Link>
                 <Link href="/publications" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Publications</Link>
-                <Link href="/projects" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Projects</Link>
-                <Link href="/academic-profile" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Academic Profile</Link>
+                <Link href="/teaching" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Teaching</Link>
+                <Link href="/news" className="nav-link-mobile" onClick={() => setIsOpen(false)}>News</Link>
                 <Link href="/blog" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Blog</Link>
                 <Link href="/contact" className="nav-link-mobile" onClick={() => setIsOpen(false)}>Contact</Link>
               </div>

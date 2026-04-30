@@ -12,11 +12,19 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             <div className="md:col-span-2">
               <div className="prose prose-lg max-w-none">
-                <p className="text-lg mb-6">
+                {/* Current Position - Lead with this */}
+                <div className="bg-blue-50 border-l-4 border-accent p-4 rounded-r-lg mb-6">
+                  <h2 className="text-xl font-bold text-primary mb-2">Current Position</h2>
+                  <p className="text-gray-700">
+                    <strong>Assistant Professor</strong>, School of Computer Science, UPES Dehradun (July 2025–present). 
+                    Shortlisted as Research Faculty (January 2026).
+                  </p>
+                </div>
+
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Research Focus</h2>
+                <p className="text-lg mb-4">
                   I am a PhD researcher specializing in Deep Learning for Medical Imaging, with a passion for developing innovative AI solutions that bridge the gap between cutting-edge research and clinical applications. My work focuses on medical image segmentation, classification, and analysis, with a particular emphasis on improving diagnostic accuracy and efficiency in healthcare.
                 </p>
-                
-                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Research Focus</h2>
                 <ul className="list-disc pl-5 space-y-2 mb-6">
                   <li>Deep learning architectures for medical image analysis</li>
                   <li>Efficient neural network design for resource-constrained environments</li>
@@ -47,21 +55,18 @@ export default function About() {
                   </div>
                 </div>
                 
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Awards & Recognition</h2>
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                  <p className="text-gray-700">
+                    <strong>UGC NET JRF Computer Science</strong> — December 2019, All India Rank 53
+                  </p>
+                </div>
+
                 <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Skills</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <h3 className="font-semibold mb-2">Web Development</h3>
-                    <ul className="space-y-1">
-                      <li>Next.js, React, TypeScript</li>
-                      <li>Node.js, Express, MongoDB</li>
-                      <li>Tailwind CSS, Headless UI</li>
-                      <li>Authentication (NextAuth, JWT)</li>
-                      <li>RESTful APIs, GraphQL</li>
-                    </ul>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h3 className="font-semibold mb-2">AI/ML & Research</h3>
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 text-gray-600">
                       <li>Python, PyTorch, TensorFlow</li>
                       <li>Medical Imaging (DICOM, NIfTI)</li>
                       <li>Computer Vision & Deep Learning</li>
@@ -71,12 +76,11 @@ export default function About() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">Tools & Platforms</h3>
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 text-gray-600">
                       <li>Git, GitHub, GitLab</li>
                       <li>Docker, Kubernetes</li>
                       <li>AWS, GCP, Vercel</li>
                       <li>CI/CD Pipelines</li>
-                      <li>Agile/Scrum Methodologies</li>
                     </ul>
                   </div>
                 </div>
@@ -95,9 +99,9 @@ export default function About() {
               <div className="mt-6 space-y-4">
                 <div>
                   <h3 className="font-semibold">Contact Information</h3>
-                  <p className="text-gray-600">mohsinfurkh@gmail.com</p>
-                  <p className="text-gray-600">University of Hyderabad</p>
-                  <p className="text-gray-600">Hyderabad, India</p>
+                  <p className="text-gray-600">mohsin.dar@ddn.upes.ac.in</p>
+                  <p className="text-gray-600">School of Computer Science</p>
+                  <p className="text-gray-600">UPES Dehradun, India</p>
                 </div>
                 
                 <div>

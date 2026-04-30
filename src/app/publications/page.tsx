@@ -132,17 +132,70 @@ function mergePublications(scholarPubs: Publication[], additionalPubs: Publicati
   return merged;
 }
 
+// Function to generate BibTeX citation
+function generateBibTeX(pub: Publication): string {
+  const type = getPublicationType(pub) === 'journal' ? 'article' : 'inproceedings';
+  const key = pub.title.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 30);
+  const authorList = pub.authors.replace(/\s+and\s+/gi, ' and ');
+  
+  let bib = `@${type}{${key},\n`;
+  bib += `  title = {${pub.title}},\n`;
+  bib += `  author = {${authorList}},\n`;
+  
+  if (pub.journal || pub.publication) {
+    if (type === 'article') {
+      bib += `  journal = {${pub.journal || pub.publication}},\n`;
+    } else {
+      bib += `  booktitle = {${pub.journal || pub.publication}},\n`;
+    }
+  }
+  
+  if (pub.volume) {
+    bib += `  volume = {${pub.volume}},\n`;
+  }
+  
+  if (pub.issue) {
+    bib += `  number = {${pub.issue}},\n`;
+  }
+  
+  if (pub.pages) {
+    bib += `  pages = {${pub.pages}},\n`;
+  }
+  
+  bib += `  year = {${pub.year}},\n`;
+  
+  if (pub.doi) {
+    bib += `  doi = {${pub.doi}},\n`;
+  }
+  
+  bib += `}`;
+  return bib;
+}
+
 export default function Publications() {
   const [pubType, setPubType] = useState<'journal' | 'conference' | 'all'>('all');
   const [publications, setPublications] = useState<Publication[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [stats, setStats] = useState({
     totalCitations: 0,
     totalPublications: 0,
     hIndex: 0,
     i10Index: 0
   });
+
+  // Function to copy citation to clipboard
+  const copyCitation = async (pub: Publication) => {
+    const bibTeX = generateBibTeX(pub);
+    try {
+      await navigator.clipboard.writeText(bibTeX);
+      setCopiedId(pub.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy citation:', err);
+    }
+  };
 
   useEffect(() => {
     const fetchPublications = async () => {
@@ -399,6 +452,30 @@ export default function Publications() {
                         View on Google Scholar
                       </a>
                     )}
+                  </div>
+
+                  {/* Copy Citation Button */}
+                  <div className="mt-3">
+                    <button
+                      onClick={() => copyCitation(pub)}
+                      className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                    >
+                      {copiedId === pub.id ? (
+                        <>
+                          <svg className="w-4 h-4 mr-1.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="text-green-600">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          Copy Citation (BibTeX)
+                        </>
+                      )}
+                    </button>
                   </div>
                   
                   {/* Source indicator */}

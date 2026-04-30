@@ -48,27 +48,33 @@ export default function TeachingPage() {
                 <tbody className="divide-y divide-gray-100">
                   <tr>
                     <td className="px-6 py-4 font-medium text-gray-900">Discrete Mathematics</td>
-                    <td className="px-6 py-4 text-gray-600">B.Tech Year 1</td>
-                    <td className="px-6 py-4 text-gray-600">UPES Dehradun</td>
-                    <td className="px-6 py-4 text-gray-600">2025–present</td>
+                    <td className="px-6 py-4 text-gray-600">BSc CS Year 2</td>
+                    <td className="px-6 py-4 text-gray-600">Government Degree College Uri, Baramulla</td>
+                    <td className="px-6 py-4 text-gray-600">2020</td>
                   </tr>
                   <tr className="bg-gray-50/50">
                     <td className="px-6 py-4 font-medium text-gray-900">Data Structures & Algorithms</td>
-                    <td className="px-6 py-4 text-gray-600">B.Tech Year 1</td>
-                    <td className="px-6 py-4 text-gray-600">UPES Dehradun</td>
-                    <td className="px-6 py-4 text-gray-600">2025–present</td>
+                    <td className="px-6 py-4 text-gray-600">BSc CS Year 2</td>
+                    <td className="px-6 py-4 text-gray-600">Government Degree College Uri, Baramulla</td>
+                    <td className="px-6 py-4 text-gray-600">2020</td>
                   </tr>
                   <tr>
                     <td className="px-6 py-4 font-medium text-gray-900">Database Systems</td>
-                    <td className="px-6 py-4 text-gray-600">B.Tech Year 1</td>
+                    <td className="px-6 py-4 text-gray-600">M.Tech Year 1</td>
                     <td className="px-6 py-4 text-gray-600">UPES Dehradun</td>
-                    <td className="px-6 py-4 text-gray-600">2025–present</td>
+                    <td className="px-6 py-4 text-gray-600">2025</td>
                   </tr>
                   <tr className="bg-gray-50/50">
                     <td className="px-6 py-4 font-medium text-gray-900">C Programming</td>
                     <td className="px-6 py-4 text-gray-600">B.Tech Year 1</td>
                     <td className="px-6 py-4 text-gray-600">UPES Dehradun</td>
-                    <td className="px-6 py-4 text-gray-600">2025–present</td>
+                    <td className="px-6 py-4 text-gray-600">2025</td>
+                  </tr>
+                  <tr className="bg-gray-50/50">
+                    <td className="px-6 py-4 font-medium text-gray-900">Python Programming</td>
+                    <td className="px-6 py-4 text-gray-600">B.Tech Year 1</td>
+                    <td className="px-6 py-4 text-gray-600">UPES Dehradun</td>
+                    <td className="px-6 py-4 text-gray-600">2026</td>
                   </tr>
                 </tbody>
               </table>

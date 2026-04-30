@@ -48,13 +48,24 @@ export default function Home() {
               <div className="text-xl text-green-700 dark:text-green-500 mb-2 animate-fadeIn delay-200 font-semibold">
                 Assistant Professor | Medical AI Researcher
               </div>
-              <div className="text-lg text-white/90 mb-4 animate-fadeIn delay-300">
+              <div className="text-lg text-white/90 mb-2 animate-fadeIn delay-300">
                 School of Computer Science, UPES Dehradun
               </div>
+              <div className="text-sm text-white/70 mb-4 animate-fadeIn delay-350">
+                <a 
+                  href="https://www.upes.ac.in/faculty/school-of-computer-science/mohsin-furkh-dar" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white underline transition-colors"
+                >
+                  View UPES Faculty Profile
+                </a>
+              </div>
               <p className="text-lg mb-8 animate-fadeIn delay-400">
-                I lead research on deep learning for medical image analysis, with a focus on efficient segmentation architectures, 
-                novel loss functions, and interpretable classification systems for breast ultrasound and multi-modal imaging. 
-                My work aims to make expert-level clinical image interpretation accessible in low-resource settings.
+                Dr. Mohsin Furkh Dar is currently serving as an Assistant Professor in the School of Computer Science at UPES Dehradun. 
+                His academic and research work focuses on deep learning, medical image analysis, and the design of efficient and 
+                generalizable neural architectures. His doctoral contributions include EfficientU-Net, UMA-Net, fuzzy–rough set based 
+                loss functions, and SGAN frameworks for medical image segmentation and classification.
               </p>
               
               {/* Error message */}
@@ -202,7 +213,7 @@ export default function Home() {
                 </a>
                 <span className="text-white/40">|</span>
                 <a 
-                  href="https://orcid.org/0009-0000-0000-0000" 
+                  href="https://orcid.org/0000-0003-1756-9087" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm text-white/80 hover:text-white transition-colors"
@@ -286,11 +297,22 @@ export default function Home() {
             <div>
               <h3 className="text-2xl font-semibold text-primary mb-4">Bridging AI Innovation with Clinical Impact</h3>
               <p className="text-lg mb-6">
-  I am a PhD graduate in Computer Science from the University of Hyderabad, specializing in <strong className="text-primary"><a href="#" className="hover:underline">Deep Learning for Medical Image Analysis</a></strong>. Currently serving as Assistant Professor at UPES School of Computer Science, my research has produced breakthrough innovations including <strong className="text-primary"><a href="https://link.springer.com/article/10.1007/s11063-023-11333-x" target="_blank" rel="noopener noreferrer" className="hover:underline">EfficientU-Net</a></strong>, <strong className="text-primary"><a href="https://link.springer.com/article/10.1007/s11517-025-03301-5" target="_blank" rel="noopener noreferrer" className="hover:underline">UMA-Net</a></strong> with adaptive <strong className="text-primary">loss functions</strong>, and <strong className="text-primary">Saliency-Guided AttentionNet</strong>. With <strong className="text-primary">NET JRF qualification (AIR under 50)</strong>, my work spans novel architectures, <strong className="text-primary"><a href="https://www.sciencedirect.com/science/article/pii/S0262885624001227" target="_blank" rel="noopener noreferrer" className="hover:underline">genetic algorithm-based feature selection</a></strong>, and attention mechanisms validated across multiple medical imaging modalities.
-</p>
-<p className="text-lg">
-  As Founder of <strong className="text-primary"><a href="https://shifa-ai.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:underline">ShifaAI</a></strong>, I'm translating academic research into real-world healthcare solutions through AI-powered diagnostic platforms that provide automated medical image analysis and intelligent clinical decision support. My mission is democratizing access to expert-level medical interpretation, particularly in underserved regions where specialized healthcare is limited. I am open to collaborations in medical AI research and clinical partnerships to further advance the field of healthcare AI.
-</p>
+                Dr. Mohsin Furkh Dar is currently serving as an Assistant Professor in the School of Computer Science at UPES Dehradun. 
+                His academic and research work focuses on <strong className="text-primary">deep learning, medical image analysis</strong>, and the 
+                design of efficient and generalizable neural architectures. His doctoral contributions include 
+                <strong className="text-primary"><a href="https://link.springer.com/article/10.1007/s11063-023-11333-x" target="_blank" rel="noopener noreferrer" className="hover:underline"> EfficientU-Net</a></strong>, 
+                <strong className="text-primary"><a href="https://link.springer.com/article/10.1007/s11517-025-03301-5" target="_blank" rel="noopener noreferrer" className="hover:underline"> UMA-Net</a></strong>, 
+                <strong className="text-primary"> fuzzy–rough set based loss functions</strong>, and 
+                <strong className="text-primary"> SGAN</strong> frameworks for medical image segmentation and classification. 
+                He has published in <strong className="text-primary">SCIE-indexed journals</strong> and presented at international conferences.
+              </p>
+              <p className="text-lg">
+                In addition to his research pursuits, Dr. Dar has significant <strong className="text-primary">teaching experience</strong> at both undergraduate and postgraduate levels, 
+                delivering courses in computer science, artificial intelligence, and data-driven technologies with a strong emphasis on hands-on learning. 
+                He combines theoretical model development with practical system implementation and has built AI-driven applications such as 
+                <strong className="text-primary"><a href="https://shifa-ai.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:underline"> ShifaAI</a></strong>. 
+                He also supervises student projects in computer vision, deep learning, and applied machine learning.
+              </p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -324,85 +346,96 @@ export default function Home() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
-              <h3 className="text-xl font-semibold text-primary mb-4">PhD Thesis: Advances in Deep Learning for Medical Imaging</h3>
-              <p className="text-gray-600 mb-6">
-                Developed novel deep learning architectures for medical image segmentation and classification,
-                achieving state-of-the-art performance in breast cancer detection from ultrasound images and other medical image modalities.
-              </p>
-              <div className="mt-4">
-                <div className="text-sm text-gray-500 mb-3">
-                  <span>University of Hyderabad</span>
-                  <span className="mx-2">•</span>
-                  <span>2020-2025</span>
+            {/* Publication 1 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">SCIE</span>
+                  <span className="text-gray-500 text-sm">Neural Processing Letters, 2023</span>
                 </div>
+                <h3 className="text-lg font-semibold text-primary mb-3">EfficientU-Net: A Novel Deep Learning Method for Breast Tumor Segmentation and Classification in Ultrasound Images</h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  A lightweight encoder-decoder architecture achieving state-of-the-art performance in breast cancer detection from ultrasound images. Features efficient skip connections and optimized feature extraction pathways.
+                </p>
+                <div className="text-sm text-gray-500">
+                  <span className="font-medium">Citations:</span> 38 | 
+                  <span className="font-medium"> Journal:</span> Neural Processing Letters (Springer, SCIE)
+                </div>
+              </div>
+              <div className="mt-4">
                 <a 
-                  href="/phd-thesis" 
-                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium mt-2"
+                  href="https://link.springer.com/article/10.1007/s11063-023-11333-x" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
                 >
-                  Read more
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  View Paper
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
               </div>
             </div>
 
+            {/* Publication 2 */}
             <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-primary mb-4">ShifaAI: AI-Powered Healthcare Platform</h3>
-                <p className="text-gray-600 mb-4">
-                  ShifaAI is revolutionizing healthcare with AI-powered diagnostics, automated report analysis, and personalized treatment suggestions for patients and healthcare providers.
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">SCIE</span>
+                  <span className="text-gray-500 text-sm">Image and Vision Computing, 2024</span>
+                </div>
+                <h3 className="text-lg font-semibold text-primary mb-3">Deep Learning and Genetic Algorithm-Based Ensemble Model for Feature Selection and Classification of Breast Ultrasound Images</h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  An evolutionary feature selection approach combined with deep learning ensemble models for improved breast ultrasound classification. Demonstrates superior accuracy through optimized feature subsets.
                 </p>
-                <p className="text-gray-600 mb-4">
-                  Built using Next.js, TensorFlow, and modern web technologies, it reduces diagnostic errors and accelerates care delivery through intelligent automation.
-                </p>
+                <div className="text-sm text-gray-500">
+                  <span className="font-medium">Citations:</span> 30 | 
+                  <span className="font-medium"> Journal:</span> Image and Vision Computing (Elsevier, SCIE)
+                </div>
               </div>
               <div className="mt-4">
                 <a 
-                  href="https://shifa-ai.vercel.app/" 
+                  href="https://www.sciencedirect.com/science/article/pii/S0262885624001227" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
                 >
-                  Explore ShifaAI Beta
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  View Paper
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
-                <p className="text-xs text-gray-500 mt-2">Currently in active development with new features rolling out regularly</p>
               </div>
             </div>
+
+            {/* Publication 3 */}
             <div className="bg-gray-50 p-8 rounded-lg shadow-md border-l-4 border-accent hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-primary mb-4">MPhil Thesis: Performance Comparison of Face Detection and Recognition Algorithms</h3>
-                <p className="text-gray-600 mb-4">
-                  A comprehensive evaluation of face detection and recognition algorithms, analyzing performance metrics and computational efficiency across various benchmarks including WIDER FACE and MegaFace.
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">SCIE</span>
+                  <span className="text-gray-500 text-sm">Med. & Biol. Eng. & Comp., 2025</span>
+                </div>
+                <h3 className="text-lg font-semibold text-primary mb-3">Adaptive Ensemble Loss and Multi-Scale Attention in Breast Ultrasound Segmentation with UMA-Net</h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  A novel U-Net Multi-scale Attention architecture with adaptive ensemble loss functions for precise medical image segmentation. Addresses class imbalance through dynamic weight adjustment mechanisms.
                 </p>
-                <ul className="list-disc pl-5 text-gray-600 text-sm space-y-1 mb-4">
-                  <li>SSH achieved highest precision-recall in detection but with slower processing</li>
-                  <li>Dlib-R and ArcFace showed superior recognition accuracy</li>
-                  <li>Detailed analysis of speed-accuracy tradeoffs in real-world applications</li>
-                </ul>
+                <div className="text-sm text-gray-500">
+                  <span className="font-medium">Citations:</span> 5 | 
+                  <span className="font-medium"> Journal:</span> Med. & Biol. Eng. & Comp. (Springer, SCIE)
+                </div>
               </div>
               <div className="mt-4">
                 <a 
-                  href="https://drive.google.com/file/d/1hEE-kMir6IsBwE6xP3381YgLGL_PBHyk/view?usp=sharing" 
+                  href="https://link.springer.com/article/10.1007/s11517-025-03301-5" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
                 >
-                  View Full Thesis
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  View Paper
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
-                <div className="text-xs text-gray-500 mt-2">
-                  <span>Mewar University Rajasthan</span>
-                  <span className="mx-1">•</span>
-                  <span>Oct 2017 - Mar 2019</span>
-                </div>
               </div>
             </div>
 
@@ -421,7 +454,7 @@ export default function Home() {
             Interested in my research or exploring collaboration opportunities? I'd love to hear from you.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:mohsinfaurkh@gmail.com" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+            <a href="mailto:mohsin.dar@ddn.upes.ac.in" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
               📧 Email
             </a>
             <a href="https://www.linkedin.com/in/mohsinfurkh/" target="_blank" rel="noopener noreferrer" className="btn border-2 border-white/30 hover:bg-accent hover:border-accent px-6 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">

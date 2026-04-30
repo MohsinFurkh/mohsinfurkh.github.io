@@ -72,8 +72,8 @@ export default function Contact() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <a href="mailto:20mcpc02@uohyd.ac.in" className="hover:underline">
-                      20mcpc02@uohyd.ac.in
+                    <a href="mailto:mohsin.dar@ddn.upes.ac.in" className="hover:underline">
+                      mohsin.dar@ddn.upes.ac.in
                     </a>
                   </p>
                 </div>
@@ -85,9 +85,9 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  Room No. W103A, School of Computer and Information Sciences<br />
-                  University of Hyderabad<br />
-                  Hyderabad, India
+                  School of Computer Science<br />
+                  UPES Dehradun<br />
+                  Dehradun, Uttarakhand, India
                 </p>
                 </div>
                 
@@ -139,9 +139,16 @@ export default function Contact() {
               </div>
               
               <div className="mt-12">
-                <h3 className="text-lg font-semibold mb-2">Office Hours</h3>
-                <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
-                <p>Or by appointment</p>
+                <h3 className="text-lg font-semibold mb-2">UPES Faculty Profile</h3>
+                <p className="mb-2">View my official faculty page at UPES:</p>
+                <a 
+                  href="https://www.upes.ac.in/faculty/school-of-computer-science/mohsin-furkh-dar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white underline hover:text-gray-200"
+                >
+                  www.upes.ac.in/faculty/mohsin-furkh-dar
+                </a>
               </div>
             </div>
             

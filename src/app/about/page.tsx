@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function About() {
   return (
@@ -9,29 +10,112 @@ export default function About() {
             About Me
           </h1>
           
+          {/* Quick Info Card */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <div className="flex flex-col md:flex-row md:items-center gap-4">
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-primary">Dr. Mohsin Furkh Dar</h2>
+                <p className="text-gray-700">Assistant Professor, School of Computer Science</p>
+                <p className="text-gray-600 text-sm">UPES Dehradun | mohsin.dar@ddn.upes.ac.in</p>
+              </div>
+              <div className="flex gap-3">
+                <a 
+                  href="https://www.upes.ac.in/faculty/school-of-computer-science/mohsin-furkh-dar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
+                >
+                  UPES Faculty Profile
+                </a>
+              </div>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             <div className="md:col-span-2">
               <div className="prose prose-lg max-w-none">
-                {/* Current Position - Lead with this */}
-                <div className="bg-blue-50 border-l-4 border-accent p-4 rounded-r-lg mb-6">
-                  <h2 className="text-xl font-bold text-primary mb-2">Current Position</h2>
-                  <p className="text-gray-700">
-                    <strong>Assistant Professor</strong>, School of Computer Science, UPES Dehradun (July 2025–present). 
-                    Shortlisted as Research Faculty (January 2026).
-                  </p>
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Profile Summary</h2>
+                <p className="text-lg mb-6">
+                  Dr. Mohsin Furkh Dar is currently serving as an Assistant Professor in the School of Computer Science at UPES Dehradun. 
+                  His academic and research work focuses on <strong>deep learning, medical image analysis</strong>, and the design of 
+                  efficient and generalizable neural architectures. His doctoral contributions include 
+                  <strong> EfficientU-Net, UMA-Net, fuzzy–rough set based loss functions</strong>, and 
+                  <strong> SGAN</strong> frameworks for medical image segmentation and classification. 
+                  He has published in <strong>SCIE-indexed journals</strong> and presented at international conferences. 
+                  He also maintains an academic profile at <Link href="/" className="text-accent hover:underline">mohsinfurkh.github.io</Link>.
+                </p>
+                <p className="text-lg mb-6">
+                  In addition to his research pursuits, Dr. Dar has significant <strong>teaching experience</strong> at both undergraduate 
+                  and postgraduate levels, delivering courses in computer science, artificial intelligence, and data-driven technologies 
+                  with a strong emphasis on hands-on learning. He combines theoretical model development with practical system 
+                  implementation and has built AI-driven applications such as 
+                  <a href="https://shifa-ai.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline"> ShifaAI</a>. 
+                  He also supervises student projects in computer vision, deep learning, and applied machine learning.
+                </p>
+
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Work Experience</h2>
+                <div className="space-y-4 mb-6">
+                  <div className="border-l-4 border-accent pl-4">
+                    <h3 className="font-semibold text-gray-900">Assistant Professor</h3>
+                    <p className="text-gray-600">School of Computer Science, UPES Dehradun</p>
+                    <p className="text-sm text-gray-500">July 2025 – Present</p>
+                  </div>
+                  <div className="border-l-4 border-gray-300 pl-4">
+                    <h3 className="font-semibold text-gray-900">Assistant Professor</h3>
+                    <p className="text-gray-600">Government Degree College, Uri (Brief tenure)</p>
+                  </div>
+                  <div className="border-l-4 border-gray-300 pl-4">
+                    <h3 className="font-semibold text-gray-900">Teaching Assistant</h3>
+                    <p className="text-gray-600">University of Hyderabad</p>
+                    <p className="text-sm text-gray-500">Mentored MTech students in databases, algorithms, and AI-related projects</p>
+                  </div>
+                  <div className="border-l-4 border-gray-300 pl-4">
+                    <h3 className="font-semibold text-gray-900">System Administrator</h3>
+                    <p className="text-gray-600">AI Lab, School of CSIS, University of Hyderabad</p>
+                  </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Research Focus</h2>
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Research Interests</h2>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Machine Learning</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Deep Learning</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Computer Vision</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Medical Imaging</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Health Analytics</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Computer-Aided Diagnosis</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Medical Image Segmentation</span>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Medical Image Classification</span>
+                </div>
+
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Teaching Philosophy</h2>
                 <p className="text-lg mb-4">
-                  I am a PhD researcher specializing in Deep Learning for Medical Imaging, with a passion for developing innovative AI solutions that bridge the gap between cutting-edge research and clinical applications. My work focuses on medical image segmentation, classification, and analysis, with a particular emphasis on improving diagnostic accuracy and efficiency in healthcare.
+                  Dr. Dar follows a <strong>learner-centric teaching philosophy</strong> that blends strong theoretical foundations 
+                  with hands-on, experiential learning. He actively incorporates collaborative learning techniques such as 
+                  <strong> Think-Pair-Share, Jigsaw, structured problem-solving</strong>, and <strong>peer instruction</strong> to promote 
+                  deeper understanding and student engagement.
                 </p>
-                <ul className="list-disc pl-5 space-y-2 mb-6">
-                  <li>Deep learning architectures for medical image analysis</li>
-                  <li>Efficient neural network design for resource-constrained environments</li>
-                  <li>Interpretable AI for clinical decision support</li>
-                  <li>Multi-modal medical image fusion and analysis</li>
-                </ul>
-                
+                <p className="text-lg mb-6">
+                  His approach emphasizes conceptual clarity, reproducible experimentation, and real-world applications using 
+                  authentic datasets. He integrates continuous feedback, incremental projects, and reflective learning practices 
+                  to help students develop analytical thinking, practical engineering skills, and independent research capability.
+                </p>
+
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Courses Taught</h2>
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="font-medium text-gray-800">Discrete Mathematics</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="font-medium text-gray-800">Data Structures and Algorithms</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="font-medium text-gray-800">Database Systems</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="font-medium text-gray-800">C Programming</p>
+                  </div>
+                </div>
+
                 <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Education</h2>
                 <div className="space-y-4">
                   <div>
@@ -55,11 +139,46 @@ export default function About() {
                   </div>
                 </div>
                 
-                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Awards & Recognition</h2>
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Awards and Grants</h2>
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                   <p className="text-gray-700">
-                    <strong>UGC NET JRF Computer Science</strong> — December 2019, All India Rank 53
+                    <strong>UGC NET with Junior Research Fellowship (JRF)</strong> — December 2019, 
+                    Computer Science and Applications, <strong>All India Rank 53</strong>
                   </p>
+                </div>
+
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Scholarly Activities</h2>
+                <p className="text-lg mb-6">
+                  Dr. Dar has contributed to peer-reviewed research in medical image analysis, deep learning, and 
+                  fuzzy–rough set based learning methods. His work includes <strong>SCIE and Scopus-indexed</strong> journal 
+                  publications on neural network architectures, ensemble-based classification, and evolutionary feature selection. 
+                  He has presented his findings at international conferences, including <strong>ICCCNet</strong>, and has attended 
+                  multiple specialized workshops on MRI, EEG, and NLP research. He has also mentored graduate and undergraduate 
+                  research projects involving deep learning, image processing, and applied machine learning.
+                </p>
+
+                <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Research IDs</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                  <a href="https://scholar.google.com/citations?user=DGm9l2wAAAAJ" target="_blank" rel="noopener noreferrer" className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                    <p className="text-xs text-gray-500">Google Scholar</p>
+                    <p className="font-medium text-gray-800">DGm9l2wAAAAJ</p>
+                  </a>
+                  <a href="https://orcid.org/0000-0003-1756-9087" target="_blank" rel="noopener noreferrer" className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                    <p className="text-xs text-gray-500">ORCID</p>
+                    <p className="font-medium text-gray-800">0000-0003-1756-9087</p>
+                  </a>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Vidwan ID</p>
+                    <p className="font-medium text-gray-800">638631</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Scopus ID</p>
+                    <p className="font-medium text-gray-800">58484416800</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Researcher ID</p>
+                    <p className="font-medium text-gray-800">KIB-9833-2024</p>
+                  </div>
                 </div>
 
                 <h2 className="text-2xl font-bold text-primary mt-8 mb-4">Skills</h2>
@@ -100,8 +219,17 @@ export default function About() {
                 <div>
                   <h3 className="font-semibold">Contact Information</h3>
                   <p className="text-gray-600">mohsin.dar@ddn.upes.ac.in</p>
+                  <p className="text-gray-600">Assistant Professor</p>
                   <p className="text-gray-600">School of Computer Science</p>
                   <p className="text-gray-600">UPES Dehradun, India</p>
+                  <a 
+                    href="https://www.upes.ac.in/faculty/school-of-computer-science/mohsin-furkh-dar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent text-sm hover:underline mt-2 inline-block"
+                  >
+                    View UPES Faculty Profile →
+                  </a>
                 </div>
                 
                 <div>

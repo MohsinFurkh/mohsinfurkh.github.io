@@ -5,7 +5,7 @@ export default function LabPage() {
     <div className="min-h-screen py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          
+
           {/* Lab Header */}
           <div className="text-center mb-12">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">Biomedical Imaging & AI Laboratory</span>
@@ -31,8 +31,8 @@ export default function LabPage() {
                   <p className="text-green-100">Looking for motivated B.Tech students to join as research interns</p>
                 </div>
               </div>
-              <a 
-                href="#join" 
+              <a
+                href="#join"
                 className="bg-white text-green-600 px-6 py-3 rounded-full font-semibold hover:bg-green-50 transition-colors whitespace-nowrap"
               >
                 Apply Now
@@ -45,10 +45,10 @@ export default function LabPage() {
             <h2 className="text-3xl font-bold text-primary mb-6">Mission</h2>
             <div className="bg-blue-50 border-l-4 border-accent p-6 rounded-r-lg">
               <p className="text-lg text-gray-700 leading-relaxed">
-                The MedVIS Lab at UPES Dehradun develops data-efficient and interpretable deep learning systems 
-                for clinical medical image analysis. Our work spans novel segmentation architectures, adaptive 
-                loss function design, and explainable classification for breast ultrasound, gastrointestinal, and 
-                brain imaging modalities. We prioritise methods that generalise across devices and institutions, 
+                The MedVIS Lab at UPES Dehradun develops data-efficient and interpretable deep learning systems
+                for clinical medical image analysis. Our work spans novel segmentation architectures, adaptive
+                loss function design, and explainable classification for breast ultrasound, gastrointestinal, and
+                brain imaging modalities. We prioritise methods that generalise across devices and institutions,
                 making high-accuracy AI diagnostics viable in low-resource clinical environments.
               </p>
             </div>
@@ -58,7 +58,7 @@ export default function LabPage() {
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-primary mb-8">Research Themes</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              
+
               {/* Theme 1 */}
               <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500 hover:shadow-lg transition-shadow">
                 <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
@@ -124,13 +124,22 @@ export default function LabPage() {
                 <tbody className="divide-y divide-gray-100">
                   <tr>
                     <td className="px-6 py-4 font-medium text-gray-900">Dr. Mohsin Furkh Dar</td>
-                    <td className="px-6 py-4 text-gray-600">Lab Director, Assistant Professor</td>
+                    <td className="px-6 py-4 text-gray-600">Assistant Professor</td>
                     <td className="px-6 py-4 text-gray-600">Medical image segmentation, loss function design, interpretable AI</td>
                   </tr>
                   <tr className="bg-gray-50/50">
-                    <td className="px-6 py-4 font-medium text-gray-500 italic">[MTech Student Name]</td>
-                    <td className="px-6 py-4 text-gray-500 italic">MTech Research Scholar (Co-supervised)</td>
-                    <td className="px-6 py-4 text-gray-500 italic">[Her research area]</td>
+                    <td className="px-6 py-4 font-medium text-gray-900">
+                      Riya Gupta
+                      <div className="text-sm font-normal text-gray-500">
+                        <a href="mailto:Riya.29249@stu.upes.ac.in" className="hover:text-accent transition-colors">
+                          Riya.29249@stu.upes.ac.in
+                        </a>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-gray-600">MTech Research Scholar (Co-supervised)</td>
+                    <td className="px-6 py-4 text-gray-600">
+                      Federated Learning combined with quantum-based methods for privacy-preserving data security in IoT networks; integrating these approaches to enhance privacy and secure communication in IoT systems.
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -140,11 +149,11 @@ export default function LabPage() {
           {/* Join the Lab */}
           <section id="join" className="mb-16">
             <h2 className="text-3xl font-bold text-primary mb-8">Open Positions — Recruiting B.Tech Students</h2>
-            
+
             <div className="bg-white rounded-lg shadow-md p-8">
               <p className="text-lg text-gray-700 mb-8">
-                We are looking for motivated B.Tech students (CSE, IT, or related) to join as research interns. 
-                No prior research experience is required — curiosity, consistency, and willingness to learn are 
+                We are looking for motivated B.Tech students (CSE, IT, or related) to join as research interns.
+                No prior research experience is required — curiosity, consistency, and willingness to learn are
                 what matter most.
               </p>
 
@@ -250,13 +259,13 @@ export default function LabPage() {
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold text-purple-700 mb-3">ShifaAI</h3>
                   <p className="text-gray-700 mb-4">
-                    Translating lab research into real-world clinical diagnostic tools. ShifaAI is an AI-powered 
-                    healthcare platform providing automated medical image analysis and intelligent clinical 
+                    Translating lab research into real-world clinical diagnostic tools. ShifaAI is an AI-powered
+                    healthcare platform providing automated medical image analysis and intelligent clinical
                     decision support.
                   </p>
-                  <a 
-                    href="https://shifa-ai.vercel.app/" 
-                    target="_blank" 
+                  <a
+                    href="https://shifa-ai.vercel.app/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
                   >

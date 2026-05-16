@@ -8,10 +8,10 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 export default function Home() {
   // Hardcoded Google Scholar metrics (update manually every 3-4 months)
   const scholarData = {
-    citations: 83,
+    citations: 97,
     publications: 8,
     h_index: 4,
-    i10_index: 2,
+    i10_index: 3,
     citationsByYear: [
       { year: 2022, citations: 1 },
       { year: 2023, citations: 1 },

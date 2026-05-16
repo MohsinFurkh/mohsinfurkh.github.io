@@ -15,9 +15,9 @@ export default function Home() {
     citationsByYear: [
       { year: 2022, citations: 1 },
       { year: 2023, citations: 1 },
-      { year: 2024, citations: 18 },
+      { year: 2024, citations: 17 },
       { year: 2025, citations: 50 },
-      { year: 2026, citations: 13 }
+      { year: 2026, citations: 28 }
     ] as Array<{year: number, citations: number}>,
     author_name: 'Mohsin Furkh Dar',
     author_affiliation: 'Assistant Professor, UPES Dehradun'

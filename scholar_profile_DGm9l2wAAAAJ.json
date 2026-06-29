@@ -4,13 +4,13 @@
   "basic_info": {
     "name": "Mohsin Furkh Dar",
     "affiliation": "Assistant Professor UPES Dehradun",
-    "email_domain": "Verified email at ddn.upes.ac.in - Homepage",
+    "email_domain": "@ddn.upes.ac.in",
     "profile_image": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=DGm9l2wAAAAJ&citpid=1"
   },
   "citation_metrics": {
     "citations": {
-      "all_time": "97",
-      "since_2019": "97"
+      "all_time": "101",
+      "since_2019": "101"
     },
     "h-index": {
       "all_time": "4",
@@ -26,12 +26,28 @@
   ],
   "publications": [
     {
-      "title": "Efficientu-net: a novel deep learning method for breast tumor segmentation and classification in ultrasound images",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
+      "title": "Fuzzy rough set loss for deep learning-based precise medical image segmentation",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Se3iqnhoufwC",
       "authors": "MF Dar, A Ganivada",
-      "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
-      "citations": 40,
-      "year": "2023"
+      "journal": "Computerized Medical Imaging and Graphics, 102716, 2026",
+      "citations": 1,
+      "year": "2026"
+    },
+    {
+      "title": "Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with UMA-Net",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Tyk-4Ss8FVUC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Medical & Biological Engineering & Computing 63 (6), 1697-1713, 2025",
+      "citations": 12,
+      "year": "2025"
+    },
+    {
+      "title": "Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:8k81kl-MbHgC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Proceedings of Fourth International Conference on Computing and \u2026, 2025",
+      "citations": 0,
+      "year": "2025"
     },
     {
       "title": "Deep learning and genetic algorithm-based ensemble model for feature selection and classification of breast ultrasound images",
@@ -43,51 +59,35 @@
     },
     {
       "title": "Design and analysis of a robust security layer for software defined network framework",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:qjMakFHDy7sC",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:MXK_kJrjxJIC",
       "authors": "AN Alhaj, ND Patel, A Singh, RK Bondugula, MF Dar, J Ahamed",
       "journal": "International Journal of Sensor Networks 46 (1), 1-14, 2024",
-      "citations": 11,
+      "citations": 8,
       "year": "2024"
     },
     {
-      "title": "Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with UMA-Net",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Tyk-4Ss8FVUC",
+      "title": "Efficientu-net: a novel deep learning method for breast tumor segmentation and classification in ultrasound images",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
       "authors": "MF Dar, A Ganivada",
-      "journal": "Medical & Biological Engineering & Computing 63 (6), 1697-1713, 2025",
-      "citations": 5,
-      "year": "2025"
+      "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
+      "citations": 42,
+      "year": "2023"
     },
     {
       "title": "Latent fingerprint enhancement and matching using intuitionistic type-2 fuzzy",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:d1gkVwhDpl0C",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:3fE2CSJIrl8C",
       "authors": "S Mukhtar, MF Dar, A Kaur",
-      "journal": "International Journal of Artificial Intelligence and Soft Computing 7 (4 …, 2022",
+      "journal": "International Journal of Artificial Intelligence and Soft Computing 7 (4 \u2026, 2022",
       "citations": 3,
       "year": "2022"
     },
     {
-      "title": "Performance Comparison of Face Detection and Recognition Algorithms",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:W7OEmFMy1HYC",
+      "title": "Performance comparison of face detection and recognition algorithms",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:kNdYIx-mwKoC",
       "authors": "MF Dar, S Dixit",
-      "journal": "International Journal of Science and Research 8 (1), 986-994, 2019",
+      "journal": "Int J Sci Res 8, 986-994, 2018",
       "citations": 1,
-      "year": "2019"
-    },
-    {
-      "title": "Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:eQOLeE2rZwMC",
-      "authors": "MF Dar, A Ganivada",
-      "journal": "International Conference on Computing and Communication Networks, 1-12, 2024",
-      "citations": 0,
-      "year": "2024"
-    },
-    {
-      "title": "Fuzzy rough set loss for deep learning-based precise medical image segmentation",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Se3iqnhoufwC",
-      "authors": "MF Dar, A Ganivada",
-      "journal": "Computerized Medical Imaging and Graphics, 102716, 2026",
-      "citations": 1,
-      "year": "2026"
+      "year": "2018"
     }
   ],
   "coauthors": [
@@ -95,46 +95,6 @@
       "name": "Avatharam Ganivada",
       "scholar_url": "https://scholar.google.com/citations?user=ajlzmN0AAAAJ&hl=en",
       "user_id": "ajlzmN0AAAAJ"
-    },
-    {
-      "name": "Ali Nadim Alhaj",
-      "scholar_url": "https://scholar.google.com/citations?user=Js-55m8AAAAJ&hl=en",
-      "user_id": "Js-55m8AAAAJ"
-    },
-    {
-      "name": "Dr. ND Patel",
-      "scholar_url": "https://scholar.google.com/citations?user=HYxbUHMAAAAJ&hl=en",
-      "user_id": "HYxbUHMAAAAJ"
-    },
-    {
-      "name": "Dr. Ajeet Singh",
-      "scholar_url": "https://scholar.google.com/citations?user=RgIdMoIAAAAJ&hl=en",
-      "user_id": "RgIdMoIAAAAJ"
-    },
-    {
-      "name": "Dr. Rohit Kumar Bondugula",
-      "scholar_url": "https://scholar.google.com/citations?user=e3-AdYgAAAAJ&hl=en",
-      "user_id": "e3-AdYgAAAAJ"
-    },
-    {
-      "name": "Dr. Jameel Ahamed",
-      "scholar_url": "https://scholar.google.com/citations?user=0DhTHaEAAAAJ&hl=en",
-      "user_id": "0DhTHaEAAAAJ"
-    },
-    {
-      "name": "Amandeep Kaur",
-      "scholar_url": "https://scholar.google.com/citations?user=68a6g7QAAAAJ&hl=en",
-      "user_id": "68a6g7QAAAAJ"
-    },
-    {
-      "name": "Sayima Mukhtar",
-      "scholar_url": "https://scholar.google.com/citations?user=8CNtpD0AAAAJ&hl=en",
-      "user_id": "8CNtpD0AAAAJ"
-    },
-    {
-      "name": "Dixit Sarvottam",
-      "scholar_url": "https://scholar.google.com/citations?user=oIQXbPcAAAAJ&hl=en",
-      "user_id": "oIQXbPcAAAAJ"
     }
   ],
   "citations_by_year": [
@@ -152,17 +112,12 @@
     },
     {
       "year": 2025,
-      "citations": 50
+      "citations": 49
     },
     {
       "year": 2026,
-      "citations": 28
+      "citations": 33
     }
   ],
-  "fetch_timestamp": "2026-05-16 12:17:58"
-
+  "fetch_timestamp": "2026-06-29 12:18:57"
 }
-
-
-
-

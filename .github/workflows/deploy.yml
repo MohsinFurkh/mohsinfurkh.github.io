@@ -10,6 +10,13 @@ permissions:
   pages: write
   id-token: write
 
+# Allow only one concurrent deployment; do not cancel an in-progress run so
+# a running deploy can finish. Prevents the intermittent
+# "Deployment failed, try again later" caused by overlapping deployments.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

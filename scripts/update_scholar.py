@@ -1,10 +1,104 @@
 import json
 import os
+import re
 from datetime import datetime
 from scholarly import scholarly
 
 # Path to the profile JSON file (relative to root of repo)
 PROFILE_FILE = "scholar_profile_DGm9l2wAAAAJ.json"
+# Home page carries hardcoded scholar metrics because the site is a static
+# export (output: 'export'), so the /api/scholar route does not run in prod.
+HOMEPAGE_FILE = os.path.join("src", "app", "page.tsx")
+
+# Featured Research cards on the home page. Each entry maps a unique substring
+# in the card's heading to a substring that identifies the publication in the
+# JSON, so the per-paper citation counts stay in sync too.
+FEATURED_CARDS = [
+    ("EfficientU-Net", "efficientu-net"),
+    ("Genetic Algorithm-Based Ensemble", "genetic algorithm-based ensemble"),
+    ("UMA-Net", "uma-net"),
+]
+
+
+def update_featured_cards(content, data):
+    """Sync per-paper citation counts on the Featured Research cards."""
+    pubs = data.get("publications", [])
+
+    def citations_for(keyword):
+        for pub in pubs:
+            if keyword in pub.get("title", "").lower():
+                return pub.get("citations", 0)
+        return None
+
+    for heading_kw, json_kw in FEATURED_CARDS:
+        cites = citations_for(json_kw)
+        if cites is None:
+            print(f"Warning: no publication matched '{json_kw}'; skipping card.")
+            continue
+        idx = content.find(heading_kw)
+        if idx == -1:
+            print(f"Warning: featured card '{heading_kw}' not found; skipping.")
+            continue
+        # Replace the first "Citations:</span> N" that follows this heading.
+        head, tail = content[:idx], content[idx:]
+        tail = re.sub(
+            r"(Citations:</span>\s*)\d+",
+            rf"\g<1>{cites}",
+            tail,
+            count=1,
+        )
+        content = head + tail
+    return content
+
+
+def update_homepage(data):
+    """Sync the hardcoded scholarData block in the home page with the JSON."""
+    if not os.path.exists(HOMEPAGE_FILE):
+        print(f"Warning: {HOMEPAGE_FILE} not found; skipping home page update.")
+        return
+
+    metrics = data.get("citation_metrics", {})
+    citations = metrics.get("citations", {}).get("all_time", "0")
+    h_index = metrics.get("h-index", {}).get("all_time", "0")
+    i10_index = metrics.get("i10-index", {}).get("all_time", "0")
+    publications = len(data.get("publications", []))
+
+    with open(HOMEPAGE_FILE, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    original = content
+
+    # Replace the top-level scalar metrics (anchored to their exact keys).
+    content = re.sub(r"(\bcitations:\s*)\d+(,)", rf"\g<1>{citations}\g<2>", content, count=1)
+    content = re.sub(r"(\bpublications:\s*)\d+(,)", rf"\g<1>{publications}\g<2>", content, count=1)
+    content = re.sub(r"(\bh_index:\s*)\d+(,)", rf"\g<1>{h_index}\g<2>", content, count=1)
+    content = re.sub(r"(\bi10_index:\s*)\d+(,)", rf"\g<1>{i10_index}\g<2>", content, count=1)
+
+    # Rebuild the citationsByYear array from the JSON.
+    by_year = data.get("citations_by_year", [])
+    if by_year:
+        items = ",\n".join(
+            f"      {{ year: {int(item['year'])}, citations: {int(item['citations'])} }}"
+            for item in sorted(by_year, key=lambda x: x["year"])
+        )
+        new_block = f"citationsByYear: [\n{items}\n    ]"
+        content = re.sub(
+            r"citationsByYear:\s*\[.*?\]",
+            new_block,
+            content,
+            count=1,
+            flags=re.DOTALL,
+        )
+
+    # Sync the per-paper Featured Research cards.
+    content = update_featured_cards(content, data)
+
+    if content != original:
+        with open(HOMEPAGE_FILE, "w", encoding="utf-8") as f:
+            f.write(content)
+        print("Successfully updated home page metrics.")
+    else:
+        print("Home page metrics already up to date.")
 
 def main():
     if not os.path.exists(PROFILE_FILE):
@@ -104,8 +198,11 @@ def main():
         # Write back to JSON
         with open(PROFILE_FILE, "w") as f:
             json.dump(data, f, indent=2)
-            
+
         print("Successfully updated profile data.")
+
+        # Keep the statically-exported home page in sync with the JSON.
+        update_homepage(data)
         
     except Exception as e:
         print(f"Error fetching data: {e}")

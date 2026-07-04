@@ -6,9 +6,9 @@ import Link from "next/link";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Home() {
-  // Hardcoded Google Scholar metrics (update manually every 3-4 months)
+  // Hardcoded Google Scholar metrics (auto-updated by scripts/update_scholar.py)
   const scholarData = {
-    citations: 97,
+    citations: 101,
     publications: 8,
     h_index: 4,
     i10_index: 3,
@@ -16,8 +16,8 @@ export default function Home() {
       { year: 2022, citations: 1 },
       { year: 2023, citations: 1 },
       { year: 2024, citations: 17 },
-      { year: 2025, citations: 50 },
-      { year: 2026, citations: 28 }
+      { year: 2025, citations: 49 },
+      { year: 2026, citations: 33 }
     ] as Array<{year: number, citations: number}>,
     author_name: 'Mohsin Furkh Dar',
     author_affiliation: 'Assistant Professor, UPES Dehradun'
@@ -358,7 +358,7 @@ export default function Home() {
                   A lightweight encoder-decoder architecture achieving state-of-the-art performance in breast cancer detection from ultrasound images. Features efficient skip connections and optimized feature extraction pathways.
                 </p>
                 <div className="text-sm text-gray-500">
-                  <span className="font-medium">Citations:</span> 38 | 
+                  <span className="font-medium">Citations:</span> 12 |
                   <span className="font-medium"> Journal:</span> Neural Processing Letters (Springer, SCIE)
                 </div>
               </div>
@@ -389,7 +389,7 @@ export default function Home() {
                   An evolutionary feature selection approach combined with deep learning ensemble models for improved breast ultrasound classification. Demonstrates superior accuracy through optimized feature subsets.
                 </p>
                 <div className="text-sm text-gray-500">
-                  <span className="font-medium">Citations:</span> 30 | 
+                  <span className="font-medium">Citations:</span> 34 |
                   <span className="font-medium"> Journal:</span> Image and Vision Computing (Elsevier, SCIE)
                 </div>
               </div>
@@ -420,7 +420,7 @@ export default function Home() {
                   A novel U-Net Multi-scale Attention architecture with adaptive ensemble loss functions for precise medical image segmentation. Addresses class imbalance through dynamic weight adjustment mechanisms.
                 </p>
                 <div className="text-sm text-gray-500">
-                  <span className="font-medium">Citations:</span> 5 | 
+                  <span className="font-medium">Citations:</span> 12 |
                   <span className="font-medium"> Journal:</span> Med. & Biol. Eng. & Comp. (Springer, SCIE)
                 </div>
               </div>

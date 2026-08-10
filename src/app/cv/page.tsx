@@ -14,6 +14,14 @@ interface Section {
   }[];
 }
 
+const metrics = [
+  { value: '9', label: 'Publications' },
+  { value: '7', label: 'First author' },
+  { value: '108+', label: 'Citations' },
+  { value: '4', label: 'h-index' },
+  { value: '4', label: 'Q1 SCIE papers' }
+];
+
 const cvData: Section[] = [
   {
     id: 'education',
@@ -22,20 +30,20 @@ const cvData: Section[] = [
       {
         title: 'Ph.D. in Computer Science',
         subtitle: 'University of Hyderabad',
-        date: 'Nov 2020 - Present',
-        description: 'Thesis title: Advances in Deep Learning for Medical Image Segmentation and Classification'
+        date: 'Nov 2020 - Jul 2026 · Degree awarded 28 July 2026',
+        description: 'Thesis: Advances in Deep Learning for Medical Image Segmentation and Classification. Advisor: Dr. Avatharam Ganivada, School of Computer and Information Sciences. Funded by the UGC Junior Research Fellowship (All India Rank 53).'
       },
       {
         title: 'M.Phil. in Computer Science',
         subtitle: 'Mewar University',
         date: 'Sept 2017 - Mar 2019',
-        description: 'Thesis title: Performance Comparison of Face Detection and Recognition Algorithms'
+        description: 'Thesis: Performance Comparison of Face Detection and Recognition Algorithms'
       },
       {
         title: 'Master of Computer Applications (MCA)',
         subtitle: 'University of Kashmir',
         date: 'Mar 2013 - Jun 2016',
-        description: 'Project Thesis title: SMS Intimation System for Online Leave Management'
+        description: 'Project: SMS Intimation System for Online Leave Management'
       },
       {
         title: 'B.Sc.',
@@ -47,54 +55,70 @@ const cvData: Section[] = [
   },
   {
     id: 'experience',
-    title: 'Experience',
+    title: 'Academic Appointments',
     content: [
       {
-        title: 'Full Stack Web Developer',
-        subtitle: 'Freelance',
-        date: '2022 - Present',
-        description: 'Web Development Projects',
+        title: 'Assistant Professor',
+        subtitle: 'School of Computer Science, UPES, Dehradun',
+        date: '2025 - Present',
         items: [
-          'Developed Shifa.AI - An AI-powered healthcare platform with symptom analysis and health assessments using Next.js, TypeScript, and Google Gemini AI',
-          'Created UGC NET CS HUB - An e-learning platform for UGC NET CS aspirants with practice questions and performance tracking',
-          'Built GoalTrackr - A personal goal management application with task tracking and progress visualization',
-          'Implemented responsive UIs with modern frameworks like Tailwind CSS and Headless UI',
-          'Integrated various APIs including Google Gemini AI, OpenAI, and custom backend services',
-          'Set up CI/CD pipelines for automated testing and deployment using Vercel'
+          'Shortlisted and appointed under the Research Faculty track in recognition of research output in deep learning for medical imaging',
+          'Lead an independent research programme on interpretable deep learning for medical image analysis; author of two 2026 journal papers produced at UPES',
+          'Teach core B.Tech. and M.Tech. Computer Science courses; design course material and assessments',
+          'Supervise B.Tech. and M.Tech. capstone projects in machine learning and computer vision'
         ]
       },
       {
         title: 'Teaching Assistant',
-        subtitle: 'University of Hyderabad',
-        date: '2022 - 2024',
-        description: 'School of Computer and Information Sciences',
+        subtitle: 'School of Computer and Information Sciences, University of Hyderabad',
+        date: 'Jan 2022 - Dec 2024',
         items: [
-          'Mentored 10+ IMTech and MTech students in Deep Learning and Computer Vision',
-          'Mentored two research assistants in projects on Fuzzy Rough Kernel-Based Extreme Learning Machine and Mineral Prospectivity Classification using Deep CNNs',
-          'Conducted workshops on web development technologies including React, Next.js, and modern JavaScript/TypeScript'
+          'Delivered tutorial and laboratory sessions for graduate courses in deep learning and computer vision',
+          'Designed and evaluated programming assignments; mentored students on course projects',
+          'Mentored 10+ IMTech and M.Tech. students in deep learning and computer vision',
+          'Guided two research assistants on fuzzy rough kernel-based extreme learning machines and mineral prospectivity classification'
         ]
       },
       {
-        title: 'System Administrator',
-        subtitle: 'Artificial Intelligence Lab, University of Hyderabad',
-        date: '2021 - 2022',
-        description: 'School of Computer and Information Sciences',
+        title: 'System Administrator, Artificial Intelligence Lab',
+        subtitle: 'School of Computer and Information Sciences, University of Hyderabad',
+        date: 'Jan 2021 - Dec 2022',
         items: [
-          'Managed and maintained computational resources in the AI Lab',
-          'Provided technical support for researchers and students',
-          'Developed internal web tools for lab resource management using modern web technologies'
+          'Managed GPU workstations and server infrastructure supporting the AI research group',
+          'Configured and optimised deep learning software environments for lab-wide research use',
+          'Provided technical support for researchers and students'
         ]
       },
       {
         title: 'Assistant Professor',
         subtitle: 'Government Degree College Uri, Baramulla, J&K',
         date: '2019',
-        description: 'Department of Computer Science',
         items: [
-          'Taught undergraduate computer science courses including Web Development and Programming',
-          'Developed curriculum and assessment materials for web technologies',
-          'Guided students in web development projects and applications'
+          'Taught undergraduate Computer Science courses',
+          'Developed course material for programming and data structures'
         ]
+      }
+    ]
+  },
+  {
+    id: 'grants',
+    title: 'Grants & Funding',
+    content: [
+      {
+        title: 'ICMR ANVESHAN Small Extramural Grant — Principal Investigator',
+        subtitle: 'Indian Council of Medical Research · Submitted, under review',
+        date: '2026',
+        description: 'AI-Assisted Automated Quantification of Umbilical Artery Doppler Ultrasound for Early Detection of Fetal Compromise. Requested budget ₹25,00,000 over 24 months.',
+        items: [
+          'Role: Principal Investigator, with Dr. Ufaque Muzaffar (Medical Officer, Department of Health & Family Welfare, J&K) as clinical Co-PI and Prof. Tanupriya Choudhury (UPES) as Co-Investigator',
+          'Priority area: Reproductive, Maternal & Child Health — Antenatal Care'
+        ]
+      },
+      {
+        title: 'Institution of Eminence (IoE) International Travel Grant',
+        subtitle: 'University of Hyderabad',
+        date: '2024',
+        description: '₹1,00,000 covering registration, international travel and per-diem, competitively awarded to present at ICCCNet-2024 in Manchester, United Kingdom.'
       }
     ]
   },
@@ -103,34 +127,105 @@ const cvData: Section[] = [
     title: 'Awards & Honors',
     content: [
       {
-        title: 'UGC NET+JRF (Computer Science & Application)',
+        title: 'IoE International Travel Grant',
+        subtitle: 'University of Hyderabad',
+        date: '2024',
+        description: '₹1,00,000 for international conference presentation in Manchester, UK'
+      },
+      {
+        title: 'UGC NET + JRF (Computer Science & Applications)',
         subtitle: 'National Testing Agency (NTA)',
         date: 'December 2019',
         description: 'Qualified with All India Rank 53'
+      }
+    ]
+  },
+  {
+    id: 'service',
+    title: 'Professional Service',
+    content: [
+      {
+        title: 'Journal Reviewer',
+        subtitle: 'Peer review for eight international journals',
+        items: [
+          'IEEE Transactions on Medical Imaging',
+          'IEEE Journal of Biomedical and Health Informatics',
+          'Information Fusion (Elsevier)',
+          'Image and Vision Computing (Elsevier)',
+          'Engineering Applications of Artificial Intelligence (Elsevier)',
+          'Neural Computing and Applications (Springer)',
+          'Multimedia Tools and Applications (Springer)',
+          'Journal of Clinical Ultrasound (Wiley)'
+        ]
       },
       {
-        title: 'Programmer J&K',
-        subtitle: 'Samagra Shiksha',
-        date: '2017',
-        description: 'Achieved District Rank 1st and State Rank 3rd'
+        title: 'Editorial Board Member',
+        subtitle: 'PriMera Scientific Engineering (ISSN 2834-2550)'
       }
     ]
   },
   {
     id: 'conferences',
-    title: 'Conference Presentations & Service',
+    title: 'Presentations & Professional Development',
     content: [
       {
-        title: 'Paper Presentation',
-        subtitle: 'ICCCNet-2024 Conference, Manchester, UK',
-        date: '2024',
-        description: 'Presented research on "Dynamic Weight Adjusted Ensemble Loss for Enhanced Medical Image Segmentation"'
+        title: 'Conference Presenter — ICCCNet-2024',
+        subtitle: 'Manchester, United Kingdom',
+        date: 'October 2024',
+        description: 'Presented "Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation", funded by the IoE International Travel Grant'
       },
       {
-        title: 'Volunteer, Transport Committee In-charge',
-        subtitle: 'International Conference on BigData',
-        date: '2024',
-        description: 'University of Hyderabad'
+        title: 'Train-the-Trainer (T3): Cloud Application Development',
+        subtitle: 'IBM · One-week programme',
+        date: '2026'
+      },
+      {
+        title: 'Train-the-Trainer (T3): Pattern Recognition',
+        subtitle: 'IBM · One-week programme',
+        date: '2025'
+      },
+      {
+        title: 'Workshop: MRI and EEG Data Analysis',
+        subtitle: 'IIIT Hyderabad',
+        date: '2024'
+      },
+      {
+        title: 'Workshop: Hands-On Natural Language Processing',
+        subtitle: 'Machine Learning India (MLI)',
+        date: '2021'
+      }
+    ]
+  },
+  {
+    id: 'teaching',
+    title: 'Teaching',
+    content: [
+      {
+        title: 'Courses Taught',
+        subtitle: 'Assistant Professor',
+        items: [
+          'Introduction to Programming using C',
+          'Python Programming',
+          'Data Structures and Algorithms',
+          'Database Management Systems'
+        ]
+      },
+      {
+        title: 'Courses Assisted',
+        subtitle: 'Teaching Assistant, University of Hyderabad',
+        items: [
+          'Deep Learning for Computer Vision',
+          'Advanced Machine Learning',
+          'Neural Networks and Applications',
+          'Research Methodology'
+        ]
+      },
+      {
+        title: 'Courses Prepared to Teach',
+        items: [
+          'Undergraduate: Programming (C / Python), Data Structures and Algorithms, Database Management Systems, Operating Systems fundamentals, Introduction to Artificial Intelligence, Digital Image Processing',
+          'Postgraduate: Machine Learning, Deep Learning, Computer Vision, Medical Image Analysis, Soft Computing and Fuzzy Systems, Explainable AI, Research Methodology'
+        ]
       }
     ]
   },
@@ -141,21 +236,21 @@ const cvData: Section[] = [
       {
         title: 'Programming & Deep Learning',
         items: [
-          'Python, PyTorch, TensorFlow',
-          'Medical image analysis',
-          'Computer vision algorithms',
+          'Python, C, MATLAB, SQL',
+          'TensorFlow, Keras, PyTorch',
+          'Scikit-learn, NumPy, Pandas, SciPy, OpenCV',
           'Deep learning for segmentation and classification',
-          'Fuzzy rough set theory',
-          'Multi-modal learning'
+          'Fuzzy rough set theory and soft computing',
+          'Explainable AI and multi-modal learning'
         ]
       },
       {
         title: 'Research & Academic',
         items: [
           'Technical writing and publication',
+          'Grant proposal writing',
           'Curriculum development',
-          'Student mentoring',
-          'Lab administration',
+          'Student mentoring and project supervision',
           'Research methodology'
         ]
       },
@@ -163,7 +258,7 @@ const cvData: Section[] = [
         title: 'Tools & Technologies',
         items: [
           'Linux system administration',
-          'High-performance computing',
+          'High-performance and GPU computing',
           'Version control (Git)',
           'Docker containerization',
           'DICOM medical image processing'
@@ -187,9 +282,55 @@ export default function CV() {
   return (
     <div className="min-h-screen py-16">
       <div className="container">
-        <h1 className="text-4xl font-bold text-primary mb-12 text-center">
+        <h1 className="text-4xl font-bold text-primary mb-4 text-center">
           Curriculum Vitae
         </h1>
+        <p className="text-center text-gray-600 mb-10">
+          Assistant Professor (Research Faculty), School of Computer Science, UPES, Dehradun
+        </p>
+
+        {/* Research Profile */}
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 sm:p-8 mb-8">
+          <h2 className="text-xl font-semibold mb-4">Research Profile</h2>
+          <div className="space-y-4 text-gray-600">
+            <p>
+              Computer scientist working at the intersection of{' '}
+              <span className="font-semibold text-gray-900">deep learning, medical image analysis, and soft computing</span>.
+              My research develops architectures and learning objectives for medical image segmentation and
+              classification, with an emphasis on uncertainty-aware learning (fuzzy rough set losses), adaptive
+              ensemble objectives, and interpretable attention mechanisms for breast ultrasound diagnosis.
+            </p>
+            <p>
+              <span className="font-semibold text-gray-900">Independent research programme.</span>{' '}
+              Since joining UPES I have established a line of work independent of my doctoral supervision:
+              Principal Investigator on a ₹25 lakh ICMR ANVESHAN extramural proposal (under review) with a
+              clinical Co-PI, and first and corresponding author on <em>MSCT-Trans</em> (Ultrasound in Medicine
+              &amp; Biology, 2026) — conceived and executed at UPES with my own postgraduate student.
+            </p>
+            <p>
+              <span className="font-semibold text-gray-900">Forward agenda.</span>{' '}
+              Building clinically deployable, explainable AI for multimodal medical imaging — extending
+              uncertainty-aware loss design and foundation-model adaptation from breast ultrasound to obstetric
+              Doppler and other modalities, in partnership with clinical collaborators.
+            </p>
+          </div>
+
+          {/* Metrics */}
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6">
+            {metrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="border border-gray-200 border-t-2 border-t-primary rounded-md py-3 px-2 text-center"
+              >
+                <div className="text-2xl font-bold text-primary leading-none">{metric.value}</div>
+                <div className="text-xs uppercase tracking-wide text-gray-500 mt-1">{metric.label}</div>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">
+            Citation metrics from Google Scholar, August 2026
+          </p>
+        </div>
 
         {/* Download CV Button */}
         <div className="text-center mb-12">
@@ -257,4 +398,4 @@ export default function CV() {
       </div>
     </div>
   );
-} 
+}

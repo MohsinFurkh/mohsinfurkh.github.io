@@ -1,150 +1,155 @@
-import Link from 'next/link';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
+
+export const metadata: Metadata = {
+  title: "PhD Thesis",
+  description:
+    "Summary of the doctoral thesis “Advances in Deep Learning for Medical Image Segmentation and Classification” (University of Hyderabad).",
+};
+
+const contributions = [
+  {
+    number: "01",
+    title: "EfficientU-Net: parameter-optimized segmentation",
+    description:
+      "EfficientNet-B7 and atrous convolution folded into U-Net, tuning breast tumor segmentation and classification in ultrasound for lower computational cost.",
+    points: [
+      "13× reduction in parameters — 1.31M against U-Net's 17.27M",
+      "Stronger segmentation of malignant tumors with irregular shapes",
+      "Better boundary localisation through adaptive receptive fields",
+      "97.905% accuracy classifying benign, malignant and normal tissue",
+      "Validated on two public datasets with 5-fold cross-validation",
+    ],
+  },
+  {
+    number: "02",
+    title: "UMA-Net with adaptive loss functions",
+    description:
+      "A U-Net variant with residual connections, attention blocks and atrous convolutions, trained under a dynamic ensemble loss.",
+    points: [
+      "Residual connections and attention blocks sharpen feature integration",
+      "Atrous convolutions capture multi-scale context without losing resolution",
+      "Dynamic ensemble loss (BCE, Dice, Hausdorff, Tversky) rebalances weights during training",
+      "Generalises across five breast ultrasound datasets: BUET, BUSI, Mendeley, OMI, UDIAT",
+    ],
+  },
+  {
+    number: "03",
+    title: "Fuzzy rough set loss for boundary precision",
+    description:
+      "A loss function built on fuzzy rough set theory to handle boundary uncertainty in medical images.",
+    points: [
+      "Higher sensitivity to uncertain predictions and ambiguous lesion boundaries",
+      "Lower computational complexity alongside improved segmentation accuracy",
+      "Handles irregular shapes and overlapping edges",
+      "New similarity functions for uncertainty in boundary regions",
+    ],
+  },
+  {
+    number: "04",
+    title: "Deep learning and genetic algorithm ensemble",
+    description:
+      "MobileNet for feature extraction, genetic algorithms for feature selection, and an ensemble classifier with soft voting.",
+    points: [
+      "MobileNet as a minimal-parameter feature extractor for medical images",
+      "GA-based selection navigating complex feature spaces",
+      "Soft-voting ensemble for robust classification decisions",
+      "Addresses overfitting where data is limited",
+    ],
+  },
+  {
+    number: "05",
+    title: "Saliency-Guided AttentionNet (SGAN)",
+    description:
+      "A dual-branch architecture using Grad-CAM saliency maps for breast ultrasound classification.",
+    points: [
+      "90.51% accuracy on multi-center validation",
+      "87.95% F1-score and 94.08% AUC across five datasets",
+      "Explicit foreground–background decomposition for lesion and peritumoral analysis",
+      "Adaptive attention fusion, keeping transfer learning benefits at minimal parameter cost",
+    ],
+  },
+];
 
 export default function PhdThesis() {
   return (
-    <div className="min-h-screen py-16">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-12">
-          <Link 
-            href="/research" 
-            className="inline-flex items-center text-primary hover:text-primary/80 mb-6 transition-colors"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back to Research
-          </Link>
-          <h1 className="text-4xl font-bold text-primary mb-4">
-            PhD Thesis Summary
-          </h1>
-          <h2 className="text-2xl text-gray-700">
-            Advances in Deep Learning for Medical Image Segmentation and Classification
-          </h2>
+    <>
+      <section className="container animate-rise pt-20 pb-12 text-center sm:pt-24">
+        <p className="kicker">University of Hyderabad · 2026</p>
+        <h1 className="mt-4 font-display text-3xl tracking-tight text-ink sm:text-4xl">
+          Advances in Deep Learning for Medical Image Segmentation and
+          Classification
+        </h1>
+        <p className="mx-auto mt-8 max-w-[38rem]">
+          My doctoral research tackled accuracy, computational cost and
+          generalisation in medical image analysis, with breast ultrasound and
+          tumor detection as the proving ground. Advisor: Dr. Avatharam
+          Ganivada, School of Computer and Information Sciences. Funded by the
+          UGC Junior Research Fellowship.
+        </p>
+      </section>
+
+      <section className="container py-16">
+        <SectionHeading id="contributions">Key Contributions</SectionHeading>
+        <div className="space-y-14">
+          {contributions.map((item) => (
+            <article key={item.number}>
+              <p className="font-display text-2xl text-line">{item.number}</p>
+              <h3 className="mt-2 font-sans text-base font-semibold text-ink">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-[15px]">{item.description}</p>
+              <ul className="mt-3 space-y-1.5 text-[15px]">
+                {item.points.map((point) => (
+                  <li key={point} className="flex gap-2.5">
+                    <span className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-subtle" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
         </div>
+      </section>
 
-        <div className="prose prose-lg max-w-none">
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-primary mb-4">Overview</h2>
-            <p className="mb-6">
-              My doctoral research addressed critical challenges in medical image analysis through the development of innovative deep learning architectures and methodologies. The work focused on improving accuracy, computational efficiency, and generalization capabilities of AI models for medical diagnostics, with particular emphasis on breast ultrasound imaging and tumor detection.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-primary mb-6">Key Research Contributions</h2>
-            
-            <div className="space-y-10">
-            <div className="bg-gray-50 p-6 rounded-lg">
-                <h4 className="text-xl font-semibold text-primary mb-3">EfficientU-Net: Parameter-Optimized Medical Image Segmentation</h4>
-                <p className="mb-3">
-                  Developed EfficientU-Net, a novel deep learning model integrating EfficientNet-B7 and atrous convolution into the U-Net architecture, optimizing breast tumor segmentation and classification in ultrasound images with reduced computational complexity and enhanced accuracy.
-                </p>
-                <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                  <li><span className="font-medium">13x reduction</span> in parameters (1.31M vs. 17.27M in U-Net)</li>
-                  <li>Superior segmentation of malignant tumors with irregular shapes</li>
-                  <li>Enhanced boundary localization with adaptive receptive fields</li>
-                  <li><span className="font-medium">97.905% accuracy</span> in tumor classification (benign, malignant, normal)</li>
-                  <li>Validated on two public datasets using 5-fold cross-validation</li>
-                </ul>
-              </div>
-              
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h4 className="text-xl font-semibold text-primary mb-3">2. UMA-Net with Adaptive Loss Functions</h4>
-                <p className="mb-3">
-                  Developed UMA-Net, an advanced U-Net variant integrating residual connections, attention mechanisms, and atrous convolutions, enhanced by a dynamic ensemble loss function to optimize medical image segmentation across diverse datasets.
-                </p>
-                <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                  <li>Residual connections and attention blocks enhance feature integration and focus on critical regions</li>
-                  <li>Atrous convolutions enable multi-scale feature capture without compromising resolution</li>
-                  <li>Dynamic ensemble loss (BCE, Dice, Hausdorff, Tversky) adapts weights for balanced optimization</li>
-                  <li>Achieves superior generalization across five breast ultrasound datasets (BUET, BUSI, Mendeley, OMI, UDIAT)</li>
-                </ul>
-              </div>
-              
-
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-3">3. Fuzzy Rough Set Loss for Boundary Precision</h3>
-                <p className="mb-4">
-                  Introduced a novel loss function based on fuzzy rough set theory to handle boundary uncertainties in medical images.
-                </p>
-                <div className="space-y-2">
-                  <h4 className="font-semibold">Innovations:</h4>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Enhanced sensitivity to uncertain predictions and ambiguous lesion boundaries</li>
-                    <li>Reduced computational complexity while improving segmentation accuracy</li>
-                    <li>Effective handling of irregular shapes and overlapping edges in medical imaging</li>
-                    <li>Novel similarity functions for better uncertainty handling in boundary regions</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-3">4. Deep Learning and Genetic Algorithm-based Ensemble Model for Feature Selection and Classification</h3>
-                <p className="mb-4">
-                  Developed a unified approach integrating MobileNet for feature extraction, Genetic Algorithms (GA) for feature selection, and an ensemble model for classification, optimizing medical image analysis with enhanced accuracy and efficiency.
-                </p>
-                <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                  <li>MobileNet as an optimal feature extractor for medical images with minimal parameters</li>
-                  <li>GA-based feature selection to navigate complex feature spaces effectively</li>
-                  <li>Novel ensemble model with soft voting for robust classification decisions</li>
-                  <li>Addresses overfitting in limited data scenarios, enhancing model generalizability</li>
-                </ul>
-              </div>
-
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-primary mb-3">5. Saliency-Guided AttentionNet (SGAN)</h3>
-                <p className="mb-4">
-                  Designed a dual-branch architecture leveraging Grad-CAM saliency maps for breast ultrasound classification.
-                </p>
-                <div className="space-y-2">
-                  <h4 className="font-semibold">Performance Metrics:</h4>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li><span className="font-medium">90.51% accuracy</span> on multi-center validation</li>
-                    <li>87.95% F1-score and 94.08% AUC across five datasets</li>
-                    <li>Explicit foreground-background decomposition for lesion and peritumoral analysis</li>
-                    <li>Adaptive attention fusion maintaining transfer learning benefits with minimal parameter increase</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-primary mb-4">Impact and Validation</h2>
-            <p className="mb-4">
-              The research was comprehensively validated across multiple medical imaging modalities including ultrasound, MRI, CT scans, and various anatomical regions. Key achievements include:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 mb-6">
-              <li><span className="font-medium">Cross-dataset validation</span> demonstrating robust generalization (78.46% accuracy across held-out datasets)</li>
-              <li><span className="font-medium">Computational efficiency</span> suitable for clinical deployment and real-time processing</li>
-              <li><span className="font-medium">State-of-the-art performance</span> with significant improvements over baseline methods</li>
-              <li><span className="font-medium">Clinical applicability</span> addressing real-world challenges in resource-limited healthcare settings</li>
-            </ul>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-primary mb-4">Broader Significance</h2>
-            <p className="mb-4">
-              This work bridges the gap between theoretical deep learning advances and practical medical applications, providing computationally efficient solutions that maintain high accuracy while being deployable in clinical environments. The research contributes to the democratization of advanced medical AI, particularly benefiting healthcare systems with limited access to expert radiological interpretation.
-            </p>
-            <p>
-              The developed methodologies have been published in top-tier conferences and journals, with open-source implementations available to facilitate further research and clinical adoption.
-            </p>
-          </section>
-
-          <div className="mt-12 pt-6 border-t border-gray-200 text-center">
-            <Link 
-              href="/research" 
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-colors"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Research
-            </Link>
-          </div>
+      <section className="border-y border-line bg-wash py-16">
+        <div className="container">
+          <SectionHeading id="impact">Impact &amp; Validation</SectionHeading>
+          <p>
+            The work was validated across ultrasound, MRI and CT, and across
+            anatomical regions:
+          </p>
+          <ul className="mt-4 space-y-2 text-[15px]">
+            {[
+              "Cross-dataset validation showing robust generalisation — 78.46% accuracy on held-out datasets",
+              "Computational efficiency suitable for clinical deployment and real-time processing",
+              "State-of-the-art results against baseline methods",
+              "Clinical applicability in resource-limited healthcare settings",
+            ].map((point) => (
+              <li key={point} className="flex gap-2.5">
+                <span className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-subtle" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6">
+            Taken together, the thesis narrows the gap between theoretical
+            advances and practical medical use: computationally efficient methods
+            that stay accurate while remaining deployable, which matters most for
+            health systems with limited access to expert radiological
+            interpretation. The methods are published in peer-reviewed venues
+            with open-source implementations.
+          </p>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section className="container py-16 text-center">
+        <Link href="/research" className="pill">
+          <ArrowLeft className="h-4 w-4" /> Back to research
+        </Link>
+      </section>
+    </>
   );
 }

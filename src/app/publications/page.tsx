@@ -1,507 +1,242 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import PaperActions from '@/components/PaperActions';
+import SectionHeading from '@/components/SectionHeading';
+import { linksFor } from '@/data/paperLinks';
+import { site } from '@/data/site';
 
-// Publication types
 type Publication = {
   id: string;
   title: string;
   authors: string;
-  journal?: string;
-  publication?: string;
-  volume?: string;
-  issue?: string;
-  pages?: string;
+  journal: string;
   year: number;
-  doi?: string;
-  status?: string;
-  thumbnail?: string;
   citations: number;
-  scholarUrl?: string;
   link?: string;
-  isFromScholar?: boolean;
 };
 
-// Fallback/additional publications not in Scholar
-const additionalPublications: Publication[] = [
- 
+const conferenceKeywords = [
+  'proceedings',
+  'conference',
+  'symposium',
+  'workshop',
+  'congress',
+  'international conference',
 ];
 
-// Function to determine publication type
-function getPublicationType(publication: Publication): 'journal' | 'conference' {
-  const title = publication.title.toLowerCase();
-  const journal = (publication.journal || publication.publication || '').toLowerCase();
-  
-  // Conference indicators
-  const conferenceKeywords = [
-    'proceedings', 'conference', 'symposium', 'workshop', 'congress',
-    'ieee', 'acm', 'international conference', 'cvpr', 'iccv', 'nips',
-    'icml', 'aaai', 'ijcai'
-  ];
-  
-  // Check if it's a conference publication
-  const isConference = conferenceKeywords.some(keyword => 
-    title.includes(keyword) || journal.includes(keyword)
-  );
-  
-  return isConference ? 'conference' : 'journal';
+function getPublicationType(pub: Publication): 'journal' | 'conference' {
+  const haystack = `${pub.title} ${pub.journal}`.toLowerCase();
+  return conferenceKeywords.some((keyword) => haystack.includes(keyword))
+    ? 'conference'
+    : 'journal';
 }
 
-// Function to generate thumbnail based on publication type/content
-function generateThumbnail(publication: Publication): string {
-  const title = publication.title.toLowerCase();
-  
-  // Map specific publications to their thumbnails
-  if (title.includes('uma-net') || title.includes('adaptive ensemble loss')) {
-    return '/images/publications/UMA-Net.jpg';
-  } else if (title.includes('feature selection') || title.includes('genetic algorithm')) {
-    return '/images/publications/Feature Selection.jpg';
-  } else if (title.includes('efficientu-net') || title.includes('breast tumor segmentation')) {
-    return '/images/publications/EfficientU-Net.jpg';
-  } else if (title.includes('fingerprint') || title.includes('intuitionistic type-2')) {
-    return '/images/publications/ijaisc.jpg';
-  } else if (title.includes('face detection') || title.includes('performance comparison')) {
-    return '/images/publications/ijsr.jpg';
-  } else if (title.includes('security layer') || title.includes('software defined network')) {
-    return '/images/publications/ijsnet.jpg';
-  } else if (title.includes('fuzzy rough set loss')) {
-    return '/images/publications/FRS Loss.jpg';
-  } else if (title.includes('multi-modal attentionnet')) {
-    return '/images/publications/MANN.jpg';
-  } else if (title.includes('dynamic weight') || title.includes('conference')) {
-    return '/images/publications/Conference_Paper.jpg';
-  }
-  
-  // Default thumbnail (you can create a default.jpg if needed)
-  return '/images/publications/Conference_Paper.jpg';
-}
-
-// Function to extract publication details from Scholar data
-function processScholarPublication(scholarPaper: any, index: number): Publication {
-  // Extract year from title or use current year as fallback
-  let year = new Date().getFullYear();
-  if (scholarPaper.year) {
-    year = typeof scholarPaper.year === 'number' ? scholarPaper.year : parseInt(scholarPaper.year);
-  }
-  
-  // Clean up authors string
-  const authors = scholarPaper.authors || 'Unknown Author';
-  
-  // Use publication field as journal/venue
-  const journal = scholarPaper.publication || 'Unknown Venue';
-  
-  return {
-    id: `scholar-${index}`,
-    title: scholarPaper.title || 'Untitled',
-    authors: authors,
-    journal: journal,
-    publication: journal,
-    year: year,
-    citations: scholarPaper.citations || 0,
-    link: scholarPaper.link,
-    scholarUrl: scholarPaper.link,
-    thumbnail: generateThumbnail({
-      title: scholarPaper.title || '',
-      authors: authors,
-      journal: journal,
-      year: year,
-      citations: scholarPaper.citations || 0,
-      id: `scholar-${index}`
-    }),
-    isFromScholar: true
-  };
-}
-
-// Function to merge and deduplicate publications
-function mergePublications(scholarPubs: Publication[], additionalPubs: Publication[]): Publication[] {
-  const merged = [...scholarPubs];
-  
-  // Add additional publications that aren't already in Scholar results
-  additionalPubs.forEach(addPub => {
-    const exists = scholarPubs.some(schPub => 
-      schPub.title.toLowerCase().includes(addPub.title.toLowerCase().substring(0, 30)) ||
-      addPub.title.toLowerCase().includes(schPub.title.toLowerCase().substring(0, 30))
-    );
-    
-    if (!exists) {
-      merged.push(addPub);
-    }
-  });
-  
-  return merged;
-}
-
-// Function to generate BibTeX citation
 function generateBibTeX(pub: Publication): string {
   const type = getPublicationType(pub) === 'journal' ? 'article' : 'inproceedings';
   const key = pub.title.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 30);
-  const authorList = pub.authors.replace(/\s+and\s+/gi, ' and ');
-  
-  let bib = `@${type}{${key},\n`;
-  bib += `  title = {${pub.title}},\n`;
-  bib += `  author = {${authorList}},\n`;
-  
-  if (pub.journal || pub.publication) {
-    if (type === 'article') {
-      bib += `  journal = {${pub.journal || pub.publication}},\n`;
-    } else {
-      bib += `  booktitle = {${pub.journal || pub.publication}},\n`;
-    }
-  }
-  
-  if (pub.volume) {
-    bib += `  volume = {${pub.volume}},\n`;
-  }
-  
-  if (pub.issue) {
-    bib += `  number = {${pub.issue}},\n`;
-  }
-  
-  if (pub.pages) {
-    bib += `  pages = {${pub.pages}},\n`;
-  }
-  
-  bib += `  year = {${pub.year}},\n`;
-  
-  if (pub.doi) {
-    bib += `  doi = {${pub.doi}},\n`;
-  }
-  
-  bib += `}`;
-  return bib;
+  const venueField = type === 'article' ? 'journal' : 'booktitle';
+
+  return [
+    `@${type}{${key},`,
+    `  title = {${pub.title}},`,
+    `  author = {${pub.authors}},`,
+    `  ${venueField} = {${pub.journal}},`,
+    `  year = {${pub.year}},`,
+    `}`,
+  ].join('\n');
+}
+
+// Highlights the site owner in a Google Scholar author string like "MF Dar, A Ganivada".
+function renderAuthors(authors: string) {
+  return authors.split(',').map((author, index) => {
+    const name = author.trim();
+    const isOwner = /^MF Dar$/i.test(name) || /mohsin/i.test(name);
+    return (
+      <span key={name + index}>
+        {index > 0 && ', '}
+        <span className={isOwner ? 'font-semibold text-ink' : undefined}>{name}</span>
+      </span>
+    );
+  });
 }
 
 export default function Publications() {
-  const [pubType, setPubType] = useState<'journal' | 'conference' | 'all'>('all');
+  const [filter, setFilter] = useState<'all' | 'journal' | 'conference'>('all');
   const [publications, setPublications] = useState<Publication[]>([]);
+  const [stats, setStats] = useState({ citations: 0, publications: 0, hIndex: 0, i10Index: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [stats, setStats] = useState({
-    totalCitations: 0,
-    totalPublications: 0,
-    hIndex: 0,
-    i10Index: 0
-  });
-
-  // Function to copy citation to clipboard
-  const copyCitation = async (pub: Publication) => {
-    const bibTeX = generateBibTeX(pub);
-    try {
-      await navigator.clipboard.writeText(bibTeX);
-      setCopiedId(pub.id);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch (err) {
-      console.error('Failed to copy citation:', err);
-    }
-  };
 
   useEffect(() => {
-    const fetchPublications = async () => {
+    const load = async () => {
       try {
-        setLoading(true);
-        setError(null);
-        
-        // Fetch data from your Google Scholar API
         const response = await fetch('/api/scholar');
-        
         if (!response.ok) {
-          throw new Error(`Failed to fetch publications: ${response.status}`);
+          throw new Error(`Request failed with status ${response.status}`);
         }
-        
         const data = await response.json();
-        
-        // Handle API error response
         if (data.error) {
           throw new Error(data.message || 'Failed to fetch citation data');
         }
-        
-        // Process Scholar publications
-        const scholarPublications = data.papers ? 
-          data.papers.map((paper: any, index: number) => processScholarPublication(paper, index)) : 
-          [];
-        
-        // Merge with additional publications
-        const allPublications = mergePublications(scholarPublications, additionalPublications);
-        
-        // Sort by citations (descending) and then by year (descending)
-        allPublications.sort((a, b) => {
-          if (a.citations !== b.citations) {
-            return b.citations - a.citations; // Higher citations first
-          }
-          return b.year - a.year; // Then newer publications first
-        });
-        
-        setPublications(allPublications);
+
+        const papers: Publication[] = (data.papers ?? []).map((paper: any, index: number) => ({
+          id: `scholar-${index}`,
+          title: paper.title ?? 'Untitled',
+          authors: paper.authors ?? '',
+          journal: paper.publication ?? '',
+          year: Number(paper.year) || 0,
+          citations: paper.citations ?? 0,
+          link: paper.link,
+        }));
+
+        papers.sort((a, b) => b.year - a.year || b.citations - a.citations);
+
+        setPublications(papers);
         setStats({
-          totalCitations: data.citations || 0,
-          totalPublications: data.publications || allPublications.length,
-          hIndex: data.h_index || 0,
-          i10Index: data.i10_index || 0
+          citations: data.citations ?? 0,
+          publications: data.publications ?? papers.length,
+          hIndex: data.h_index ?? 0,
+          i10Index: data.i10_index ?? 0,
         });
-        
       } catch (err) {
-        console.error('Error fetching publications:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred while fetching publications');
-        
-        // Fallback to additional publications only
-        setPublications(additionalPublications);
+        setError(err instanceof Error ? err.message : 'Could not load publications');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPublications();
+    load();
   }, []);
 
-  // Filter publications based on selected type
-  const filteredPublications = publications.filter(pub => {
-    if (pubType === 'all') return true;
-    return getPublicationType(pub) === pubType;
-  });
+  const counts = {
+    all: publications.length,
+    journal: publications.filter((pub) => getPublicationType(pub) === 'journal').length,
+    conference: publications.filter((pub) => getPublicationType(pub) === 'conference').length,
+  };
 
-  // Count publications by type
-  const journalCount = publications.filter(pub => getPublicationType(pub) === 'journal').length;
-  const conferenceCount = publications.filter(pub => getPublicationType(pub) === 'conference').length;
-  
-  if (loading) {
-    return (
-      <div className="min-h-screen py-20">
-        <div className="container">
-          <h1 className="text-4xl font-bold text-primary mb-12 text-center">
-            Research Publications
-          </h1>
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            <span className="ml-4 text-gray-600">Loading publications from Google Scholar...</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const filtered =
+    filter === 'all'
+      ? publications
+      : publications.filter((pub) => getPublicationType(pub) === filter);
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="container">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">
-          Research Publications
+    <>
+      <section className="container animate-rise pt-20 pb-12 text-center sm:pt-24">
+        <p className="kicker">Peer-reviewed work</p>
+        <h1 className="mt-4 font-display text-4xl tracking-tight text-ink sm:text-5xl">
+          Publications
         </h1>
-        
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto">
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <div className="text-2xl font-bold text-primary">{stats.totalCitations.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Total Citations</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <div className="text-2xl font-bold text-primary">{stats.totalPublications}</div>
-            <div className="text-sm text-gray-600">Publications</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <div className="text-2xl font-bold text-primary">{stats.hIndex}</div>
-            <div className="text-sm text-gray-600">h-index</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <div className="text-2xl font-bold text-primary">{stats.i10Index}</div>
-            <div className="text-sm text-gray-600">i10-index</div>
-          </div>
+        <p className="mx-auto mt-8 max-w-[36rem]">
+          Journal articles and conference papers on medical image segmentation,
+          classification and loss function design. Metrics and entries sync from{' '}
+          <a href={site.scholar} target="_blank" rel="noopener noreferrer" className="prose-link">
+            Google Scholar
+          </a>
+          .
+        </p>
+
+        <dl className="mx-auto mt-12 grid max-w-lg grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-4">
+          {[
+            { label: 'Publications', value: stats.publications },
+            { label: 'Citations', value: stats.citations },
+            { label: 'h-index', value: stats.hIndex },
+            { label: 'i10-index', value: stats.i10Index },
+          ].map((metric) => (
+            <div key={metric.label}>
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-subtle">
+                {metric.label}
+              </dt>
+              <dd className="mt-1 font-display text-3xl text-ink">
+                {loading ? '—' : metric.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="container py-12">
+        <SectionHeading>All Publications</SectionHeading>
+
+        <div className="mb-12 flex flex-wrap justify-center gap-2">
+          {(['all', 'journal', 'conference'] as const).map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setFilter(option)}
+              className={`pill pill-sm ${filter === option ? 'pill-filled' : ''}`}
+            >
+              {option === 'all' ? 'All' : option === 'journal' ? 'Journal' : 'Conference'} (
+              {counts[option]})
+            </button>
+          ))}
         </div>
+
+        {loading && <p className="text-center text-[15px] text-subtle">Loading publications…</p>}
 
         {error && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6 max-w-4xl mx-auto">
-            <div className="flex">
-              <div className="text-yellow-800">
-                <strong>Note:</strong> {error}
-                <br />
-                <small>Showing available publications. Some data may be incomplete.</small>
-              </div>
-            </div>
-          </div>
+          <p className="text-center text-[15px] text-subtle">
+            Could not reach the Scholar data ({error}). The full list is available{' '}
+            <a href={site.scholar} target="_blank" rel="noopener noreferrer" className="prose-link">
+              on Google Scholar
+            </a>
+            .
+          </p>
         )}
-        
-        {/* Publication Type Selector */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex rounded-md shadow-sm" role="group">
-            <button
-              type="button"
-              className={`px-6 py-3 text-sm font-medium border border-gray-200 rounded-l-lg ${
-                pubType === 'all' 
-                  ? 'bg-primary text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-              onClick={() => setPubType('all')}
-            >
-              All Publications ({publications.length})
-            </button>
-            <button
-              type="button"
-              className={`px-6 py-3 text-sm font-medium border-t border-b border-gray-200 ${
-                pubType === 'journal' 
-                  ? 'bg-primary text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-              onClick={() => setPubType('journal')}
-            >
-              Journal Articles ({journalCount})
-            </button>
-            <button
-              type="button"
-              className={`px-6 py-3 text-sm font-medium border border-gray-200 rounded-r-lg ${
-                pubType === 'conference' 
-                  ? 'bg-primary text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-              onClick={() => setPubType('conference')}
-            >
-              Conference Proceedings ({conferenceCount})
-            </button>
-          </div>
-        </div>
-        
-        {/* Publications List */}
-        <div className="max-w-4xl mx-auto space-y-8">
-          {filteredPublications.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              No publications found for the selected category.
-            </div>
-          ) : (
-            filteredPublications.map((pub) => (
-              <div key={pub.id} className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row gap-6 hover:shadow-lg transition-shadow">
-                {/* Publication Thumbnail */}
-                <div className="flex-shrink-0 w-24 h-24 relative mx-auto md:mx-0">
-                  <div className="bg-gray-200 w-full h-full rounded-md flex items-center justify-center overflow-hidden">
-                    {pub.thumbnail ? (
-                      <Image
-                        src={pub.thumbnail}
-                        alt={`${pub.journal || pub.publication} thumbnail`}
-                        fill
-                        className="object-contain p-2 rounded-md"
-                        onError={(e) => {
-                          // Fallback to default image on error
-                          (e.target as HTMLImageElement).src = '/images/publications/default.jpg';
-                        }}
-                      />
-                    ) : (
-                      <span className="text-gray-400 text-xs text-center p-2">
-                        {getPublicationType(pub) === 'journal' ? 'Journal' : 'Conference'}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Publication Details */}
-                <div className="flex-grow">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{pub.title}</h3>
-                  <p className="text-gray-700 mb-1">{pub.authors}</p>
-                  <p className="text-gray-600 mb-1 italic">
-                    {pub.journal || pub.publication}
-                    {pub.volume && `, vol. ${pub.volume}`}
-                    {pub.issue && `, no. ${pub.issue}`}
-                    {pub.pages && `, pp. ${pub.pages}`}
-                    {`, ${pub.year}`}
-                    {pub.status && ` (${pub.status})`}
-                  </p>
-                  
-                  {/* Citations */}
-                  {pub.citations > 0 && (
-                    <div className="mt-2 inline-flex items-center bg-blue-50 text-blue-700 text-sm font-medium px-3 py-1 rounded-full">
-                      <svg 
-                        className="w-4 h-4 mr-1.5" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24" 
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" 
-                        />
-                      </svg>
-                      <span className="font-semibold">{pub.citations.toLocaleString()}</span>
-                      <span className="ml-1">citations</span>
-                      {pub.citations >= 10 && (
-                        <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                          Highly Cited
-                        </span>
-                      )}
-                    </div>
-                  )}
-                  
-                  {/* Links */}
-                  <div className="mt-3 flex flex-wrap gap-4">
-                    {pub.doi && (
-                      <a
-                        href={`https://doi.org/${pub.doi}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline text-sm font-medium"
-                      >
-                        DOI: {pub.doi}
-                      </a>
-                    )}
-                    {pub.link && (
-                      <a
-                        href={pub.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline text-sm font-medium"
-                      >
-                        View on Google Scholar
-                      </a>
-                    )}
-                  </div>
 
-                  {/* Copy Citation Button */}
-                  <div className="mt-3">
-                    <button
-                      onClick={() => copyCitation(pub)}
-                      className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-                    >
-                      {copiedId === pub.id ? (
-                        <>
-                          <svg className="w-4 h-4 mr-1.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          <span className="text-green-600">Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
-                          Copy Citation (BibTeX)
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  
-                  {/* Source indicator */}
-                  {pub.isFromScholar && (
-                    <div className="mt-2">
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Auto-synced from Google Scholar
-                      </span>
-                    </div>
+        <ol className="space-y-10">
+          {filtered.map((pub) => {
+            const links = linksFor(pub.title);
+            const paper = links?.paper ?? pub.link;
+
+            return (
+              <li key={pub.id} className="grid gap-2 sm:grid-cols-[4rem_1fr] sm:gap-6">
+                <p className="pt-0.5 text-sm font-medium text-subtle">{pub.year || '—'}</p>
+                <div className="border-l border-line pl-5">
+                  <h3 className="font-sans text-base font-semibold leading-snug text-ink">
+                    {paper ? (
+                      <a
+                        href={paper}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-accent"
+                      >
+                        {pub.title}
+                      </a>
+                    ) : (
+                      pub.title
+                    )}
+                  </h3>
+                  {pub.authors && (
+                    <p className="mt-1.5 text-[15px]">{renderAuthors(pub.authors)}</p>
                   )}
+                  {pub.journal && (
+                    <p className="mt-1 font-display text-[15px] italic text-subtle">{pub.journal}</p>
+                  )}
+                  {pub.citations > 0 && (
+                    <p className="mt-2 text-[13px] text-subtle">
+                      {pub.citations} {pub.citations === 1 ? 'citation' : 'citations'}
+                    </p>
+                  )}
+                  <PaperActions
+                    paper={paper}
+                    code={links?.code}
+                    bibtex={generateBibTeX(pub)}
+                    align="left"
+                    className="mt-3"
+                  />
                 </div>
-              </div>
-            ))
-          )}
-        </div>
-        
-        {/* Refresh Button */}
-        <div className="flex justify-center mt-12">
-          <button
-            onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
-          >
-            Refresh Publications
-          </button>
-        </div>
-      </div>
-    </div>
+              </li>
+            );
+          })}
+        </ol>
+
+        {!loading && filtered.length === 0 && !error && (
+          <p className="text-center text-[15px] text-subtle">
+            No publications in this category.
+          </p>
+        )}
+      </section>
+    </>
   );
 }

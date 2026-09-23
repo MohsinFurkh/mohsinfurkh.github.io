@@ -9,8 +9,8 @@
   },
   "citation_metrics": {
     "citations": {
-      "all_time": "103",
-      "since_2019": "103"
+      "all_time": "115",
+      "since_2019": "115"
     },
     "h-index": {
       "all_time": "4",
@@ -26,68 +26,76 @@
   ],
   "publications": [
     {
-      "title": "Fuzzy rough set loss for deep learning-based precise medical image segmentation",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Se3iqnhoufwC",
+      "title": "EfficientU-Net: A Novel Deep Learning Method for Breast Tumor Segmentation and Classification in Ultrasound Images",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
       "authors": "MF Dar, A Ganivada",
-      "journal": "Computerized Medical Imaging and Graphics, 102716, 2026",
-      "citations": 1,
-      "year": "2026"
-    },
-    {
-      "title": "Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with UMA-Net",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Tyk-4Ss8FVUC",
-      "authors": "MF Dar, A Ganivada",
-      "journal": "Medical & Biological Engineering & Computing 63 (6), 1697-1713, 2025",
-      "citations": 12,
-      "year": "2025"
-    },
-    {
-      "title": "Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:8k81kl-MbHgC",
-      "authors": "MF Dar, A Ganivada",
-      "journal": "Proceedings of Fourth International Conference on Computing and \u2026, 2025",
-      "citations": 0,
-      "year": "2025"
+      "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
+      "citations": 48,
+      "year": "2023"
     },
     {
       "title": "Deep learning and genetic algorithm-based ensemble model for feature selection and classification of breast ultrasound images",
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:2osOgNQ5qMEC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Image and Vision Computing 146, 105018, 2024",
-      "citations": 36,
+      "citations": 38,
       "year": "2024"
     },
     {
+      "title": "Adaptive ensemble loss and multi-scale attention in breast ultrasound segmentation with UMA-Net",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Tyk-4Ss8FVUC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Medical & Biological Engineering & Computing 63 (6), 1697-1713, 2025",
+      "citations": 14,
+      "year": "2025"
+    },
+    {
       "title": "Design and analysis of a robust security layer for software defined network framework",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:MXK_kJrjxJIC",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:ULOm3_A8WrAC",
       "authors": "AN Alhaj, ND Patel, A Singh, RK Bondugula, MF Dar, J Ahamed",
       "journal": "International Journal of Sensor Networks 46 (1), 1-14, 2024",
       "citations": 8,
       "year": "2024"
     },
     {
-      "title": "Efficientu-net: a novel deep learning method for breast tumor segmentation and classification in ultrasound images",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
+      "title": "Fuzzy rough set loss for deep learning-based precise medical image segmentation",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Se3iqnhoufwC",
       "authors": "MF Dar, A Ganivada",
-      "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
-      "citations": 42,
-      "year": "2023"
+      "journal": "Computerized Medical Imaging and Graphics, 102716, 2026",
+      "citations": 3,
+      "year": "2026"
     },
     {
       "title": "Latent fingerprint enhancement and matching using intuitionistic type-2 fuzzy",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:3fE2CSJIrl8C",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:YOwf2qJgpHMC",
       "authors": "S Mukhtar, MF Dar, A Kaur",
-      "journal": "International Journal of Artificial Intelligence and Soft Computing 7 (4 \u2026, 2022",
+      "journal": "International Journal of Artificial Intelligence and Soft Computing 7 (4), 2022",
       "citations": 3,
       "year": "2022"
     },
     {
-      "title": "Performance comparison of face detection and recognition algorithms",
-      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:kNdYIx-mwKoC",
-      "authors": "MF Dar, S Dixit",
-      "journal": "Int J Sci Res 8, 986-994, 2018",
+      "title": "Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:8k81kl-MbHgC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Proceedings of Fourth International Conference on Computing and Communication Networks, 2025",
       "citations": 1,
-      "year": "2018"
+      "year": "2025"
+    },
+    {
+      "title": "Saliency-guided AttentionNet: Dual-branch deep learning for breast ultrasound classification",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:KlAtU1dfN6UC",
+      "authors": "MF Dar, A Ganivada",
+      "journal": "Biomedical Signal Processing and Control 127, 111194, 2026",
+      "citations": 0,
+      "year": "2026"
+    },
+    {
+      "title": "MSCT-Trans: A Multi-scale Convolutional Neural Network Token Transformer for Interpretable Ultrasound Image Classification",
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:Zph67rFs4hoC",
+      "authors": "MF Dar, S Mukhtar",
+      "journal": "Ultrasound in Medicine & Biology, 2026",
+      "citations": 0,
+      "year": "2026"
     }
   ],
   "coauthors": [
@@ -99,25 +107,21 @@
   ],
   "citations_by_year": [
     {
-      "year": 2022,
-      "citations": 1
-    },
-    {
       "year": 2023,
-      "citations": 1
+      "citations": 3
     },
     {
       "year": 2024,
-      "citations": 17
+      "citations": 16
     },
     {
       "year": 2025,
-      "citations": 49
+      "citations": 48
     },
     {
       "year": 2026,
-      "citations": 35
+      "citations": 47
     }
   ],
-  "fetch_timestamp": "2026-07-26 02:21:17"
+  "fetch_timestamp": "2026-09-23 10:11:20"
 }

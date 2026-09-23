@@ -6,55 +6,15 @@ from scholarly import scholarly
 
 # Path to the profile JSON file (relative to root of repo)
 PROFILE_FILE = "scholar_profile_DGm9l2wAAAAJ.json"
-# Home page carries hardcoded scholar metrics because the site is a static
-# export (output: 'export'), so the /api/scholar route does not run in prod.
-HOMEPAGE_FILE = os.path.join("src", "app", "page.tsx")
-
-# Featured Research cards on the home page. Each entry maps a unique substring
-# in the card's heading to a substring that identifies the publication in the
-# JSON, so the per-paper citation counts stay in sync too.
-FEATURED_CARDS = [
-    ("EfficientU-Net", "efficientu-net"),
-    ("Genetic Algorithm-Based Ensemble", "genetic algorithm-based ensemble"),
-    ("UMA-Net", "uma-net"),
-]
-
-
-def update_featured_cards(content, data):
-    """Sync per-paper citation counts on the Featured Research cards."""
-    pubs = data.get("publications", [])
-
-    def citations_for(keyword):
-        for pub in pubs:
-            if keyword in pub.get("title", "").lower():
-                return pub.get("citations", 0)
-        return None
-
-    for heading_kw, json_kw in FEATURED_CARDS:
-        cites = citations_for(json_kw)
-        if cites is None:
-            print(f"Warning: no publication matched '{json_kw}'; skipping card.")
-            continue
-        idx = content.find(heading_kw)
-        if idx == -1:
-            print(f"Warning: featured card '{heading_kw}' not found; skipping.")
-            continue
-        # Replace the first "Citations:</span> N" that follows this heading.
-        head, tail = content[:idx], content[idx:]
-        tail = re.sub(
-            r"(Citations:</span>\s*)\d+",
-            rf"\g<1>{cites}",
-            tail,
-            count=1,
-        )
-        content = head + tail
-    return content
+# The site carries hardcoded scholar metrics because it is a static export
+# (output: 'export'), so the /api/scholar route does not run in prod.
+METRICS_FILE = os.path.join("src", "data", "scholar.ts")
 
 
 def update_homepage(data):
-    """Sync the hardcoded scholarData block in the home page with the JSON."""
-    if not os.path.exists(HOMEPAGE_FILE):
-        print(f"Warning: {HOMEPAGE_FILE} not found; skipping home page update.")
+    """Sync the hardcoded scholarMetrics block with the JSON."""
+    if not os.path.exists(METRICS_FILE):
+        print(f"Warning: {METRICS_FILE} not found; skipping metrics update.")
         return
 
     metrics = data.get("citation_metrics", {})
@@ -63,7 +23,7 @@ def update_homepage(data):
     i10_index = metrics.get("i10-index", {}).get("all_time", "0")
     publications = len(data.get("publications", []))
 
-    with open(HOMEPAGE_FILE, "r", encoding="utf-8") as f:
+    with open(METRICS_FILE, "r", encoding="utf-8") as f:
         content = f.read()
 
     original = content
@@ -90,15 +50,12 @@ def update_homepage(data):
             flags=re.DOTALL,
         )
 
-    # Sync the per-paper Featured Research cards.
-    content = update_featured_cards(content, data)
-
     if content != original:
-        with open(HOMEPAGE_FILE, "w", encoding="utf-8") as f:
+        with open(METRICS_FILE, "w", encoding="utf-8") as f:
             f.write(content)
-        print("Successfully updated home page metrics.")
+        print("Successfully updated scholar metrics.")
     else:
-        print("Home page metrics already up to date.")
+        print("Scholar metrics already up to date.")
 
 def main():
     if not os.path.exists(PROFILE_FILE):

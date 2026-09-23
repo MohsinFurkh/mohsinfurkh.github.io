@@ -1,13 +1,14 @@
 # Academic Website - Deep Learning for Medical Image Analysis
 
-A modern, responsive academic website showcasing research in Deep Learning and Medical Image Analysis.
+A minimalist academic website showcasing research in Deep Learning and Medical Image Analysis.
 
 ## Features
 
-- Modern, responsive design using Next.js and Tailwind CSS
-- Clean and professional layout
-- Sections for research areas, publications, and contact information
-- Optimized for performance and SEO
+- Next.js App Router + Tailwind CSS, deployed to GitHub Pages as a static export
+- Pages: Home, Research, Publications, Writing, About & CV, plus the MedVIS Lab and
+  PhD thesis pages
+- Publication metrics sync weekly from Google Scholar
+  (`scripts/update_scholar.py`, run by `.github/workflows/update_scholar.yml`)
 
 ## Getting Started
 
@@ -43,12 +44,22 @@ npm run dev
 - `npm run start` - Start the production server
 - `npm run lint` - Run ESLint
 
-## Customization
+## Where the content lives
 
-1. Update the content in `src/app/page.tsx` with your personal information
-2. Modify the color scheme in `tailwind.config.js`
-3. Add your own images and assets in the `public` directory
-4. Update the metadata in `src/app/layout.tsx`
+Page content is kept in `src/data/` so pages stay presentational:
+
+| File | Contents |
+| --- | --- |
+| `site.ts` | Name, role, email, profile links, top navigation |
+| `cv.ts` | Education, appointments, grants, awards, teaching, service, skills, IDs |
+| `news.ts` | Home page news items |
+| `research.ts` | Research directions and projects |
+| `featuredPublications.ts` | The three publications highlighted on the home page |
+| `posts.ts` | Writing index |
+| `scholar.ts` | Scholar metrics — rewritten weekly by `scripts/update_scholar.py` |
+
+Colors and fonts are defined in `tailwind.config.js`, `src/app/globals.css` and
+`src/app/layout.tsx`. Images live in `public/images`.
 
 ## License
 

@@ -27,10 +27,6 @@ export const news: NewsItem[] = [
     linkLabel: "Read the summary",
   },
   {
-    date: "2026",
-    text: "Submitted, as Principal Investigator, an ICMR ANVESHAN proposal on AI-assisted quantification of umbilical artery Doppler ultrasound. The proposal is under review.",
-  },
-  {
     date: "Jan 2026",
     text: "Moved to the Research Faculty track in the School of Computer Science, UPES.",
   },

@@ -37,7 +37,6 @@ export const appointments: TimelineEntry[] = [
     items: [
       "Joined in July 2025; moved to the Research Faculty track in January 2026",
       "First and corresponding author of MSCT-Trans (Ultrasound in Medicine & Biology, 2026), written at UPES without my doctoral advisor",
-      "Principal Investigator on an ICMR ANVESHAN proposal (₹25 lakh, 24 months) on AI-assisted umbilical artery Doppler ultrasound — submitted 2026, under review",
       "Teach B.Tech. and M.Tech. Computer Science courses; supervise B.Tech. and M.Tech. projects in machine learning and computer vision",
     ],
   },
@@ -63,7 +62,7 @@ export const appointments: TimelineEntry[] = [
     ],
   },
   {
-    date: "2019",
+    date: "May – Nov 2020",
     title: "Assistant Professor",
     subtitle: "Government Degree College Uri, Baramulla, J&K",
     items: [
@@ -74,13 +73,6 @@ export const appointments: TimelineEntry[] = [
 ];
 
 export const grants: TimelineEntry[] = [
-  {
-    date: "2026",
-    title: "ICMR ANVESHAN Small Extramural Grant — Principal Investigator",
-    subtitle: "Indian Council of Medical Research · Submitted, under review",
-    description:
-      "“AI-Assisted Automated Quantification of Umbilical Artery Doppler Ultrasound for Early Detection of Fetal Compromise.” ₹25,00,000 requested over 24 months.",
-  },
   {
     date: "2024",
     title: "Institution of Eminence (IoE) International Travel Grant",

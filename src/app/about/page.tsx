@@ -79,9 +79,8 @@ export default function About() {
             2026), written without my doctoral advisor.
           </p>
           <p>
-            Next, I am extending uncertainty-aware learning to maternal–fetal
-            Doppler ultrasound, the subject of an ICMR proposal under review. I
-            teach B.Tech. and M.Tech. courses and supervise student projects in
+            Next, I plan to extend uncertainty-aware learning to maternal–fetal
+            ultrasound. I teach B.Tech. and M.Tech. courses and supervise student projects in
             computer vision and applied machine learning.
           </p>
         </div>

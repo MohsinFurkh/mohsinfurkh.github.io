@@ -4,8 +4,7 @@ export type ResearchDirection = {
   description: string;
 };
 
-// Only published results carry numbers. Ongoing and proposed work is labelled
-// as such.
+// Only published results carry numbers. Ongoing work is labelled as such.
 export const researchDirections: ResearchDirection[] = [
   {
     number: "01",
@@ -24,11 +23,5 @@ export const researchDirections: ResearchDirection[] = [
     title: "Uncertainty and Reliability (ongoing)",
     description:
       "Current work on pixel-level uncertainty estimation, aimed at flagging unreliable segmentations so that only uncertain cases go to human review.",
-  },
-  {
-    number: "04",
-    title: "Maternal–Fetal Doppler Ultrasound (proposed)",
-    description:
-      "Automated quantification of umbilical artery Doppler for early detection of fetal compromise, the subject of an ICMR ANVESHAN proposal under review.",
   },
 ];

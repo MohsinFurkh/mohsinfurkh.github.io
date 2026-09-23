@@ -30,33 +30,6 @@ export const posts: Post[] = [
     url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/fuzzy-cross-entropy-loss-function-in-image-segmentation",
   },
   {
-    title: "Data Analysis of Anantnag District's Teaching Support Merit List",
-    excerpt:
-      "Insights and analysis from the teaching support recruitment merit list in Anantnag district.",
-    date: "October 15, 2023",
-    category: "Data Analysis",
-    readTime: "7 min read",
-    url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/unveiling-insights-data-analysis-of-anantnag-district-s-teaching-support-recruitment-merit-list",
-  },
-  {
-    title: "Exploring Achabal Gardens: A Mughal Masterpiece",
-    excerpt:
-      "A journey through the historical and architectural significance of Achabal Gardens in Kashmir.",
-    date: "October 1, 2023",
-    category: "Travel",
-    readTime: "6 min read",
-    url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/exploring-achabal-gardens-a-mughal-masterpiece",
-  },
-  {
-    title: "12 Signs You're a Great Parent",
-    excerpt:
-      "Key indicators of effective parenting and creating a nurturing environment for children.",
-    date: "September 15, 2023",
-    category: "Parenting",
-    readTime: "5 min read",
-    url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/12-signs-you-re-a-great-parent-how-to-create-a-nurturing-environment-for-your-children",
-  },
-  {
     title: "Fuzzy Cross-Entropy Loss Function in Image Segmentation",
     excerpt:
       "Understanding and implementing fuzzy cross-entropy loss for more robust image segmentation models.",
@@ -84,15 +57,6 @@ export const posts: Post[] = [
     url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/unet-model-and-its-limitations",
   },
   {
-    title: "The Many Causes of Arrogance: Understanding and Overcoming Them",
-    excerpt:
-      "An exploration of the psychological factors behind arrogance and strategies for personal growth.",
-    date: "July 15, 2023",
-    category: "Personal Development",
-    readTime: "6 min read",
-    url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/the-many-causes-of-arrogance-understanding-and-overcoming-them",
-  },
-  {
     title: "Deepfakes: The Double-Edged Sword of Synthetic Media",
     excerpt:
       "Examining the implications and challenges of deepfake technology in media and society.",
@@ -100,15 +64,6 @@ export const posts: Post[] = [
     category: "AI Ethics",
     readTime: "8 min read",
     url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/deepfakes-the-double-edged-sword-of-synthetic-media",
-  },
-  {
-    title: "Overcoming Distractions and Staying Focused",
-    excerpt:
-      "Strategies for maintaining focus and productivity during research work and studies.",
-    date: "June 15, 2023",
-    category: "Productivity",
-    readTime: "5 min read",
-    url: "https://mohsinfaurkh.wixsite.com/deepmedresearch/post/overcoming-distractions-and-staying-focused",
   },
   {
     title: "Developing a Novel Segmentation Technique",

@@ -25,6 +25,17 @@ const conferenceKeywords = [
   'international conference',
 ];
 
+// Co-authored work outside medical image analysis, listed separately.
+const otherContributionTitles = [
+  'design and analysis of a robust security layer',
+  'latent fingerprint enhancement',
+];
+
+function isOtherContribution(pub: Publication): boolean {
+  const title = pub.title.toLowerCase();
+  return otherContributionTitles.some((match) => title.includes(match));
+}
+
 function getPublicationType(pub: Publication): 'journal' | 'conference' {
   const haystack = `${pub.title} ${pub.journal}`.toLowerCase();
   return conferenceKeywords.some((keyword) => haystack.includes(keyword))
@@ -119,6 +130,8 @@ export default function Publications() {
     filter === 'all'
       ? publications
       : publications.filter((pub) => getPublicationType(pub) === filter);
+  const core = filtered.filter((pub) => !isOtherContribution(pub));
+  const other = filtered.filter(isOtherContribution);
 
   return (
     <>
@@ -184,59 +197,75 @@ export default function Publications() {
           </p>
         )}
 
-        <ol className="space-y-10">
-          {filtered.map((pub) => {
-            const links = linksFor(pub.title);
-            const paper = links?.paper ?? pub.link;
-
-            return (
-              <li key={pub.id} className="grid gap-2 sm:grid-cols-[4rem_1fr] sm:gap-6">
-                <p className="pt-0.5 text-sm font-medium text-subtle">{pub.year || '—'}</p>
-                <div className="border-l border-line pl-5">
-                  <h3 className="font-sans text-base font-semibold leading-snug text-ink">
-                    {paper ? (
-                      <a
-                        href={paper}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition-colors hover:text-accent"
-                      >
-                        {pub.title}
-                      </a>
-                    ) : (
-                      pub.title
-                    )}
-                  </h3>
-                  {pub.authors && (
-                    <p className="mt-1.5 text-[15px]">{renderAuthors(pub.authors)}</p>
-                  )}
-                  {pub.journal && (
-                    <p className="mt-1 font-display text-[15px] italic text-subtle">{pub.journal}</p>
-                  )}
-                  {pub.citations > 0 && (
-                    <p className="mt-2 text-[13px] text-subtle">
-                      {pub.citations} {pub.citations === 1 ? 'citation' : 'citations'}
-                    </p>
-                  )}
-                  <PaperActions
-                    paper={paper}
-                    code={links?.code}
-                    bibtex={generateBibTeX(pub)}
-                    align="left"
-                    className="mt-3"
-                  />
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+        <PublicationList publications={core} />
 
         {!loading && filtered.length === 0 && !error && (
           <p className="text-center text-[15px] text-subtle">
             No publications in this category.
           </p>
         )}
+
+        {other.length > 0 && (
+          <div className="mt-20">
+            <SectionHeading id="other">Other Contributions</SectionHeading>
+            <p className="mx-auto mb-12 max-w-[36rem] text-center text-[15px] text-subtle">
+              Co-authored work outside medical image analysis.
+            </p>
+            <PublicationList publications={other} />
+          </div>
+        )}
       </section>
     </>
+  );
+}
+
+function PublicationList({ publications }: { publications: Publication[] }) {
+  return (
+    <ol className="space-y-10">
+      {publications.map((pub) => {
+        const links = linksFor(pub.title);
+        const paper = links?.paper ?? pub.link;
+
+        return (
+          <li key={pub.id} className="grid gap-2 sm:grid-cols-[4rem_1fr] sm:gap-6">
+            <p className="pt-0.5 text-sm font-medium text-subtle">{pub.year || '—'}</p>
+            <div className="border-l border-line pl-5">
+              <h3 className="font-sans text-base font-semibold leading-snug text-ink">
+                {paper ? (
+                  <a
+                    href={paper}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-accent"
+                  >
+                    {pub.title}
+                  </a>
+                ) : (
+                  pub.title
+                )}
+              </h3>
+              {pub.authors && (
+                <p className="mt-1.5 text-[15px]">{renderAuthors(pub.authors)}</p>
+              )}
+              {pub.journal && (
+                <p className="mt-1 font-display text-[15px] italic text-subtle">{pub.journal}</p>
+              )}
+              {pub.citations > 0 && (
+                <p className="mt-2 text-[13px] text-subtle">
+                  {pub.citations} {pub.citations === 1 ? 'citation' : 'citations'}
+                </p>
+              )}
+              <PaperActions
+                paper={paper}
+                code={links?.code}
+                bibtex={generateBibTeX(pub)}
+                align="left"
+                className="mt-3"
+              />
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }

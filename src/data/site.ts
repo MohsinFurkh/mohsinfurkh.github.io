@@ -2,7 +2,7 @@ export const site = {
   name: "Mohsin Furkh Dar",
   role: "Assistant Professor, School of Computer Science",
   institution: "UPES Dehradun, India",
-  kicker: "Medical Image Analysis · Deep Learning · Computer Vision",
+  kicker: "Medical Image Analysis · Ultrasound · Uncertainty-Aware Deep Learning",
   email: "mohsin.dar@ddn.upes.ac.in",
   facultyProfile:
     "https://www.upes.ac.in/faculty/school-of-computer-science/mohsin-furkh-dar",

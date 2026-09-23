@@ -60,28 +60,29 @@ export default function About() {
             >
               UPES Dehradun
             </a>
-            , working at the intersection of deep learning, medical image
-            analysis and soft computing. My work develops architectures and
-            learning objectives for medical image segmentation and
-            classification, with an emphasis on uncertainty-aware learning
-            (fuzzy rough set losses), adaptive ensemble objectives, and
-            interpretable attention mechanisms for breast ultrasound diagnosis.
+            , on the Research Faculty track. I develop deep learning methods for
+            ultrasound image analysis that treat ambiguity — at lesion
+            boundaries and across datasets — as a signal rather than noise, so
+            that models stay reliable on the small, heterogeneous datasets
+            typical of point-of-care imaging.
           </p>
           <p>
-            Since joining UPES I have established a line of work independent of
-            my doctoral supervision, including first and corresponding
-            authorship on <em>MSCT-Trans</em> (Ultrasound in Medicine &amp;
-            Biology, 2026) — conceived and executed at UPES with my own
-            postgraduate student.
+            My doctoral work at the University of Hyderabad introduced a fuzzy
+            rough set loss (<em>Computerized Medical Imaging and Graphics</em>,
+            2026) and an adaptive ensemble loss (<em>Med. Biol. Eng.
+            Comput.</em>, 2025) for segmentation, and efficient, interpretable
+            classifiers for breast ultrasound (<em>Neural Processing
+            Letters</em>, 2023; <em>Image and Vision Computing</em>, 2024;{" "}
+            <em>BSPC</em>, 2026). At UPES I extended this work to breast,
+            thyroid and fetal ultrasound as first and corresponding author of{" "}
+            <em>MSCT-Trans</em> (<em>Ultrasound in Medicine &amp; Biology</em>,
+            2026), written without my doctoral advisor.
           </p>
           <p>
-            Ahead: clinically deployable, explainable AI for multimodal medical
-            imaging — extending uncertainty-aware loss design and
-            foundation-model adaptation from breast ultrasound to obstetric
-            Doppler and other modalities, in partnership with clinical
-            collaborators. I teach across B.Tech. and M.Tech. programmes and
-            supervise student projects in computer vision and applied machine
-            learning.
+            Next, I am extending uncertainty-aware learning to maternal–fetal
+            Doppler ultrasound, the subject of an ICMR proposal under review. I
+            teach B.Tech. and M.Tech. courses and supervise student projects in
+            computer vision and applied machine learning.
           </p>
         </div>
 
@@ -219,10 +220,19 @@ export default function About() {
           </div>
           <div>
             <h3 className="font-sans text-base font-semibold text-ink">
-              Editorial board member
+              Open science
             </h3>
             <p className="mt-1 text-[15px]">
-              PriMera Scientific Engineering (ISSN 2834-2550)
+              Code for six publications is public on{" "}
+              <a
+                href={site.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="prose-link"
+              >
+                GitHub
+              </a>
+              .
             </p>
           </div>
         </div>

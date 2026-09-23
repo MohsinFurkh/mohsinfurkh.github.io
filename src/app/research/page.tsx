@@ -19,11 +19,12 @@ export default function Research() {
           Research
         </h1>
         <p className="mx-auto mt-8 max-w-[38rem]">
-          I build deep learning methods for medical images — segmentation and
-          classification models that stay accurate under uncertainty, remain
-          small enough to deploy, and explain what they saw. Most of this work is
-          grounded in breast ultrasound, where boundaries are ambiguous, datasets
-          are small, and clinical stakes are high.
+          I build deep learning methods for ultrasound images that treat
+          ambiguity — at lesion boundaries and across datasets — as a signal
+          rather than noise. The aim is models that stay reliable on the small,
+          heterogeneous datasets typical of point-of-care imaging, remain small
+          enough to deploy, and show what they based a decision on. Most of this
+          work so far is on breast ultrasound.
         </p>
       </section>
 

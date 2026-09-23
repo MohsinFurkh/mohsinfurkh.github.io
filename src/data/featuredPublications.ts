@@ -54,7 +54,7 @@ export const featuredPublications: FeaturedPublication[] = [
     venue: "Computerized Medical Imaging and Graphics, 128, 102716, 2026",
     image: "/images/architectures/frs-loss.jpg",
     summary:
-      "A loss built on fuzzy rough set theory that treats boundary ambiguity as a first-class signal, combining fuzzy similarity with lower and upper approximations to sharpen delineation across ultrasound, MRI and CT.",
+      "A loss built on fuzzy rough set theory that treats boundary ambiguity as a first-class signal, combining fuzzy similarity with lower and upper approximations — a 2.1% average Dice gain over the best baseline across breast ultrasound, polyp, brain MRI, chest CT and skin-lesion datasets.",
     paper: "https://doi.org/10.1016/j.compmedimag.2026.102716",
     code: "https://github.com/MohsinFurkh/Fuzzy-Rough-Set-Loss",
     bibtex: `@article{dar2026frsloss,

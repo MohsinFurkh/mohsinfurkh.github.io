@@ -28,10 +28,10 @@ export default function Home() {
         <p className="kicker mt-4">{site.kicker}</p>
         <p className="mx-auto mt-8 max-w-[38rem] text-balance">
           I am an Assistant Professor in the School of Computer Science at UPES
-          Dehradun. My research develops efficient, interpretable deep learning
-          for medical image segmentation and classification — architectures such
-          as EfficientU-Net and UMA-Net, and uncertainty-aware losses built on
-          fuzzy rough set theory.
+          Dehradun. I build deep learning for ultrasound images that treats
+          ambiguity as a signal rather than noise — fuzzy rough set losses for
+          uncertain lesion boundaries, and lightweight, interpretable models that
+          stay reliable on small, heterogeneous datasets.
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-3">

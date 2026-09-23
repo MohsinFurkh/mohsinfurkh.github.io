@@ -38,6 +38,10 @@ export const paperLinks: PaperLink[] = [
     paper: "https://doi.org/10.1007/s11063-023-11333-x",
     code: "https://github.com/MohsinFurkh/EfficientU-Net",
   },
+  {
+    match: "dynamic weight-adjusted ensemble loss",
+    paper: "https://doi.org/10.1007/978-981-96-3250-3_1",
+  },
 ];
 
 export function linksFor(title: string): PaperLink | undefined {

@@ -35,10 +35,10 @@ export const appointments: TimelineEntry[] = [
     title: "Assistant Professor",
     subtitle: "School of Computer Science, UPES, Dehradun",
     items: [
-      "Appointed under the Research Faculty track in recognition of research output in deep learning for medical imaging",
-      "Lead an independent research programme on interpretable deep learning for medical image analysis; author of two 2026 journal papers produced at UPES",
-      "Teach core B.Tech. and M.Tech. Computer Science courses; design course material and assessments",
-      "Supervise B.Tech. and M.Tech. capstone projects in machine learning and computer vision",
+      "Joined in July 2025; moved to the Research Faculty track in January 2026",
+      "First and corresponding author of MSCT-Trans (Ultrasound in Medicine & Biology, 2026), written at UPES without my doctoral advisor",
+      "Principal Investigator on an ICMR ANVESHAN proposal (₹25 lakh, 24 months) on AI-assisted umbilical artery Doppler ultrasound — submitted 2026, under review",
+      "Teach B.Tech. and M.Tech. Computer Science courses; supervise B.Tech. and M.Tech. projects in machine learning and computer vision",
     ],
   },
   {
@@ -48,7 +48,7 @@ export const appointments: TimelineEntry[] = [
       "School of Computer and Information Sciences, University of Hyderabad",
     items: [
       "Delivered tutorial and laboratory sessions for graduate courses in deep learning and computer vision",
-      "Designed and evaluated programming assignments; mentored 10+ IMTech and M.Tech. students",
+      "Designed and evaluated programming assignments; mentored IMTech and M.Tech. students on course projects",
       "Guided two research assistants on fuzzy rough kernel-based extreme learning machines and mineral prospectivity classification",
     ],
   },
@@ -75,6 +75,13 @@ export const appointments: TimelineEntry[] = [
 
 export const grants: TimelineEntry[] = [
   {
+    date: "2026",
+    title: "ICMR ANVESHAN Small Extramural Grant — Principal Investigator",
+    subtitle: "Indian Council of Medical Research · Submitted, under review",
+    description:
+      "“AI-Assisted Automated Quantification of Umbilical Artery Doppler Ultrasound for Early Detection of Fetal Compromise.” ₹25,00,000 requested over 24 months.",
+  },
+  {
     date: "2024",
     title: "Institution of Eminence (IoE) International Travel Grant",
     subtitle: "University of Hyderabad",
@@ -85,23 +92,10 @@ export const grants: TimelineEntry[] = [
 
 export const awards: TimelineEntry[] = [
   {
-    date: "2024",
-    title: "IoE International Travel Grant",
-    subtitle: "University of Hyderabad",
-    description:
-      "₹1,00,000 for an international conference presentation in Manchester, UK.",
-  },
-  {
     date: "2019",
     title: "UGC NET + JRF (Computer Science & Applications)",
     subtitle: "National Testing Agency (NTA)",
     description: "Qualified with All India Rank 53.",
-  },
-  {
-    date: "2017",
-    title: "Programmer, J&K",
-    subtitle: "Samagra Shiksha",
-    description: "District Rank 1 and State Rank 3.",
   },
 ];
 
@@ -112,11 +106,6 @@ export const presentations: TimelineEntry[] = [
     subtitle: "Manchester, United Kingdom",
     description:
       "Presented “Dynamic Weight-Adjusted Ensemble Loss for Enhanced Medical Image Segmentation”, funded by the IoE International Travel Grant.",
-  },
-  {
-    date: "2024",
-    title: "Volunteer, Transport Committee In-charge",
-    subtitle: "International Conference on BigData 2024, University of Hyderabad",
   },
   {
     date: "2026",
@@ -132,11 +121,6 @@ export const presentations: TimelineEntry[] = [
     date: "2024",
     title: "Workshop: MRI and EEG Data Analysis",
     subtitle: "IIIT Hyderabad",
-  },
-  {
-    date: "2021",
-    title: "Workshop: Hands-On Natural Language Processing",
-    subtitle: "Machine Learning India (MLI)",
   },
 ];
 
@@ -218,7 +202,6 @@ export const skills = [
     group: "Research & Academic",
     items: [
       "Technical writing and publication",
-      "Grant proposal writing",
       "Curriculum development",
       "Student mentoring and project supervision",
       "Research methodology",

@@ -118,15 +118,14 @@ export default function PhdThesis() {
         <div className="container">
           <SectionHeading id="impact">Impact &amp; Validation</SectionHeading>
           <p>
-            The work was validated across ultrasound, MRI and CT, and across
-            anatomical regions:
+            The methods were evaluated on public datasets:
           </p>
           <ul className="mt-4 space-y-2 text-[15px]">
             {[
-              "Cross-dataset validation showing robust generalisation — 78.46% accuracy on held-out datasets",
-              "Computational efficiency suitable for clinical deployment and real-time processing",
-              "State-of-the-art results against baseline methods",
-              "Clinical applicability in resource-limited healthcare settings",
+              "Five public breast ultrasound datasets (BUET, BUSI, Mendeley, OMI, UDIAT)",
+              "The fuzzy rough set loss was also tested on polyp, brain MRI, chest CT and skin-lesion datasets, with statistically significant gains (p < 0.001)",
+              "Cross-dataset testing: SGAN reached 78.46% accuracy on held-out datasets, against 90.51% on its multi-center evaluation",
+              "Compact models: EfficientU-Net uses 1.31M parameters against U-Net's 17.27M",
             ].map((point) => (
               <li key={point} className="flex gap-2.5">
                 <span className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-subtle" />
@@ -135,12 +134,11 @@ export default function PhdThesis() {
             ))}
           </ul>
           <p className="mt-6">
-            Taken together, the thesis narrows the gap between theoretical
-            advances and practical medical use: computationally efficient methods
-            that stay accurate while remaining deployable, which matters most for
-            health systems with limited access to expert radiological
-            interpretation. The methods are published in peer-reviewed venues
-            with open-source implementations.
+            Throughout, the emphasis is on methods that stay accurate with few
+            parameters and little data — a prerequisite for use in health
+            systems with limited access to expert radiologists, though clinical
+            evaluation is still future work. Each method is published in a
+            peer-reviewed venue, with code released publicly.
           </p>
         </div>
       </section>

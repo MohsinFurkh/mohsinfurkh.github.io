@@ -4,29 +4,31 @@ export type ResearchDirection = {
   description: string;
 };
 
+// Only published results carry numbers. Ongoing and proposed work is labelled
+// as such.
 export const researchDirections: ResearchDirection[] = [
   {
     number: "01",
-    title: "Domain-Aware Optimization for Segmentation",
+    title: "Ambiguity-Aware Learning Objectives",
     description:
-      "Optimization frameworks that fold anatomical priors, imaging physics and clinical workflow constraints into the training pipeline, balancing accuracy, uncertainty and compute under limited medical data.",
+      "Loss functions that treat boundary ambiguity as signal rather than noise. The fuzzy rough set loss combines fuzzy similarity with lower and upper approximations, improving Dice by 2.1% on average over the best baseline across breast ultrasound, polyp, brain MRI, chest CT and skin-lesion datasets (CMIG, 2026). An adaptive ensemble loss rebalances BCE, Dice, Hausdorff and Tversky terms during training (MBEC, 2025).",
   },
   {
     number: "02",
-    title: "Saliency-Guided Attention for Ultrasound",
+    title: "Interpretable Ultrasound Classification",
     description:
-      "A dual-branch architecture that models lesion and peritumoral tissue separately through Grad-CAM saliency guidance — 90.51% accuracy across five public datasets, 78.46% on held-out data.",
+      "Lightweight models that show where they look. Saliency-guided AttentionNet models lesion and surrounding tissue in separate branches: 90.51% accuracy across five public breast ultrasound datasets, and 78.46% on held-out data (BSPC, 2026). MSCT-Trans turns multi-scale CNN features into transformer tokens for breast, thyroid and fetal ultrasound, with Grad-CAM++ localisation and confidence analysis (UMB, 2026).",
   },
   {
     number: "03",
-    title: "Fuzzy Similarity-Driven Loss Design",
+    title: "Uncertainty and Reliability (ongoing)",
     description:
-      "Fuzzy rough set losses that treat boundary ambiguity as a first-class signal, sharpening lesion delineation across ultrasound, MRI and CT at lower computational cost than conventional objectives.",
+      "Current work on pixel-level uncertainty estimation, aimed at flagging unreliable segmentations so that only uncertain cases go to human review.",
   },
   {
     number: "04",
-    title: "Uncertainty-Aware Explainable Models",
+    title: "Maternal–Fetal Doppler Ultrasound (proposed)",
     description:
-      "Pixel-level uncertainty estimation paired with multi-modal explainability — detecting 92% of segmentation failures while sending only 15% of cases to manual review.",
+      "Automated quantification of umbilical artery Doppler for early detection of fetal compromise, the subject of an ICMR ANVESHAN proposal under review.",
   },
 ];

@@ -9,8 +9,8 @@
   },
   "citation_metrics": {
     "citations": {
-      "all_time": "115",
-      "since_2019": "115"
+      "all_time": "116",
+      "since_2019": "116"
     },
     "h-index": {
       "all_time": "4",
@@ -30,7 +30,7 @@
       "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DGm9l2wAAAAJ&citation_for_view=DGm9l2wAAAAJ:u-x6o8ySG0sC",
       "authors": "MF Dar, A Ganivada",
       "journal": "Neural Processing Letters 55 (8), 10439-10462, 2023",
-      "citations": 48,
+      "citations": 49,
       "year": "2023"
     },
     {
@@ -120,7 +120,7 @@
     },
     {
       "year": 2026,
-      "citations": 47
+      "citations": 48
     }
   ],
   "fetch_timestamp": "2026-09-23 10:11:20"

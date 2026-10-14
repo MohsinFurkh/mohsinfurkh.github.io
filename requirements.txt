@@ -1,1 +1,4 @@
 scholarly
+# scholarly currently imports bibtexparser's legacy bibdatabase module.
+# Keep it on the compatible 1.x API until scholarly supports bibtexparser 2.x.
+bibtexparser<2

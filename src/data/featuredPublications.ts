@@ -3,12 +3,35 @@ export type FeaturedPublication = {
   venue: string;
   image: string;
   summary: string;
-  paper: string;
-  code: string;
-  bibtex: string;
+  paper?: string;
+  code?: string;
+  bibtex?: string;
 };
 
 export const featuredPublications: FeaturedPublication[] = [
+  {
+    title: "Frequency-attention boundary network for breast ultrasound segmentation with uncertainty estimation",
+    venue: "Journal of Computational Science, 102, 103071, 2027",
+    image: "/images/architectures/fab-net.png",
+    summary: "FAB-Net combines Fourier-domain attention, boundary-aware supervision and Monte Carlo dropout to segment breast ultrasound images and estimate uncertainty.",
+    paper: "https://doi.org/10.1016/j.jocs.2026.103071",
+    code: "https://github.com/MohsinFurkh/FAB-Net",
+    bibtex: `@article{dar2027fabnet,
+  title   = {Frequency-attention boundary network for breast ultrasound segmentation with uncertainty estimation},
+  author  = {Dar, Mohsin Furkh and Mukhtar, Sayima and Hussain, Syed Sajid and Rather, Ishfaq Hussain},
+  journal = {Journal of Computational Science},
+  volume  = {102},
+  pages   = {103071},
+  year    = {2027},
+  doi     = {10.1016/j.jocs.2026.103071}
+}`,
+  },
+  {
+    title: "Available but Not Taken: A Calibrated Null for Burnt-In Annotation Shortcuts in Ultrasound Classification",
+    venue: "11th International Conference on Computer Vision and Image Processing (CVIP 2026), accepted",
+    image: "/images/architectures/calibrated-null.png",
+    summary: "A calibrated evaluation of whether ultrasound classifiers use burnt-in annotation shortcuts, comparing annotation masking with controlled synthetic cues across four datasets.",
+  },
   {
     title:
       "MSCT-Trans: A Multi-scale Convolutional Neural Network Token Transformer for Interpretable Ultrasound Image Classification",

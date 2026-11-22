@@ -13,14 +13,14 @@ export default function PaperActions({
 }: {
   paper?: string;
   code?: string;
-  bibtex: string;
+  bibtex?: string;
   align?: 'center' | 'left';
   className?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    if (await copyText(bibtex)) {
+    if (bibtex && await copyText(bibtex)) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -54,7 +54,7 @@ export default function PaperActions({
           Code
         </a>
       )}
-      <button type="button" onClick={copy} className="pill pill-sm">
+      {bibtex && <button type="button" onClick={copy} className="pill pill-sm">
         {copied ? (
           <>
             <Check className="h-3.5 w-3.5 text-accent" strokeWidth={1.75} />
@@ -66,7 +66,7 @@ export default function PaperActions({
             BibTeX
           </>
         )}
-      </button>
+      </button>}
     </div>
   );
 }

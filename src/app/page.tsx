@@ -85,20 +85,15 @@ export default function Home() {
           <div className="space-y-16">
             {featuredPublications.map((pub) => (
               <article key={pub.title} className="text-center">
-                <a
-                  href={pub.paper}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block border border-line bg-white p-3 transition-colors hover:border-accent"
-                >
-                  <Image
-                    src={pub.image}
-                    alt={`Architecture diagram — ${pub.title}`}
-                    width={1400}
-                    height={900}
-                    className="h-auto w-full"
-                  />
-                </a>
+                {pub.paper ? (
+                  <a href={pub.paper} target="_blank" rel="noopener noreferrer" className="block border border-line bg-white p-3 transition-colors hover:border-accent">
+                    <Image src={pub.image} alt={`Research diagram — ${pub.title}`} width={1400} height={900} className="h-auto w-full" />
+                  </a>
+                ) : (
+                  <div className="border border-line bg-white p-3">
+                    <Image src={pub.image} alt={`Research diagram — ${pub.title}`} width={1400} height={900} className="h-auto w-full" />
+                  </div>
+                )}
                 <h3 className="mt-6 font-sans text-base font-semibold leading-snug text-ink">
                   {pub.title}
                 </h3>

@@ -9,6 +9,16 @@ export type NewsItem = {
 // journal issue date.
 export const news: NewsItem[] = [
   {
+    date: "Nov 2026",
+    text: "FAB-Net, a frequency-attention boundary network for breast ultrasound segmentation with uncertainty estimation, published online in the Journal of Computational Science.",
+    href: "https://doi.org/10.1016/j.jocs.2026.103071",
+    linkLabel: "Read the paper",
+  },
+  {
+    date: "Oct 2026",
+    text: "“Available but Not Taken: A Calibrated Null for Burnt-In Annotation Shortcuts in Ultrasound Classification” accepted at the 11th International Conference on Computer Vision and Image Processing (CVIP 2026).",
+  },
+  {
     date: "Aug 2026",
     text: "MSCT-Trans — a multi-scale CNN token transformer for interpretable breast, thyroid and fetal ultrasound classification — published online in Ultrasound in Medicine & Biology (vol. 52, no. 11).",
     href: "https://doi.org/10.1016/j.ultrasmedbio.2026.07.032",

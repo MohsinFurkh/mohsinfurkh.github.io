@@ -79,8 +79,9 @@ export default function About() {
             2026), written without my doctoral advisor.
           </p>
           <p>
-            Next, I plan to extend uncertainty-aware learning to maternal–fetal
-            ultrasound. I teach B.Tech. and M.Tech. courses and supervise student projects in
+            My recent work includes FAB-Net for breast ultrasound segmentation
+            with uncertainty estimation and a CVIP 2026 paper on annotation
+            shortcuts in ultrasound classification. I teach B.Tech. and M.Tech. courses and supervise student projects in
             computer vision and applied machine learning.
           </p>
         </div>
@@ -222,7 +223,7 @@ export default function About() {
               Open science
             </h3>
             <p className="mt-1 text-[15px]">
-              Code for six publications is public on{" "}
+              Code for seven publications is public on{" "}
               <a
                 href={site.github}
                 target="_blank"

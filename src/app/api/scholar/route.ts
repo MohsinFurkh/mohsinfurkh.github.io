@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import manualPublications from '@/data/manualPublications.json';
 
 // Type definitions for the JSON file structure
 interface CitationMetrics {
@@ -77,7 +78,19 @@ export async function GET() {
     const citationMetrics = data.citation_metrics;
     
     // Process publications into the expected format
-    const papers: ProcessedPaper[] = data.publications.map((pub: Publication) => {
+    const manualTitles = new Set(manualPublications.map((pub) => pub.title.toLowerCase()));
+    const allPublications = [
+      ...manualPublications.map((pub) => {
+        const scholarPaper = data.publications.find(
+          (entry) => entry.title.toLowerCase() === pub.title.toLowerCase()
+        );
+        return scholarPaper
+          ? { ...pub, citations: scholarPaper.citations, scholar_url: scholarPaper.scholar_url }
+          : pub;
+      }),
+      ...data.publications.filter((pub) => !manualTitles.has(pub.title.toLowerCase())),
+    ];
+    const papers: ProcessedPaper[] = allPublications.map((pub: Publication) => {
       // Parse year from string, handling cases where it might be 'N/A'
       let year: number | undefined;
       if (pub.year && pub.year !== 'N/A') {
@@ -112,7 +125,7 @@ export async function GET() {
     const totalCitations = parseInt(citationMetrics.citations?.all_time || '0');
     const hIndex = parseInt(citationMetrics['h-index']?.all_time || '0');
     const i10Index = parseInt(citationMetrics['i10-index']?.all_time || '0');
-    const publications = data.publications.length;
+    const publications = allPublications.length;
     
     // Try to get citations by year from JSON file first
     let citationsByYear: CitationByYear[] = [];

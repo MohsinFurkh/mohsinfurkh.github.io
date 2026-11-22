@@ -9,6 +9,11 @@ export type PaperLink = {
 
 export const paperLinks: PaperLink[] = [
   {
+    match: "frequency-attention boundary network",
+    paper: "https://doi.org/10.1016/j.jocs.2026.103071",
+    code: "https://github.com/MohsinFurkh/FAB-Net",
+  },
+  {
     match: "msct-trans",
     paper: "https://doi.org/10.1016/j.ultrasmedbio.2026.07.032",
     code: "https://github.com/MohsinFurkh/MSCT-Trans",

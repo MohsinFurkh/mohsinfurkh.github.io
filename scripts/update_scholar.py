@@ -9,6 +9,7 @@ PROFILE_FILE = "scholar_profile_DGm9l2wAAAAJ.json"
 # The site carries hardcoded scholar metrics because it is a static export
 # (output: 'export'), so the /api/scholar route does not run in prod.
 METRICS_FILE = os.path.join("src", "data", "scholar.ts")
+MANUAL_PUBLICATIONS_FILE = os.path.join("src", "data", "manualPublications.json")
 
 
 def update_homepage(data):
@@ -21,7 +22,11 @@ def update_homepage(data):
     citations = metrics.get("citations", {}).get("all_time", "0")
     h_index = metrics.get("h-index", {}).get("all_time", "0")
     i10_index = metrics.get("i10-index", {}).get("all_time", "0")
-    publications = len(data.get("publications", []))
+    with open(MANUAL_PUBLICATIONS_FILE, "r", encoding="utf-8") as f:
+        manual_publications = json.load(f)
+    titles = {p.get("title", "").lower() for p in data.get("publications", [])}
+    titles.update(p.get("title", "").lower() for p in manual_publications)
+    publications = len(titles)
 
     with open(METRICS_FILE, "r", encoding="utf-8") as f:
         content = f.read()

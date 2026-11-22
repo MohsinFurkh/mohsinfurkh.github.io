@@ -3,9 +3,9 @@
 // the values below each week. Keep the key names as they are — the script matches
 // them literally.
 export const scholarMetrics = {
-  citations: 114,
-  publications: 8,
-  h_index: 4,
+  citations: 124,
+  publications: 10,
+  h_index: 5,
   i10_index: 3,
   citationsByYear: [
       { year: 2023, citations: 3 },

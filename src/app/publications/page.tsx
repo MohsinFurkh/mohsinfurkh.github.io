@@ -142,11 +142,11 @@ export default function Publications() {
         </h1>
         <p className="mx-auto mt-8 max-w-[36rem]">
           Journal articles and conference papers on medical image segmentation,
-          classification and loss function design. Metrics and entries sync from{' '}
+          classification and loss function design. Metrics and Scholar entries sync from{' '}
           <a href={site.scholar} target="_blank" rel="noopener noreferrer" className="prose-link">
             Google Scholar
           </a>
-          .
+          ; recently accepted and published work is also included.
         </p>
 
         <dl className="mx-auto mt-12 grid max-w-lg grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-4">

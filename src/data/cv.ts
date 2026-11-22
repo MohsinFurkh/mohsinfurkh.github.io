@@ -35,7 +35,7 @@ export const appointments: TimelineEntry[] = [
     title: "Assistant Professor",
     subtitle: "School of Computer Science, UPES, Dehradun",
     items: [
-      "Joined in July 2025; moved to the Research Faculty track in January 2026",
+      "Joined in July 2025",
       "First and corresponding author of MSCT-Trans (Ultrasound in Medicine & Biology, 2026), written at UPES without my doctoral advisor",
       "Teach B.Tech. and M.Tech. Computer Science courses; supervise B.Tech. and M.Tech. projects in machine learning and computer vision",
     ],

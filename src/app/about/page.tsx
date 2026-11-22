@@ -60,7 +60,7 @@ export default function About() {
             >
               UPES Dehradun
             </a>
-            , on the Research Faculty track. I develop deep learning methods for
+            . I develop deep learning methods for
             ultrasound image analysis that treat ambiguity — at lesion
             boundaries and across datasets — as a signal rather than noise, so
             that models stay reliable on the small, heterogeneous datasets

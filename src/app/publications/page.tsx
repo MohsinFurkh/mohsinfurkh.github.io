@@ -94,7 +94,7 @@ export default function Publications() {
         const papers: Publication[] = (data.papers ?? []).map((paper: any, index: number) => ({
           id: `scholar-${index}`,
           title: paper.title ?? 'Untitled',
-          authors: paper.authors ?? '',
+          authors: (paper.authors ?? '').replace(/\b(?:Mohsin\s+Furkh|M\.?\s*F\.?)\s+Dar\b/gi, 'MF Dar'),
           journal: paper.publication ?? '',
           year: Number(paper.year) || 0,
           citations: paper.citations ?? 0,

@@ -91,6 +91,11 @@ export async function GET() {
       ...data.publications.filter((pub) => !manualTitles.has(pub.title.toLowerCase())),
     ];
     const papers: ProcessedPaper[] = allPublications.map((pub: Publication) => {
+      // Older Scholar snapshots include the EfficientU-Net authors in its title.
+      const isEfficientUNet = pub.title.toLowerCase().startsWith('efficientu-net:');
+      const title = isEfficientUNet
+        ? pub.title.replace(/:\s*MF Dar,\s*A\.?\s*Ganivada$/i, '')
+        : pub.title;
       // Parse year from string, handling cases where it might be 'N/A'
       let year: number | undefined;
       if (pub.year && pub.year !== 'N/A') {
@@ -101,10 +106,10 @@ export async function GET() {
       }
       
       return {
-        title: pub.title || 'Untitled',
+        title: title || 'Untitled',
         citations: pub.citations || 0,
         year,
-        authors: pub.authors || '',
+        authors: pub.authors || (isEfficientUNet ? 'MF Dar, A Ganivada' : ''),
         publication: pub.journal || '',
         link: pub.scholar_url || ''
       };

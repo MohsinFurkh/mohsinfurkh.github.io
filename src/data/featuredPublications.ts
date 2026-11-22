@@ -31,6 +31,13 @@ export const featuredPublications: FeaturedPublication[] = [
     venue: "11th International Conference on Computer Vision and Image Processing (CVIP 2026), accepted",
     image: "/images/architectures/calibrated-null.png",
     summary: "A calibrated evaluation of whether ultrasound classifiers use burnt-in annotation shortcuts, comparing annotation masking with controlled synthetic cues across four datasets.",
+    bibtex: `@inproceedings{dar2026calibratednull,
+  title     = {Available but Not Taken: A Calibrated Null for Burnt-In Annotation Shortcuts in Ultrasound Classification},
+  author    = {Dar, Mohsin Furkh},
+  booktitle = {11th International Conference on Computer Vision and Image Processing},
+  year      = {2026},
+  note      = {Accepted}
+}`,
   },
   {
     title:
